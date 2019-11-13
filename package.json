@@ -1,0 +1,36 @@
+{
+  "name": "slider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.ts",
+  "scripts": {
+    "test": "mocha --require ts-node/register test/*.spec.ts",
+    "build": "webpack -d"
+  },
+  "author": "Alexander Axenov",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.2.3",
+    "@types/jquery": "^3.3.31",
+    "@types/mocha": "^5.2.7",
+    "awesome-typescript-loader": "^5.2.1",
+    "chai": "^4.2.0",
+    "css-loader": "^3.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "jquery": "^3.4.1",
+    "mini-css-extract-plugin": "^0.8.0",
+    "mocha": "^6.2.1",
+    "node-sass": "^4.12.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "pug-html-loader": "^1.1.5",
+    "sass-loader": "^8.0.0",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
