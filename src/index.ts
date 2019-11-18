@@ -20,7 +20,7 @@ declare global {
 
       var make = function(){
 
-          let view: IView = new View(this,this,this);
+          let view: IView = new View(this,this,this,this);
       };
 
       return this.each(make);
