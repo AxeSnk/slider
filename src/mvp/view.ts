@@ -9,16 +9,13 @@ export default class View {
     private slider: HTMLDivElement;
     private handle: HTMLDivElement;
     private tooltip?: HTMLDivElement;
-    shiftX: number;
 
-    constructor(wrapper: HTMLDivElement, slider: HTMLDivElement, handle: HTMLDivElement, shiftX: number,) {
+    constructor(wrapper: HTMLDivElement, slider: HTMLDivElement, handle: HTMLDivElement) {
         this.wrapper = wrapper;
         this.slider = slider;
         this.handle = handle;
-        this.shiftX = shiftX;
         this.init();
-        this.mouseDown();
-
+        this.dragHandle();
     }
 
     init(): void {
@@ -28,45 +25,42 @@ export default class View {
         this.handle = document.createElement('div');
         this.handle.classList.add('handle');
         this.slider.appendChild(this.handle);
-
-        document.addEventListener('mousemove', this.mouseMove.bind(this));
-        document.addEventListener('mouseup', this.mouseUp.bind(this));    
-
-        // this.mouseDown();
     }
 
-    mouseDown(): void {
-        this.handle.onmousedown = (event) => {
+    dragHandle(): void {
+
+        this.slider.onmousedown = (event: MouseEvent) => {
             event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
-            this.shiftX = event.clientX - this.handle.getBoundingClientRect().left;
-            
-            // document.addEventListener('mousemove', this.mouseMove.bind(this));
-            // document.addEventListener('mouseup', this.mouseUp.bind(this));    
-    
+            let slider = this.slider;
+            let handle = this.handle;
+
+            let leftMin = 0; // левый ограничитель
+            let leftMax = this.slider.clientWidth - this.handle.offsetWidth;  // правый ограничитель
+            let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
+
+            moveMouse(event);
+
+            document.onmousemove = (event: MouseEvent) => moveMouse(event);
+
+            document.onmouseup = () => document.onmousemove = document.onmouseup = null;
+          
+            function moveMouse(event: MouseEvent) {// выставляет ползунок под курсором
+
+              let left = event.clientX - slider.getBoundingClientRect().left - shiftX;
+          
+              if (left < leftMin) {
+                handle.style.left = leftMin + 'px';
+              } else if (left > leftMax) {
+                handle.style.left = leftMax + 'px';
+              } else {
+                handle.style.left = left + 'px';
+              }
+
+            }    
+
         }
-    }
 
-    mouseMove(event: any): void {
-
-        let newLeft = event.clientX - this.shiftX - this.slider.getBoundingClientRect().left;;
-        
-        // курсор вышел из слайдера => оставить бегунок в его границах.
-        if (newLeft < 0) {
-            newLeft = 0;
-          }
-          let rightEdge = this.slider.offsetWidth - this.handle.offsetWidth;
-          if (newLeft > rightEdge) {
-            newLeft = rightEdge;
-          }
-  
-        this.handle.style.left = newLeft + 'px';
-    }
-
-    mouseUp(): void {
-        console.log('mouse up')
-        document.removeEventListener('mouseup', this.mouseUp);
-        document.removeEventListener('mousemove', this.mouseMove);
     }
 
 }
