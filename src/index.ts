@@ -10,7 +10,7 @@ declare global {
   }
 
   interface JQuery {
-    slider(options:any) : JQuery<Element> | void;
+    slider(options?:any) : JQuery<Element> | void;
   }
 }
 
@@ -22,7 +22,7 @@ declare global {
     var make = function(){
 
       let view: IView = new View(options,this);
-      let model: IModel = new Model();
+      let model: IModel = new Model(options);
       let presenter = new Presenter(model,view,)
 
     };
@@ -31,4 +31,4 @@ declare global {
   };
 })(jQuery);
 
-$('.mySlider').slider(true);
+$('.mySlider').slider();

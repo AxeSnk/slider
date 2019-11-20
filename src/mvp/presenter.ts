@@ -21,8 +21,8 @@ export default class Presenter {
       let slider = this.view.getSlider();
       let handle = this.view.getHandle();
 
-      let leftMin = 0; // левый ограничитель
-      let leftMax = this.view.getSlider().clientWidth - this.view.getHandle().offsetWidth;  // правый ограничитель
+      let leftMin = this.model.getMinVal(); // левый ограничитель
+      let leftMax = this.model.getMaxVal() ? this.model.getMaxVal() : this.view.getSlider().clientWidth - this.view.getHandle().offsetWidth;  // правый ограничитель
       let shiftX = this.view.getHandle().offsetWidth / 2; // сдвиг на полразмера ползунка
 
       moveMouse(event);
