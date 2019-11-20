@@ -11,10 +11,17 @@ export default class View implements IView {
   private handle: HTMLDivElement;
   private tooltip?: HTMLDivElement;
 
-  constructor(slider: HTMLDivElement) {
+  private lenght: string;
+
+  constructor(options: IOptions, slider: HTMLDivElement) {
     this.slider = slider;
     this.init();
 
+    if(true) {
+      this.lenght = options.width;
+      this.slider.style.width = this.lenght;
+    }
+    
     if (true) {
       this.handle = this.createHandle();
     }

@@ -21,7 +21,7 @@ declare global {
 
     var make = function(){
 
-      let view: IView = new View(this);
+      let view: IView = new View(options,this);
       let model: IModel = new Model();
       let presenter = new Presenter(model,view,)
 
