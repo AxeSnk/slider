@@ -2,13 +2,13 @@ import Model from "./model";
 import IOptions from './defaultOptions';
 
 export interface IView {
-  slider: HTMLDivElement;
-  handle: HTMLDivElement;
+  getSlider(): HTMLDivElement;
+  getHandle(): HTMLDivElement;
 }
 
-export default class View {
-  slider: HTMLDivElement;
-  handle: HTMLDivElement;
+export default class View implements IView {
+  private slider: HTMLDivElement;
+  private handle: HTMLDivElement;
   private tooltip?: HTMLDivElement;
 
   constructor(slider: HTMLDivElement) {
@@ -32,5 +32,11 @@ export default class View {
     return handle;
   }
 
+  getSlider(): HTMLDivElement {
+    return this.slider;
+  }
 
+  getHandle(): HTMLDivElement {
+    return this.handle;
+  }
 }

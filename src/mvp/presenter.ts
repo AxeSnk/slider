@@ -4,7 +4,7 @@ import View, { IView } from './view';
 export default class Presenter {
 
   private model: IModel;
-  view: IView;
+  private view: IView;
 
   constructor(model: IModel, view: IView) {
 
@@ -15,15 +15,15 @@ export default class Presenter {
   }
 
   dragHandle(): void {
-    this.view.slider.onmousedown = (event: MouseEvent) => {
+    this.view.getSlider().onmousedown = (event: MouseEvent) => {
       event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
-      let slider = this.view.slider;
-      let handle = this.view.handle;
+      let slider = this.view.getSlider();
+      let handle = this.view.getHandle();
 
       let leftMin = 0; // левый ограничитель
-      let leftMax = this.view.slider.clientWidth - this.view.handle.offsetWidth;  // правый ограничитель
-      let shiftX = this.view.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
+      let leftMax = this.view.getSlider().clientWidth - this.view.getHandle().offsetWidth;  // правый ограничитель
+      let shiftX = this.view.getHandle().offsetWidth / 2; // сдвиг на полразмера ползунка
 
       moveMouse(event);
 
