@@ -6,8 +6,8 @@ export interface IModel {
 
 export default class Model {
 
-    constructor() {
-        
-    }
+  constructor() {
+      
+  }
 
 }

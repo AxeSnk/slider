@@ -1,7 +1,8 @@
 import "./index.scss";
 import View, { IView } from "./mvp/view";
-import Model from "./mvp/model";
+import Model, { IModel } from "./mvp/model";
 import { defaultOptions } from './mvp/defaultOptions';
+import Presenter from "./mvp/presenter";
 
 declare global {
   interface Window {
@@ -14,17 +15,20 @@ declare global {
 }
 
 (function($){
-    $.fn.slider = function(options?: any) {
+  $.fn.slider = function(options?: any) {
 
-      options = $.extend(defaultOptions, options);
+    options = $.extend(defaultOptions, options);
 
-      var make = function(){
+    var make = function(){
 
-          let view: IView = new View(this,this,this);
-      };
+      let view: IView = new View(this);
+      let model: IModel = new Model();
+      let presenter = new Presenter(model,view,)
 
-      return this.each(make);
     };
+
+    return this.each(make);
+  };
 })(jQuery);
 
 $('.mySlider').slider(true);

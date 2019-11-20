@@ -1,9 +1,9 @@
 export default interface IOptions {
-    tooltip: any;
+  tooltip: any;
 }
 
 var defaultOptions: IOptions = {
-    tooltip: false,
+  tooltip: false,
 }
 
 export { defaultOptions };
