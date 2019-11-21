@@ -11,18 +11,25 @@ export default class Presenter {
     this.model = model;
     this.view = view;
     this.dragHandle();
+    this.position();
 
   }
 
+  position(): void {
+    let pos = this.model.getVal();
+    this.view.getHandle().style.left = pos + 'px';
+  }
+  
   dragHandle(): void {
+
     this.view.getSlider().onmousedown = (event: MouseEvent) => {
       event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
       let slider = this.view.getSlider();
       let handle = this.view.getHandle();
 
-      let leftMin = this.model.getMinVal(); // левый ограничитель
-      let leftMax = this.model.getMaxVal() ? this.model.getMaxVal() : this.view.getSlider().clientWidth - this.view.getHandle().offsetWidth;  // правый ограничитель
+      let leftMin = null; // левый ограничитель
+      let leftMax = this.view.getSlider().clientWidth - this.view.getHandle().offsetWidth;  // правый ограничитель
       let shiftX = this.view.getHandle().offsetWidth / 2; // сдвиг на полразмера ползунка
 
       moveMouse(event);

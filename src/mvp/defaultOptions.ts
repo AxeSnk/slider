@@ -1,5 +1,6 @@
 export default interface IOptions {
   width: string;
+  val: any;
   minVal: any;
   maxVal: any;
   tooltip: any;
@@ -7,8 +8,9 @@ export default interface IOptions {
 
 var defaultOptions: IOptions = {
   width: '400px',
+  val: 200,
   minVal: null,
-  maxVal: 100,
+  maxVal: null,
   tooltip: false,
 }
 

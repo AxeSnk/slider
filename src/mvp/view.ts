@@ -1,4 +1,3 @@
-import Model from "./model";
 import IOptions from './defaultOptions';
 
 export interface IView {
