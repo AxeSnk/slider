@@ -1,23 +1,33 @@
 .slider {
+  position: relative;
   display: flex;
   align-items: center;
   height: 10px;
   border: 1px solid grey;
   border-radius: 4px;
   margin: 20px 10px;
-}
-.handle {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  background-color: white;
-  border: 1px solid grey;
-  border-radius: 4px;
-  cursor: pointer;
-  z-index: 100;
-}
-.tooltip {
-  width: fit-content;
-  text-align: center;
-  background-color: grey;
+
+  .handle {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 100;
+
+    .tooltip {
+      position: fixed;
+      width: fit-content;
+      padding: 0 2px;
+      font-size: 12px;
+      border: 1px solid grey;
+      border-radius: 4px;
+      text-align: center;
+      background-color: #fff;
+    }
+  
+  }
+  
 }
