@@ -4,7 +4,8 @@ export interface IView {
   getSlider(): HTMLDivElement;
   getHandle(): HTMLDivElement;
   getTooltip(): HTMLDivElement;
-
+  getMinPositionHandle(): number;
+  getCurrentPositionHandle(): number;
 }
 
 export default class View implements IView {
@@ -13,10 +14,9 @@ export default class View implements IView {
   private handle: HTMLDivElement;
   private tooltip: HTMLDivElement;
 
-  constructor(model: IModel, slider: HTMLDivElement, tooltip: HTMLDivElement) {
+  constructor(model: IModel, slider: HTMLDivElement) {
     this.model = model;
     this.slider = slider;
-    this.tooltip = tooltip;
 
     this.init();
     this.dragHandle();
@@ -28,13 +28,33 @@ export default class View implements IView {
     
     if (true) {
       this.handle = this.createHandle();
+      
+      // установить первоначальную позицию handle
+      let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
+
+      this.handle.style.left = this.getMinPositionHandle() + this.model.getVal() - shiftX + 'px';
+
     }
 
     if (this.model.getTooltipMask()) {
       this.tooltip = this.createTooltip();
+
+      this.tooltip.innerHTML = '' + this.getCurrentPositionHandle();
+
+      // отображение tooltip
+      let leftTooltip = this.handle.getBoundingClientRect().left + (this.handle.offsetWidth - this.tooltip.offsetWidth) / 2;
+      if (leftTooltip < 0) leftTooltip = 0;
+
+      let topTooltip = this.handle.getBoundingClientRect().top - this.tooltip.offsetHeight - 5;
+      if (topTooltip < 0) {
+        topTooltip = this.handle.getBoundingClientRect().top + this.handle.offsetWidth + 5;
+      }
+
+      this.tooltip.style.left = leftTooltip + 'px';
+      this.tooltip.style.top = topTooltip + 'px';
+      
     }
 
-    this.position();
 
   }
 
@@ -46,7 +66,7 @@ export default class View implements IView {
     let handle: HTMLDivElement = document.createElement('div');
     handle.classList.add('handle');
     this.slider.appendChild(handle);
-
+    
     return handle;
   }
 
@@ -57,12 +77,6 @@ export default class View implements IView {
 
     return tooltip
   }
-
-  position(): void {
-    let pos = this.model.getVal();
-    this.getHandle().style.left = pos + 'px';
-  }
-
 
   dragHandle(): void {
 
@@ -128,5 +142,22 @@ export default class View implements IView {
   getTooltip(): HTMLDivElement{
     return this.tooltip
   }
+
+  getCurrentPositionHandle(): number {
+    let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
+    let currentPos = this.handle.getBoundingClientRect().left - this.getMinPositionHandle() + shiftX;
+
+    return currentPos
+  }
+
+  getMinPositionHandle(): any {
+    let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
+    let borderSlider = this.slider.getAttribute('border-width');
+    let pos = this.slider.getBoundingClientRect().left + borderSlider + shiftX;
+  
+    console.log(borderSlider);
+    return pos;
+  }
+
 
 }

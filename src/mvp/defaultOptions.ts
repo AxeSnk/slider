@@ -11,7 +11,7 @@ export default interface IOptions {
 
 var defaultOptions: IOptions = {
   width: '300px',
-  val: 250,
+  val: 200,
   minVal: null,
   maxVal: null,
   step: null,
