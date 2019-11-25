@@ -28,20 +28,19 @@ export default class View implements IView {
     
     if (true) {
       this.handle = this.createHandle();
-      
+    
       // установить первоначальную позицию handle
-      let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
-
-      this.handle.style.left = this.getMinPositionHandle() + this.model.getVal() - shiftX + 'px';
-
+      this.handle.style.left = this.model.getVal() + 'px';
     }
 
     if (this.model.getTooltipMask()) {
+
       this.tooltip = this.createTooltip();
 
+      // значение в tooltip
       this.tooltip.innerHTML = '' + this.getCurrentPositionHandle();
 
-      // отображение tooltip
+      // позиция tooltip
       let leftTooltip = this.handle.getBoundingClientRect().left + (this.handle.offsetWidth - this.tooltip.offsetWidth) / 2;
       if (leftTooltip < 0) leftTooltip = 0;
 
@@ -54,7 +53,6 @@ export default class View implements IView {
       this.tooltip.style.top = topTooltip + 'px';
       
     }
-
 
   }
 
@@ -98,10 +96,11 @@ export default class View implements IView {
 
       document.onmouseup = () => document.onmousemove = document.onmouseup = null;
     
-      function moveMouse(event: MouseEvent) {// выставляет ползунок под курсором
-
-        let left = event.clientX - slider.getBoundingClientRect().left - shiftX;
+      function moveMouse(event: MouseEvent) {
         
+        let left = event.clientX - slider.getBoundingClientRect().left - shiftX; // выставляет ползунок под курсором
+
+        // границы слайдера
         if (left < leftMin) {
           handle.style.left = leftMin + 'px';
         } else if (left > leftMax) {
@@ -112,8 +111,17 @@ export default class View implements IView {
 
         // отображение tooltip
         if (model.getTooltipMask()) {
-          tooltip.innerHTML = '' + left;
 
+           // значение в tooltip
+          if (left < leftMin) {
+            tooltip.innerHTML = leftMin + '';
+          } else if (left > leftMax) {
+            tooltip.innerHTML = leftMax + '';
+          } else {
+            tooltip.innerHTML = left + '';
+          }
+
+          // позиция tooltip
           let leftTooltip = handle.getBoundingClientRect().left + (handle.offsetWidth - tooltip.offsetWidth) / 2;
           if (leftTooltip < 0) leftTooltip = 0;
 
@@ -152,12 +160,9 @@ export default class View implements IView {
 
   getMinPositionHandle(): any {
     let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
-    let borderSlider = this.slider.getAttribute('border-width');
-    let pos = this.slider.getBoundingClientRect().left + borderSlider + shiftX;
+    let pos = this.slider.getBoundingClientRect().left + 1 + shiftX; // 1 - рамка 1px
   
-    console.log(borderSlider);
     return pos;
   }
-
 
 }
