@@ -5,9 +5,12 @@
   height: 10px;
   border: 1px solid grey;
   border-radius: 4px;
-  margin: 20px 10px;
+  margin: 30px 10px;
 
   .handle {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
     position: absolute;
     width: 18px;
     height: 18px;
@@ -18,7 +21,7 @@
     z-index: 100;
 
     .tooltip {
-      position: fixed;
+      position: relative;
       width: fit-content;
       padding: 0 2px;
       font-size: 12px;

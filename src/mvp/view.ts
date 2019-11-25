@@ -41,16 +41,7 @@ export default class View implements IView {
       this.tooltip.innerHTML = '' + this.getCurrentPositionHandle();
 
       // позиция tooltip
-      let leftTooltip = this.handle.getBoundingClientRect().left + (this.handle.offsetWidth - this.tooltip.offsetWidth) / 2;
-      if (leftTooltip < 0) leftTooltip = 0;
-
-      let topTooltip = this.handle.getBoundingClientRect().top - this.tooltip.offsetHeight - 5;
-      if (topTooltip < 0) {
-        topTooltip = this.handle.getBoundingClientRect().top + this.handle.offsetWidth + 5;
-      }
-
-      this.tooltip.style.left = leftTooltip + 'px';
-      this.tooltip.style.top = topTooltip + 'px';
+      this.tooltip.style.top = -this.handle.offsetHeight + 'px';
       
     }
 
@@ -122,16 +113,7 @@ export default class View implements IView {
           }
 
           // позиция tooltip
-          let leftTooltip = handle.getBoundingClientRect().left + (handle.offsetWidth - tooltip.offsetWidth) / 2;
-          if (leftTooltip < 0) leftTooltip = 0;
-
-          let topTooltip = handle.getBoundingClientRect().top - tooltip.offsetHeight - 5;
-          if (topTooltip < 0) {
-            topTooltip = handle.getBoundingClientRect().top + handle.offsetWidth + 5;
-          }
-
-          tooltip.style.left = leftTooltip + 'px';
-          tooltip.style.top = topTooltip + 'px';
+          tooltip.style.top = - handle.offsetHeight + 'px';
         }
       }    
 
