@@ -13,7 +13,7 @@ export default class View implements IView {
   private slider: HTMLDivElement;
   private handle: HTMLDivElement;
   private tooltip: HTMLDivElement;
-
+  
   constructor(model: IModel, slider: HTMLDivElement) {
     this.model = model;
     this.slider = slider;
@@ -22,7 +22,7 @@ export default class View implements IView {
     this.dragHandle();
 
     if(true) {
-      let lenght = this.model.getWidth();
+      let lenght = this.model.getWidth() + 'px';
       this.slider.style.width = lenght;
     }
     
@@ -38,7 +38,7 @@ export default class View implements IView {
       this.tooltip = this.createTooltip();
 
       // значение в tooltip
-      this.tooltip.innerHTML = '' + this.getCurrentPositionHandle();
+      this.tooltip.innerHTML = '' + this.getCurrentPositionHandle().toFixed();
 
       // позиция tooltip
       this.tooltip.style.top = -this.handle.offsetHeight + 'px';
@@ -76,6 +76,7 @@ export default class View implements IView {
       let handle: HTMLDivElement = this.getHandle();
       let tooltip: HTMLDivElement = this.getTooltip();
       let model = this.model;
+      let step = this.model.getStep();
 
       let leftMin = 0; // левый ограничитель
       let leftMax = slider.clientWidth - handle.offsetWidth;  // правый ограничитель
@@ -88,8 +89,8 @@ export default class View implements IView {
       document.onmouseup = () => document.onmousemove = document.onmouseup = null;
     
       function moveMouse(event: MouseEvent) {
-        
-        let left = event.clientX - slider.getBoundingClientRect().left - shiftX; // выставляет ползунок под курсором
+        let num = event.clientX
+        let left = +num.toFixed() - +slider.getBoundingClientRect().left.toFixed() - shiftX; // выставляет ползунок под курсором
 
         // границы слайдера
         if (left < leftMin) {
@@ -97,7 +98,7 @@ export default class View implements IView {
         } else if (left > leftMax) {
           handle.style.left = leftMax + 'px';
         } else {
-          handle.style.left = left + 'px';
+          handle.style.left = Math.round(left/step) * step + 'px';
         }
 
         // отображение tooltip
@@ -109,7 +110,7 @@ export default class View implements IView {
           } else if (left > leftMax) {
             tooltip.innerHTML = leftMax + '';
           } else {
-            tooltip.innerHTML = left + '';
+            tooltip.innerHTML = Math.round(left/step) * step + '';
           }
 
           // позиция tooltip

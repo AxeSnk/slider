@@ -1,25 +1,30 @@
 import IOptions, { defaultOptions } from './defaultOptions';
+import { TSParenthesizedType } from 'babel-types';
 
 export interface IModel {
-  getWidth(): string;
+  getWidth(): number;
   getVal(): any 
   getMinVal(): any;
   getMaxVal(): any;
-  getStep(): any;
+  getStep(): number;
   getRange(): boolean;
   getTooltipMask(): boolean;
   getVerticalMask(): boolean;
+  getNumSteps(): number;
+  getStepSizeArray(): number[];
 }
 
 export default class Model implements IModel {
-  private width: string; // ширина слайдера
+  private width: number; // ширина слайдера
   private val: any; // первоначальное положение одиночного ползунка
   private minVal: any; // минимальное значение диапазона, при слайдере с диапазоном
   private maxVal: any; // маскимальное значение диапазона, при слайдере с диапазоном
-  private step: any; // шаг ползунка
+  private step: number; // шаг ползунка
   private range: boolean; // диапазон слайдера
   private tooltip: boolean; // подсказка над ползунком
   private vertical: boolean; // вертикальный слайдер
+  private numSteps: number;
+  private stepSizeArray: number[];
 
 
   constructor(options: IOptions) {
@@ -31,9 +36,11 @@ export default class Model implements IModel {
     this.range = options.range;
     this.tooltip = options.tooltip;
     this.vertical = options.vertical;
+    this.numSteps = this.getNumSteps();
+    this.stepSizeArray = this.getStepSizeArray();
   }
 
-  getWidth(): string {
+  getWidth(): number {
     return this.width
   }
 
@@ -49,7 +56,7 @@ export default class Model implements IModel {
     return this.maxVal
   }
 
-  getStep(): any {
+  getStep(): number {
     return this.step
   }
 
@@ -63,6 +70,30 @@ export default class Model implements IModel {
 
   getVerticalMask(): boolean{
     return this.vertical
+  }
+
+  getNumSteps(): number {
+    let numSteps = this.maxVal / this.step;
+
+    return numSteps;
+  }
+
+  getStepSizeArray(): number[] {
+    let maxVal = this.maxVal;
+    let minVal = this.minVal;
+    let step = this.step;
+    let array = function() {
+      let arr: number[] = [];
+      let i: number;
+      for( i = minVal; i < maxVal; i = i + step) {
+        arr.push(i);
+      }
+      arr.push(maxVal);
+      return arr;
+    }
+
+    let stepSizeArray = array();
+    return stepSizeArray;
   }
 
 }
