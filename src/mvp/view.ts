@@ -1,4 +1,5 @@
 import Model, { IModel } from './model';
+import Presenter from './presenter';
 
 export interface IView {
   getSlider(): HTMLDivElement;
@@ -41,7 +42,7 @@ export default class View implements IView {
       this.tooltip.innerHTML = '' + this.getCurrentPositionHandle().toFixed();
 
       // позиция tooltip
-      this.tooltip.style.top = -this.handle.offsetHeight + 'px';
+      this.tooltip.style.top = -this.handle.offsetHeight*1.4 + 'px';
       
     }
 
@@ -114,7 +115,7 @@ export default class View implements IView {
           }
 
           // позиция tooltip
-          tooltip.style.top = - handle.offsetHeight + 'px';
+          tooltip.style.top = - handle.offsetHeight*1.4 + 'px';
         }
       }    
 
@@ -143,8 +144,7 @@ export default class View implements IView {
 
   getMinPositionHandle(): any {
     let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
-    let pos = this.slider.getBoundingClientRect().left + 1 + shiftX; // 1 - рамка 1px
-  
+    let pos = this.slider.getBoundingClientRect().left + shiftX;
     return pos;
   }
 

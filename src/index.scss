@@ -2,33 +2,47 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 10px;
-  border: 1px solid grey;
+  height: 5px;
+  background-color: rgb(229, 229, 229);
   border-radius: 6px;
-  margin: 30px 10px;
+  margin: 50px;
+  cursor: pointer;
 
   .handle {
     display: flex;
     align-items: center; 
     justify-content: center; 
     position: absolute;
-    width: 18px;
-    height: 18px;
-    background-color: white;
-    border: 1px solid grey;
-    border-radius: 10px;
+    width: 21px;
+    height: 21px;
+    background-color: rgb(231, 87, 53);
+    border-radius: 50%;
     cursor: pointer;
     z-index: 100;
 
     .tooltip {
       position: relative;
       width: fit-content;
-      padding: 0 2px;
-      font-size: 12px;
-      border: 1px solid grey;
+      padding: 4px 8px;
+      font-size: 13px;
       border-radius: 4px;
       text-align: center;
-      background-color: #fff;
+      background-color: rgb(231, 87, 53);
+      color: #fff;
+      z-index: 99;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        width: 6px;
+        height: 6px;
+        left: 40%;
+        border-radius: 15%;
+        background-color: rgb(231, 87, 53);
+        transform: rotate(45deg);
+        z-index: 98;
+      }
     }
   
   }
