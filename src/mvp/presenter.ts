@@ -11,8 +11,7 @@ export default class Presenter {
     this.model = model;
     this.view = view;
     
-
   }
 
-
+  
 }

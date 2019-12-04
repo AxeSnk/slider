@@ -23,8 +23,7 @@ export default class View implements IView {
     this.dragHandle();
 
     if(true) {
-      let lenght = this.model.getWidth() + 'px';
-      this.slider.style.width = lenght;
+      
     }
     
     if (true) {

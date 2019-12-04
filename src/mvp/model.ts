@@ -1,8 +1,6 @@
 import IOptions, { defaultOptions } from './defaultOptions';
-import { TSParenthesizedType } from 'babel-types';
 
 export interface IModel {
-  getWidth(): number;
   getVal(): any 
   getMinVal(): any;
   getMaxVal(): any;
@@ -10,12 +8,10 @@ export interface IModel {
   getRange(): boolean;
   getTooltipMask(): boolean;
   getVerticalMask(): boolean;
-  getNumSteps(): number;
-  getStepSizeArray(): number[];
+  getArrayOfDivisions(): number[];
 }
 
 export default class Model implements IModel {
-  private width: number; // ширина слайдера
   private val: any; // первоначальное положение одиночного ползунка
   private minVal: any; // минимальное значение диапазона, при слайдере с диапазоном
   private maxVal: any; // маскимальное значение диапазона, при слайдере с диапазоном
@@ -23,12 +19,10 @@ export default class Model implements IModel {
   private range: boolean; // диапазон слайдера
   private tooltip: boolean; // подсказка над ползунком
   private vertical: boolean; // вертикальный слайдер
-  private numSteps: number;
-  private stepSizeArray: number[];
+  private arrrayOfDivisions: number[]; // массив делений
 
 
   constructor(options: IOptions) {
-    this.width = options.width;
     this.val = options.val;
     this.minVal = options.minVal;
     this.maxVal = options.maxVal;  
@@ -36,14 +30,27 @@ export default class Model implements IModel {
     this.range = options.range;
     this.tooltip = options.tooltip;
     this.vertical = options.vertical;
-    this.numSteps = this.getNumSteps();
-    this.stepSizeArray = this.getStepSizeArray();
+    this.arrrayOfDivisions = this.createArrayOfDivisions();
+
+    this.init();
+  }
+  
+  init(): void {
+    console.log(this.getArrayOfDivisions());
   }
 
-  getWidth(): number {
-    return this.width
-  }
+  // создать массив делений
+  createArrayOfDivisions(): number[] {    
+    let arr: number[] = [];
+    let i: number;
+    for( i = this.minVal; i < this.maxVal; i = i + this.step) {
+      arr.push(i);
+    }
+    arr.push(this.maxVal);
 
+    return arr;
+  }
+  
   getVal(): any {
     return this.val
   }
@@ -72,28 +79,8 @@ export default class Model implements IModel {
     return this.vertical
   }
 
-  getNumSteps(): number {
-    let numSteps = this.maxVal / this.step;
-
-    return numSteps;
-  }
-
-  getStepSizeArray(): number[] {
-    let maxVal = this.maxVal;
-    let minVal = this.minVal;
-    let step = this.step;
-    let array = function() {
-      let arr: number[] = [];
-      let i: number;
-      for( i = minVal; i < maxVal; i = i + step) {
-        arr.push(i);
-      }
-      arr.push(maxVal);
-      return arr;
-    }
-
-    let stepSizeArray = array();
-    return stepSizeArray;
+  getArrayOfDivisions(): number[] {
+    return this.arrrayOfDivisions
   }
 
 }

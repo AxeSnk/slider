@@ -1,5 +1,4 @@
 export default interface IOptions {
-  width: number; // ширина слайдера
   val: any; // первоначальное положение одиночного ползунка
   minVal: any; // минимальное значение диапазона, при слайдере с диапазоном
   maxVal: any; // максимальное значение диапазона, при слайдере с диапазоном
@@ -10,11 +9,10 @@ export default interface IOptions {
 }
 
 var defaultOptions: IOptions = {
-  width: 300,
   val: 8,
   minVal: 0,
-  maxVal: 280,
-  step: 20,
+  maxVal: 100,
+  step: 1,
   range: false,
   tooltip: true,
   vertical: false,
