@@ -1,5 +1,4 @@
-import Model, { IModel } from './model';
-import Presenter from './presenter';
+import IOptions from './defaultOptions';
 
 export interface IView {
   getSlider(): HTMLDivElement;
@@ -10,52 +9,39 @@ export interface IView {
 }
 
 export default class View implements IView {
-  private model: IModel;
+  private wrapper: any;
   private slider: HTMLDivElement;
   private handle: HTMLDivElement;
   private tooltip: HTMLDivElement;
   
-  constructor(model: IModel, slider: HTMLDivElement) {
-    this.model = model;
-    this.slider = slider;
+  constructor(options: IOptions, wrapper: any) {
+    this.wrapper = wrapper;
+    this.slider = this.createSlider();
+    this.handle = this.createHandle(options);
 
-    this.init();
-    this.dragHandle();
-
-    if(true) {
-      
-    }
-    
-    if (true) {
-      this.handle = this.createHandle();
-    
-      // установить первоначальную позицию handle
-      this.handle.style.left = this.model.getVal() + 'px';
+    if (options.tooltip) {
+      this.tooltip = this.createTooltip()
     }
 
-    if (this.model.getTooltipMask()) {
-
-      this.tooltip = this.createTooltip();
-
-      // значение в tooltip
-      this.tooltip.innerHTML = '' + this.getCurrentPositionHandle().toFixed();
-
-      // позиция tooltip
-      this.tooltip.style.top = -this.handle.offsetHeight*1.4 + 'px';
-      
-    }
-
+    this.dragHandle(options);
   }
 
-  init(): void {
-    this.slider.classList.add('slider');
+  createSlider(): HTMLDivElement {
+    let slider: HTMLDivElement = document.createElement('div');
+    slider.classList.add('slider');
+    this.wrapper.appendChild(slider);
+
+    return slider;
   }
 
-  createHandle(): HTMLDivElement {
+  createHandle(options: IOptions): HTMLDivElement {
     let handle: HTMLDivElement = document.createElement('div');
     handle.classList.add('handle');
     this.slider.appendChild(handle);
-    
+
+    // установить первоначальную позицию handle
+    handle.style.left = options.val + 'px';
+
     return handle;
   }
 
@@ -64,19 +50,24 @@ export default class View implements IView {
     tooltip.classList.add('tooltip');
     this.handle.appendChild(tooltip);
 
-    return tooltip
+    // значение в tooltip
+    tooltip.innerHTML = '' + this.getCurrentPositionHandle().toFixed();
+
+    // позиция tooltip
+    tooltip.style.top = -this.handle.offsetHeight*1.4 + 'px';
+    
+    return tooltip   
   }
 
-  dragHandle(): void {
+  dragHandle(options: IOptions): void {
 
     this.getSlider().onmousedown = (event: MouseEvent) => {
       event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
-      let slider: HTMLDivElement = this.getSlider();
-      let handle: HTMLDivElement = this.getHandle();
-      let tooltip: HTMLDivElement = this.getTooltip();
-      let model = this.model;
-      let step = this.model.getStep();
+      let slider: HTMLDivElement = this.slider;
+      let handle: HTMLDivElement = this.handle;
+      let tooltip: HTMLDivElement = this.tooltip;
+      let step = options.step;
 
       let leftMin = 0; // левый ограничитель
       let leftMax = slider.clientWidth - handle.offsetWidth;  // правый ограничитель
@@ -102,7 +93,7 @@ export default class View implements IView {
         }
 
         // отображение tooltip
-        if (model.getTooltipMask()) {
+        if (options.tooltip) {
 
            // значение в tooltip
           if (left < leftMin) {
@@ -130,7 +121,7 @@ export default class View implements IView {
     return this.handle
   }
 
-  getTooltip(): HTMLDivElement{
+  getTooltip(): HTMLDivElement {
     return this.tooltip
   }
 

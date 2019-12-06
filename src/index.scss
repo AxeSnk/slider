@@ -1,51 +1,55 @@
-.slider {
-  position: relative;
-  display: flex;
-  width: 400px;
-  align-items: center;
-  height: 5px;
-  background-color: rgb(229, 229, 229);
-  border-radius: 6px;
+.mySlider {
   margin: 50px;
-  cursor: pointer;
+  width: 400px;
 
-  .handle {
+  .slider {
+    position: relative;
     display: flex;
-    align-items: center; 
-    justify-content: center; 
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: rgb(231, 87, 53);
-    border-radius: 50%;
+    align-items: center;
+    height: 5px;
+    background-color: rgb(229, 229, 229);
+    border-radius: 6px;
     cursor: pointer;
-    z-index: 100;
 
-    .tooltip {
-      position: relative;
-      width: fit-content;
-      padding: 4px 8px;
-      font-size: 13px;
-      border-radius: 4px;
-      text-align: center;
+    .handle {
+      display: flex;
+      align-items: center; 
+      justify-content: center; 
+      position: absolute;
+      width: 20px;
+      height: 20px;
       background-color: rgb(231, 87, 53);
-      color: #fff;
-      z-index: 99;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 100;
 
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        width: 6px;
-        height: 6px;
-        left: 40%;
-        border-radius: 15%;
+      .tooltip {
+        position: relative;
+        width: fit-content;
+        padding: 4px 8px;
+        font-size: 13px;
+        border-radius: 4px;
+        text-align: center;
         background-color: rgb(231, 87, 53);
-        transform: rotate(45deg);
-        z-index: 98;
+        color: #fff;
+        z-index: 99;
+        pointer-events: none;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          width: 6px;
+          height: 6px;
+          left: 40%;
+          border-radius: 15%;
+          background-color: rgb(231, 87, 53);
+          transform: rotate(45deg);
+          z-index: 98;
+        }
       }
+    
     }
-  
+    
   }
-  
 }

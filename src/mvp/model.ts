@@ -1,4 +1,4 @@
-import IOptions, { defaultOptions } from './defaultOptions';
+import IOptions from './defaultOptions';
 
 export interface IModel {
   getVal(): any 
