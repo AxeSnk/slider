@@ -11,7 +11,14 @@
     border-radius: 6px;
     cursor: pointer;
 
-    .handle {
+    .slider__fill {
+      position: absolute;
+      height: 5px;
+      background-color: rgb(231, 87, 53);
+      border-radius: 6px 0 0 6px;
+    }
+
+    .slider__handle {
       display: flex;
       align-items: center; 
       justify-content: center; 
@@ -23,7 +30,7 @@
       cursor: pointer;
       z-index: 100;
 
-      .tooltip {
+      .slider__tooltip {
         position: relative;
         width: fit-content;
         padding: 4px 8px;

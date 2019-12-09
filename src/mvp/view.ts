@@ -1,9 +1,6 @@
 import IOptions from './defaultOptions';
 
 export interface IView {
-  getSlider(): HTMLDivElement;
-  getHandle(): HTMLDivElement;
-  getTooltip(): HTMLDivElement;
   getMinPositionHandle(): number;
   getCurrentPositionHandle(): number;
 }
@@ -11,6 +8,7 @@ export interface IView {
 export default class View implements IView {
   private wrapper: any;
   private slider: HTMLDivElement;
+  private fill: HTMLDivElement;
   private handle: HTMLDivElement;
   private tooltip: HTMLDivElement;
   
@@ -18,6 +16,8 @@ export default class View implements IView {
     this.wrapper = wrapper;
     this.slider = this.createSlider();
     this.handle = this.createHandle(options);
+    this.fill = this.createFill(options);
+
 
     if (options.tooltip) {
       this.tooltip = this.createTooltip()
@@ -34,9 +34,22 @@ export default class View implements IView {
     return slider;
   }
 
+  createFill(options): HTMLDivElement {
+    let fill: HTMLDivElement = document.createElement('div');
+    fill.classList.add('slider__fill');
+    this.slider.appendChild(fill);
+
+    // установить первоначальное заполнение, относительно val
+    let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
+
+    fill.style.width = this.handle.getBoundingClientRect().left - this.slider.getBoundingClientRect().left + shiftX + 'px';
+
+    return fill;
+  }
+
   createHandle(options: IOptions): HTMLDivElement {
     let handle: HTMLDivElement = document.createElement('div');
-    handle.classList.add('handle');
+    handle.classList.add('slider__handle');
     this.slider.appendChild(handle);
 
     // установить первоначальную позицию handle
@@ -47,7 +60,7 @@ export default class View implements IView {
 
   createTooltip(): HTMLDivElement {
     let tooltip: HTMLDivElement = document.createElement('div');
-    tooltip.classList.add('tooltip');
+    tooltip.classList.add('slider__tooltip');
     this.handle.appendChild(tooltip);
 
     // значение в tooltip
@@ -61,12 +74,13 @@ export default class View implements IView {
 
   dragHandle(options: IOptions): void {
 
-    this.getSlider().onmousedown = (event: MouseEvent) => {
+    this.slider.onmousedown = (event: MouseEvent) => {
       event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
       let slider: HTMLDivElement = this.slider;
       let handle: HTMLDivElement = this.handle;
       let tooltip: HTMLDivElement = this.tooltip;
+      let fill: HTMLDivElement = this.fill;
       let step = options.step;
 
       let leftMin = 0; // левый ограничитель
@@ -90,6 +104,7 @@ export default class View implements IView {
           handle.style.left = leftMax + 'px';
         } else {
           handle.style.left = Math.round(left/step) * step + 'px';
+          fill.style.width = handle.getBoundingClientRect().left - slider.getBoundingClientRect().left + shiftX + 'px';
         }
 
         // отображение tooltip
@@ -111,18 +126,6 @@ export default class View implements IView {
 
     }
 
-  }
-
-  getSlider(): HTMLDivElement {
-    return this.slider
-  }
-
-  getHandle(): HTMLDivElement {
-    return this.handle
-  }
-
-  getTooltip(): HTMLDivElement {
-    return this.tooltip
   }
 
   getCurrentPositionHandle(): number {
