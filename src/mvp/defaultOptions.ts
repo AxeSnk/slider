@@ -10,7 +10,7 @@ export default interface IOptions {
 
 var defaultOptions: IOptions = {
   val: 8,
-  minVal: 0,
+  minVal: -2,
   maxVal: 4,
   step: 1,
   range: false,

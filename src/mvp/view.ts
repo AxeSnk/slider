@@ -11,13 +11,16 @@ export default class View implements IView {
   private fill: HTMLDivElement;
   private handle: HTMLDivElement;
   private tooltip: HTMLDivElement;
+  private arrrayOfDivisions: number[]; // массив делений
+  private scale: HTMLDivElement;
   
   constructor(options: IOptions, wrapper: any) {
     this.wrapper = wrapper;
     this.slider = this.createSlider();
     this.handle = this.createHandle(options);
-    this.fill = this.createFill(options);
-
+    this.fill = this.createFill();
+    this.arrrayOfDivisions = this.createArrayOfDivisions(options);
+    this.scale = this.createScale();
 
     if (options.tooltip) {
       this.tooltip = this.createTooltip()
@@ -34,7 +37,7 @@ export default class View implements IView {
     return slider;
   }
 
-  createFill(options): HTMLDivElement {
+  createFill(): HTMLDivElement {
     let fill: HTMLDivElement = document.createElement('div');
     fill.classList.add('slider__fill');
     this.slider.appendChild(fill);
@@ -135,10 +138,57 @@ export default class View implements IView {
     return currentPos
   }
 
-  getMinPositionHandle(): any {
+  getMinPositionHandle(): number {
     let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
     let pos = this.slider.getBoundingClientRect().left + shiftX;
+
     return pos;
   }
 
+  getMaxPositionHandle(): number {
+    let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
+    let pos = this.slider.getBoundingClientRect().right - shiftX;
+
+    return pos;
+  }
+
+  // создать массив делений
+  createArrayOfDivisions(options: IOptions): number[] {    
+    let arr: number[] = [];
+    let i: number;
+    for(i = options.minVal; i < options.maxVal; i = i + options.step) {
+      arr.push(i);
+    }
+    arr.push(options.maxVal);
+
+    return arr;
+  }
+  
+  getLenghtArrayOfDivisions(): number {
+    return this.arrrayOfDivisions.length
+  }
+
+  createScale(): HTMLDivElement {
+    let scale: HTMLDivElement = document.createElement('div');
+    scale.classList.add('slider__scale');
+    scale.style.width = this.getMaxPositionHandle() - this.getMinPositionHandle() + 'px';
+    scale.style.left = this.handle.offsetWidth / 2 + 'px';
+    this.slider.appendChild(scale);
+    
+    let i: number;
+    for(i = this.arrrayOfDivisions.length; i > 0; i--) {
+      let division = document.createElement('div');
+      division.classList.add('slider__scale-division');
+      scale.appendChild(division);
+    }
+
+    return scale;
+  }
+
+  arrangeValuesOnTheScale() {
+    // расставить значения на шкале
+    this.arrrayOfDivisions.forEach(function(item) {
+      console.log(item);
+    });
+  }
 }

@@ -11,6 +11,19 @@
     border-radius: 6px;
     cursor: pointer;
 
+    .slider__scale {
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+
+      &-division {
+        width: 1px;
+        height: 1px;
+        background-color: black;
+        z-index: 200;
+      }
+    }
+
     .slider__fill {
       position: absolute;
       height: 5px;

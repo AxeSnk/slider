@@ -19,12 +19,10 @@ declare global {
 
     options = $.extend(defaultOptions, options);
 
-    var make = function(){
-
+    var make = function() {
       let model: IModel = new Model(options);
       let view: IView = new View(options, this);
       let presenter = new Presenter(model, view)
-
     };
 
     return this.each(make);

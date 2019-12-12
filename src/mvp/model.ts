@@ -8,7 +8,6 @@ export interface IModel {
   getRange(): boolean;
   getTooltipMask(): boolean;
   getVerticalMask(): boolean;
-  getArrayOfDivisions(): number[];
 }
 
 export default class Model implements IModel {
@@ -19,7 +18,6 @@ export default class Model implements IModel {
   private range: boolean; // диапазон слайдера
   private tooltip: boolean; // подсказка над ползунком
   private vertical: boolean; // вертикальный слайдер
-  private arrrayOfDivisions: number[]; // массив делений
 
 
   constructor(options: IOptions) {
@@ -30,25 +28,7 @@ export default class Model implements IModel {
     this.range = options.range;
     this.tooltip = options.tooltip;
     this.vertical = options.vertical;
-    this.arrrayOfDivisions = this.createArrayOfDivisions();
 
-    this.init();
-  }
-  
-  init(): void {
-    console.log(this.getArrayOfDivisions());
-  }
-
-  // создать массив делений
-  createArrayOfDivisions(): number[] {    
-    let arr: number[] = [];
-    let i: number;
-    for( i = this.minVal; i < this.maxVal; i = i + this.step) {
-      arr.push(i);
-    }
-    arr.push(this.maxVal);
-
-    return arr;
   }
   
   getVal(): any {
@@ -77,10 +57,6 @@ export default class Model implements IModel {
 
   getVerticalMask(): boolean{
     return this.vertical
-  }
-
-  getArrayOfDivisions(): number[] {
-    return this.arrrayOfDivisions
   }
 
 }
