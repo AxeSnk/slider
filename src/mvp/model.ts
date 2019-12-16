@@ -5,9 +5,10 @@ export interface IModel {
   getMinVal(): any;
   getMaxVal(): any;
   getStep(): number;
-  getRange(): boolean;
+  getRangeMask(): boolean;
   getTooltipMask(): boolean;
   getVerticalMask(): boolean;
+  getRange(): number;
 }
 
 export default class Model implements IModel {
@@ -19,7 +20,6 @@ export default class Model implements IModel {
   private tooltip: boolean; // подсказка над ползунком
   private vertical: boolean; // вертикальный слайдер
 
-
   constructor(options: IOptions) {
     this.val = options.val;
     this.minVal = options.minVal;
@@ -28,9 +28,13 @@ export default class Model implements IModel {
     this.range = options.range;
     this.tooltip = options.tooltip;
     this.vertical = options.vertical;
-
   }
-  
+
+  getRange(): number {
+    let range = this.maxVal-this.minVal;
+    return range;
+  }
+
   getVal(): any {
     return this.val
   }
@@ -47,7 +51,7 @@ export default class Model implements IModel {
     return this.step
   }
 
-  getRange(): boolean {
+  getRangeMask(): boolean {
     return this.range
   }
 

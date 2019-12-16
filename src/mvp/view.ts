@@ -3,6 +3,7 @@ import IOptions from './defaultOptions';
 export interface IView {
   getMinPositionHandle(): number;
   getCurrentPositionHandle(): number;
+  renderHandle(val, numSteps): void;
 }
 
 export default class View implements IView {
@@ -24,7 +25,6 @@ export default class View implements IView {
 
     if (options.tooltip) {
       this.tooltip = this.createTooltip()
-      this.handle.style.left = ((400 - this.handle.offsetWidth) / 4) * options.val + 'px';
 
     }
 
@@ -33,6 +33,18 @@ export default class View implements IView {
     }
 
     this.dragHandle(options);
+
+  }
+
+  renderHandle(val, numSteps): void {
+
+    let stepSize = (this.slider.offsetWidth-this.handle.offsetWidth)/numSteps; // размер шага
+    let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
+    let shift = 2; // = minVal
+
+    this.handle.style.left = (val - shift) * stepSize + 'px';
+    this.fill.style.width = this.handle.getBoundingClientRect().left - this.slider.getBoundingClientRect().left + shiftX + 'px';
+
   }
 
   createSlider(): HTMLDivElement {
@@ -60,9 +72,6 @@ export default class View implements IView {
     let handle: HTMLDivElement = document.createElement('div');
     handle.classList.add('slider__handle');
     this.slider.appendChild(handle);
-
-    // установить первоначальную позицию handle
-    //handle.style.left = (400 - this.handle.offsetWidth / 4) * options.val + 'px';
 
     return handle;
   }
@@ -100,10 +109,6 @@ export default class View implements IView {
       let numSteps = (options.maxVal-options.minVal)/step; // кол-во шагов
       let stepSize = (widthSlider-handle.offsetWidth)/numSteps; // размер шага
       
-      console.log(numSteps);
-      console.log(stepSize);
-
-
       moveMouse(event);
 
       document.onmousemove = (event: MouseEvent) => moveMouse(event);

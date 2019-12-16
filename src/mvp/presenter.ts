@@ -11,6 +11,7 @@ export default class Presenter {
     this.model = model;
     this.view = view;
     
+    this.view.renderHandle(this.model.getVal(),this.model.getRange());
   }
 
   

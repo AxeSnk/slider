@@ -6,16 +6,16 @@ export default interface IOptions {
   range: boolean; // диапазон слайдера
   tooltip: boolean; // подсказка над ползунком
   vertical: boolean; // вертикальный слайдер
-  scale:boolean; //шкала
+  scale: boolean; // шкала
 }
 
 var defaultOptions: IOptions = {
-  val: 0,
-  minVal: -5,
-  maxVal: -1,
+  val: 10,
+  minVal: 2,
+  maxVal: 15,
   step: 1,
   range: false,
-  tooltip: true,
+  tooltip: false,
   vertical: false,
   scale: true
 }
