@@ -15,12 +15,23 @@
       position: absolute;
       display: flex;
       justify-content: space-between;
+       
 
       &-division {
+        display: flex;
+        justify-content: center;
         width: 1px;
-        height: 1px;
+        height: 5px;
         background-color: black;
-        z-index: 200;
+        z-index: 98;
+
+        .division__text {
+          position: absolute;
+          top: 1.07rem;
+          width: fit-content;
+          color: rgb(229, 229, 229);
+          z-index: 99;
+        }
       }
     }
 

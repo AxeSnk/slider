@@ -24,6 +24,12 @@ export default class View implements IView {
 
     if (options.tooltip) {
       this.tooltip = this.createTooltip()
+      this.handle.style.left = ((400 - this.handle.offsetWidth) / 4) * options.val + 'px';
+
+    }
+
+    if (options.scale) {
+      this.arrangeValuesOnTheScale();
     }
 
     this.dragHandle(options);
@@ -56,7 +62,7 @@ export default class View implements IView {
     this.slider.appendChild(handle);
 
     // установить первоначальную позицию handle
-    handle.style.left = options.val + 'px';
+    //handle.style.left = (400 - this.handle.offsetWidth / 4) * options.val + 'px';
 
     return handle;
   }
@@ -90,6 +96,14 @@ export default class View implements IView {
       let leftMax = slider.clientWidth - handle.offsetWidth;  // правый ограничитель
       let shiftX = handle.offsetWidth / 2; // сдвиг на полразмера ползунка
 
+      let widthSlider = this.slider.offsetWidth;
+      let numSteps = (options.maxVal-options.minVal)/step; // кол-во шагов
+      let stepSize = (widthSlider-handle.offsetWidth)/numSteps; // размер шага
+      
+      console.log(numSteps);
+      console.log(stepSize);
+
+
       moveMouse(event);
 
       document.onmousemove = (event: MouseEvent) => moveMouse(event);
@@ -97,16 +111,14 @@ export default class View implements IView {
       document.onmouseup = () => document.onmousemove = document.onmouseup = null;
     
       function moveMouse(event: MouseEvent) {
-        let num = event.clientX
-        let left = +num.toFixed() - +slider.getBoundingClientRect().left.toFixed() - shiftX; // выставляет ползунок под курсором
-
+        let left = +(event.clientX - slider.getBoundingClientRect().left - shiftX).toFixed(); // выставляет ползунок под курсором
         // границы слайдера
         if (left < leftMin) {
           handle.style.left = leftMin + 'px';
         } else if (left > leftMax) {
           handle.style.left = leftMax + 'px';
         } else {
-          handle.style.left = Math.round(left/step) * step + 'px';
+          handle.style.left = Math.round(left/stepSize) * stepSize + 'px';
           fill.style.width = handle.getBoundingClientRect().left - slider.getBoundingClientRect().left + shiftX + 'px';
         }
 
@@ -175,20 +187,25 @@ export default class View implements IView {
     scale.style.left = this.handle.offsetWidth / 2 + 'px';
     this.slider.appendChild(scale);
     
-    let i: number;
-    for(i = this.arrrayOfDivisions.length; i > 0; i--) {
+    for(let i = 0; i < this.arrrayOfDivisions.length; i++) {
       let division = document.createElement('div');
       division.classList.add('slider__scale-division');
+      division.id = `${i}`;
       scale.appendChild(division);
-    }
+
+      let division__text = document.createElement('div');
+      division__text.classList.add('division__text');
+      division.appendChild(division__text);
+    };
 
     return scale;
   }
 
   arrangeValuesOnTheScale() {
-    // расставить значения на шкале
-    this.arrrayOfDivisions.forEach(function(item) {
-      console.log(item);
-    });
+    //расставить значения на шкале
+    for(let i = 0; i < this.arrrayOfDivisions.length; i++) {
+      document.getElementById(`${i}`).firstElementChild.innerHTML = this.arrrayOfDivisions[i] + '';
+    }
   }
+
 }
