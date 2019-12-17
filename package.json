@@ -13,6 +13,7 @@
     "@types/chai": "^4.2.3",
     "@types/jquery": "^3.3.31",
     "@types/mocha": "^5.2.7",
+    "arkit": "^1.6.2",
     "awesome-typescript-loader": "^5.2.1",
     "chai": "^4.2.0",
     "css-loader": "^3.2.0",
