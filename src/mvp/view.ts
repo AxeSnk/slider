@@ -3,7 +3,7 @@ import IOptions from './defaultOptions';
 export interface IView {
   getMinPositionHandle(): number;
   getCurrentPositionHandle(): number;
-  renderHandle(val, numSteps): void;
+  renderHandle(value, shift, range): void;
 }
 
 export default class View implements IView {
@@ -36,13 +36,16 @@ export default class View implements IView {
 
   }
 
-  renderHandle(val, numSteps): void {
+  renderHandle(value, shift, range): void {
 
-    let stepSize = (this.slider.offsetWidth-this.handle.offsetWidth)/numSteps; // размер шага
+    // let stepSize = (this.slider.offsetWidth-this.handle.offsetWidth)/numSteps; // размер шага
     let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
-    let shift = 2; // = minVal
 
-    this.handle.style.left = (val - shift) * stepSize + 'px';
+    let width = this.slider.offsetWidth - this.handle.offsetWidth;
+    
+    let newLeft = (value - shift) * width / range;
+
+    this.handle.style.left = newLeft + 'px';
     this.fill.style.width = this.handle.getBoundingClientRect().left - this.slider.getBoundingClientRect().left + shiftX + 'px';
 
   }

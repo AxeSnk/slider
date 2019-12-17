@@ -1,14 +1,17 @@
 import IOptions from './defaultOptions';
 
 export interface IModel {
-  getVal(): any 
+  setVal(newVal: number): void;
+
+  getVal(): any;
   getMinVal(): any;
   getMaxVal(): any;
   getStep(): number;
+  getRange(): number;
+
   getRangeMask(): boolean;
   getTooltipMask(): boolean;
   getVerticalMask(): boolean;
-  getRange(): number;
 }
 
 export default class Model implements IModel {
@@ -28,6 +31,10 @@ export default class Model implements IModel {
     this.range = options.range;
     this.tooltip = options.tooltip;
     this.vertical = options.vertical;
+  }
+
+  setVal(newVal: number): void {
+    this.val = newVal;
   }
 
   getRange(): number {
