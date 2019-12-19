@@ -3,9 +3,9 @@ import IOptions from './defaultOptions';
 export interface IModel {
   setVal(newVal: number): void;
 
-  getVal(): any;
-  getMinVal(): any;
-  getMaxVal(): any;
+  getVal(): number;
+  getMinVal(): number;
+  getMaxVal(): number;
   getStep(): number;
   getRange(): number;
 

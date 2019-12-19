@@ -14,6 +14,14 @@ export default class Presenter {
     this.view = view;
     
     this.view.renderHandle( this.model.getVal(), this.model.getMinVal(), this.model.getRange() );
+    this.view.dragHandle( this.model.getStep(), this.model.getMaxVal(), this.model.getMinVal(), this.model.getTooltipMask() );
+
+
+    if ( this.model.getTooltipMask() ) {
+
+      this.view.renderTooltip();
+
+    }
     
     if ( this.model.getScaleMask() ) {
 

@@ -1,12 +1,12 @@
-import IOptions from './defaultOptions';
-
 export interface IView {
 
   getMinPositionHandle(): number;
   getCurrentPositionHandle(): number;
-  renderHandle(value, shift, range): void;
+  renderHandle( value: number, shift: number, range: number ): void;
   createDivisionScale( arrLenght: number ): void;
   arrangeValuesOnTheScale( arrLenght: number ): void;
+  renderTooltip(): void;
+  dragHandle( step: number, maxVal: number, minVal: number, TooltipMask: boolean ): void;
 
 }
 
@@ -19,23 +19,23 @@ export default class View implements IView {
   private tooltip: HTMLDivElement;
   private scale: HTMLDivElement;
   
-  constructor( options: IOptions, wrapper: any ) {
+  constructor( wrapper: any ) {
+
     this.wrapper = wrapper;
     this.slider = this.createSlider();
     this.handle = this.createHandle();
     this.fill = this.createFill();
     this.scale = this.createScale();
 
-    if (options.tooltip) {
-      this.tooltip = this.createTooltip()
-    }
+  }
 
+  renderTooltip(): void {
 
-    this.dragHandle(options);
+    this.tooltip = this.createTooltip()
 
   }
 
-  renderHandle(value, shift, range): void {
+  renderHandle( value: number, shift: number, range: number ): void {
 
     // let stepSize = (this.slider.offsetWidth-this.handle.offsetWidth)/numSteps; // размер шага
     let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
@@ -92,7 +92,7 @@ export default class View implements IView {
     return tooltip   
   }
 
-  dragHandle(options: IOptions): void {
+  dragHandle( step: number, maxVal: number, minVal: number, TooltipMask: boolean ): void {
 
     this.slider.onmousedown = (event: MouseEvent) => {
       event.preventDefault(); // предотвратить запуск выделения (действие браузера)
@@ -101,15 +101,14 @@ export default class View implements IView {
       let handle: HTMLDivElement = this.handle;
       let tooltip: HTMLDivElement = this.tooltip;
       let fill: HTMLDivElement = this.fill;
-      let step = options.step;
 
       let leftMin = 0; // левый ограничитель
       let leftMax = slider.clientWidth - handle.offsetWidth;  // правый ограничитель
       let shiftX = handle.offsetWidth / 2; // сдвиг на полразмера ползунка
 
       let widthSlider = this.slider.offsetWidth;
-      let numSteps = (options.maxVal-options.minVal)/step; // кол-во шагов
-      let stepSize = (widthSlider-handle.offsetWidth)/numSteps; // размер шага
+      let numSteps = ( maxVal - minVal )/step; // кол-во шагов
+      let stepSize = ( widthSlider-handle.offsetWidth )/numSteps; // размер шага
       
       moveMouse(event);
 
@@ -130,7 +129,7 @@ export default class View implements IView {
         }
 
         // отображение tooltip
-        if (options.tooltip) {
+        if ( TooltipMask ) {
 
            // значение в tooltip
           if (left < leftMin) {
