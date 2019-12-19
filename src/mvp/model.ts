@@ -9,9 +9,13 @@ export interface IModel {
   getStep(): number;
   getRange(): number;
 
+  getScaleMask(): boolean;
   getRangeMask(): boolean;
   getTooltipMask(): boolean;
   getVerticalMask(): boolean;
+
+  getLenghtArrayOfDivisions(): number;
+
 }
 
 export default class Model implements IModel {
@@ -22,6 +26,8 @@ export default class Model implements IModel {
   private range: boolean; // диапазон слайдера
   private tooltip: boolean; // подсказка над ползунком
   private vertical: boolean; // вертикальный слайдер
+  private scale: boolean; // шкала
+  private arrrayOfDivisions: number[]; // массив делений
 
   constructor(options: IOptions) {
     this.val = options.val;
@@ -31,6 +37,24 @@ export default class Model implements IModel {
     this.range = options.range;
     this.tooltip = options.tooltip;
     this.vertical = options.vertical;
+    this.scale = options.scale;
+    this.arrrayOfDivisions = this.createArrayOfDivisions(options);
+  }
+
+  // создать массив делений
+  createArrayOfDivisions(options: IOptions): number[] {    
+    let arr: number[] = [];
+    let i: number;
+    for(i = options.minVal; i < options.maxVal; i = i + options.step) {
+      arr.push(i);
+    }
+    arr.push(options.maxVal);
+
+    return arr;
+  }
+  
+  getLenghtArrayOfDivisions(): number {
+    return this.arrrayOfDivisions.length
   }
 
   setVal(newVal: number): void {
@@ -66,8 +90,11 @@ export default class Model implements IModel {
     return this.tooltip
   }
 
-  getVerticalMask(): boolean{
+  getVerticalMask(): boolean {
     return this.vertical
   }
 
+  getScaleMask(): boolean {
+    return this.scale
+  }
 }

@@ -1,36 +1,35 @@
 import IOptions from './defaultOptions';
 
 export interface IView {
+
   getMinPositionHandle(): number;
   getCurrentPositionHandle(): number;
   renderHandle(value, shift, range): void;
+  createDivisionScale( arrLenght: number ): void;
+  arrangeValuesOnTheScale( arrLenght: number ): void;
+
 }
 
 export default class View implements IView {
+
   private wrapper: any;
   private slider: HTMLDivElement;
   private fill: HTMLDivElement;
   private handle: HTMLDivElement;
   private tooltip: HTMLDivElement;
-  private arrrayOfDivisions: number[]; // массив делений
   private scale: HTMLDivElement;
   
-  constructor(options: IOptions, wrapper: any) {
+  constructor( options: IOptions, wrapper: any ) {
     this.wrapper = wrapper;
     this.slider = this.createSlider();
-    this.handle = this.createHandle(options);
+    this.handle = this.createHandle();
     this.fill = this.createFill();
-    this.arrrayOfDivisions = this.createArrayOfDivisions(options);
     this.scale = this.createScale();
 
     if (options.tooltip) {
       this.tooltip = this.createTooltip()
-
     }
 
-    if (options.scale) {
-      this.arrangeValuesOnTheScale();
-    }
 
     this.dragHandle(options);
 
@@ -71,7 +70,7 @@ export default class View implements IView {
     return fill;
   }
 
-  createHandle(options: IOptions): HTMLDivElement {
+  createHandle(): HTMLDivElement {
     let handle: HTMLDivElement = document.createElement('div');
     handle.classList.add('slider__handle');
     this.slider.appendChild(handle);
@@ -172,48 +171,39 @@ export default class View implements IView {
     return pos;
   }
 
-  // создать массив делений
-  createArrayOfDivisions(options: IOptions): number[] {    
-    let arr: number[] = [];
-    let i: number;
-    for(i = options.minVal; i < options.maxVal; i = i + options.step) {
-      arr.push(i);
-    }
-    arr.push(options.maxVal);
-
-    return arr;
-  }
-  
-  getLenghtArrayOfDivisions(): number {
-    return this.arrrayOfDivisions.length
-  }
-
   createScale(): HTMLDivElement {
-    let scale: HTMLDivElement = document.createElement('div');
-    scale.classList.add('slider__scale');
+
+    let scale: HTMLDivElement = document.createElement( 'div' );
+    scale.classList.add( 'slider__scale' );
     scale.style.width = this.getMaxPositionHandle() - this.getMinPositionHandle() + 'px';
     scale.style.left = this.handle.offsetWidth / 2 + 'px';
-    this.slider.appendChild(scale);
+    this.slider.appendChild( scale );
     
-    for(let i = 0; i < this.arrrayOfDivisions.length; i++) {
-      let division = document.createElement('div');
-      division.classList.add('slider__scale-division');
-      division.id = `${i}`;
-      scale.appendChild(division);
-
-      let division__text = document.createElement('div');
-      division__text.classList.add('division__text');
-      division.appendChild(division__text);
-    };
-
     return scale;
+
   }
 
-  arrangeValuesOnTheScale() {
-    //расставить значения на шкале
-    for(let i = 0; i < this.arrrayOfDivisions.length; i++) {
-      document.getElementById(`${i}`).firstElementChild.innerHTML = this.arrrayOfDivisions[i] + '';
-    }
+  createDivisionScale( arrLenght: number ): void {
+
+    for( let i = 0; i < arrLenght; i++ ) {
+      let division = document.createElement( 'div' );
+      division.classList.add( 'slider__scale-division' );
+      division.id = `slider__scale-division-${i}`;
+      this.scale.appendChild( division );
+
+      let division__text = document.createElement( 'div' );
+      division__text.classList.add( 'division__text' );
+      division.appendChild( division__text );
+    };
   }
+
+  arrangeValuesOnTheScale( arrLenght: number ): void { // расставить значения на шкале
+
+    for( let i = 0; i < arrLenght; i++ ) {
+      document.getElementById( `slider__scale-division-${i}` ).firstElementChild.innerHTML = `${i}`;
+    }
+
+  }
+
 
 }

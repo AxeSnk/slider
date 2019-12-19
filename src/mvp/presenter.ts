@@ -14,7 +14,14 @@ export default class Presenter {
     this.view = view;
     
     this.view.renderHandle( this.model.getVal(), this.model.getMinVal(), this.model.getRange() );
-  }
+    
+    if ( this.model.getScaleMask() ) {
 
+      this.view.createDivisionScale( this.model.getLenghtArrayOfDivisions() );
+      this.view.arrangeValuesOnTheScale( this.model.getLenghtArrayOfDivisions() );
+
+    };
+
+  }
   
 }
