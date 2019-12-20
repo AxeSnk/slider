@@ -3,11 +3,12 @@ export interface IView {
   getMinPositionHandle(): number;
   getCurrentPositionHandle(): number;
   renderHandle( value: number, shift: number, range: number ): void;
-  createDivisionScale( arrLenght: number ): void;
-  arrangeValuesOnTheScale( arrLenght: number ): void;
+  createDivisionScale( arrrayOfDivisions: number[] ): void;
+  arrangeValuesOnTheScale( arrrayOfDivisions: number[] ): void;
   renderTooltip(): void;
   dragHandle( step: number, maxVal: number, minVal: number, TooltipMask: boolean ): void;
-
+  setValueTooltip( val: number ): void;
+    
 }
 
 export default class View implements IView {
@@ -83,13 +84,16 @@ export default class View implements IView {
     tooltip.classList.add('slider__tooltip');
     this.handle.appendChild(tooltip);
 
-    // значение в tooltip
-    tooltip.innerHTML = '' + this.getCurrentPositionHandle().toFixed();
-
     // позиция tooltip
     tooltip.style.top = -this.handle.offsetHeight*1.4 + 'px';
     
     return tooltip   
+  }
+
+  setValueTooltip( val: number ): void {
+
+    this.tooltip.innerHTML = val + '';
+
   }
 
   dragHandle( step: number, maxVal: number, minVal: number, TooltipMask: boolean ): void {
@@ -182,9 +186,9 @@ export default class View implements IView {
 
   }
 
-  createDivisionScale( arrLenght: number ): void {
+  createDivisionScale( arrrayOfDivisions: number[] ): void {
 
-    for( let i = 0; i < arrLenght; i++ ) {
+    for( let i = 0; i < arrrayOfDivisions.length; i++ ) {
       let division = document.createElement( 'div' );
       division.classList.add( 'slider__scale-division' );
       division.id = `slider__scale-division-${i}`;
@@ -196,10 +200,10 @@ export default class View implements IView {
     };
   }
 
-  arrangeValuesOnTheScale( arrLenght: number ): void { // расставить значения на шкале
+  arrangeValuesOnTheScale( arrrayOfDivisions: number[] ): void { // расставить значения на шкале
 
-    for( let i = 0; i < arrLenght; i++ ) {
-      document.getElementById( `slider__scale-division-${i}` ).firstElementChild.innerHTML = `${i}`;
+    for( let i = 0; i < arrrayOfDivisions.length; i++ ) {
+      document.getElementById( `slider__scale-division-${i}` ).firstElementChild.innerHTML = arrrayOfDivisions[i] + '';
     }
 
   }

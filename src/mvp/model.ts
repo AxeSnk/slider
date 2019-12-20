@@ -14,12 +14,12 @@ export interface IModel {
   getTooltipMask(): boolean;
   getVerticalMask(): boolean;
 
-  getLenghtArrayOfDivisions(): number;
+  getArrayOfDivisions(): number[];
 
 }
 
 export default class Model implements IModel {
-  private val: any; // первоначальное положение одиночного ползунка
+  private val: number; // первоначальное положение одиночного ползунка
   private minVal: any; // минимальное значение диапазона, при слайдере с диапазоном
   private maxVal: any; // маскимальное значение диапазона, при слайдере с диапазоном
   private step: number; // шаг ползунка
@@ -52,9 +52,10 @@ export default class Model implements IModel {
 
     return arr;
   }
-  
-  getLenghtArrayOfDivisions(): number {
-    return this.arrrayOfDivisions.length
+  getArrayOfDivisions(): number[] {
+
+    return this.arrrayOfDivisions
+
   }
 
   setVal(newVal: number): void {
@@ -66,7 +67,7 @@ export default class Model implements IModel {
     return range;
   }
 
-  getVal(): any {
+  getVal(): number {
     return this.val
   }
 

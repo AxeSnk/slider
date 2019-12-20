@@ -20,13 +20,14 @@ export default class Presenter {
     if ( this.model.getTooltipMask() ) {
 
       this.view.renderTooltip();
+      this.view.setValueTooltip( this.model.getVal() );
 
     }
     
     if ( this.model.getScaleMask() ) {
 
-      this.view.createDivisionScale( this.model.getLenghtArrayOfDivisions() );
-      this.view.arrangeValuesOnTheScale( this.model.getLenghtArrayOfDivisions() );
+      this.view.createDivisionScale( this.model.getArrayOfDivisions() );
+      this.view.arrangeValuesOnTheScale( this.model.getArrayOfDivisions() );
 
     };
 
