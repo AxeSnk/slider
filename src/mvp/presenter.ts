@@ -1,21 +1,18 @@
 import { IModel } from './model';
 import { IView } from './view';
-import { IObservable } from './observable';
 
 export default class Presenter {
 
   private model: IModel;
   private view: IView;
-  private observable: IObservable;
 
   constructor( model: IModel, view: IView ) {
 
     this.model = model;
     this.view = view;
     
-    this.view.renderHandle( this.model.getVal(), this.model.getMinVal(), this.model.getRange() );
-    this.view.dragHandle( this.model.getStep(), this.model.getMaxVal(), this.model.getMinVal(), this.model.getTooltipMask() );
-
+    view.renderHandle( this.model.getVal(), this.model.getMinVal(), this.model.getRange() );
+    view.on('drag', this.upDate.bind(this))
 
     if ( this.model.getTooltipMask() ) {
 
@@ -31,6 +28,11 @@ export default class Presenter {
 
     };
 
+  }
+
+  upDate({ leftX, width }) {
+    this.model.setVal(leftX, width);
+    this.view.renderHandle(this.model.getVal(), this.model.getMinVal(), this.model.getRange());
   }
   
 }

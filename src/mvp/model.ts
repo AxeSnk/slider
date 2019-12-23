@@ -1,7 +1,7 @@
 import IOptions from './defaultOptions';
 
 export interface IModel {
-  setVal(newVal: number): void;
+  setVal(leftX, width): void;
 
   getVal(): number;
   getMinVal(): number;
@@ -58,8 +58,10 @@ export default class Model implements IModel {
 
   }
 
-  setVal(newVal: number): void {
-    this.val = newVal;
+  setVal(leftX, width): void {
+    let val = Math.round(leftX * (this.maxVal-this.minVal)/width) + this.minVal;
+
+    this.val = val;
   }
 
   getRange(): number {

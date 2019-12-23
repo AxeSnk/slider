@@ -1,17 +1,18 @@
-export interface IView {
+import EventEmitter from './eventEmitter';
 
+export interface IView extends EventEmitter {
+  
   getMinPositionHandle(): number;
   getCurrentPositionHandle(): number;
   renderHandle( value: number, shift: number, range: number ): void;
   createDivisionScale( arrrayOfDivisions: number[] ): void;
   arrangeValuesOnTheScale( arrrayOfDivisions: number[] ): void;
   renderTooltip(): void;
-  dragHandle( step: number, maxVal: number, minVal: number, TooltipMask: boolean ): void;
+  dragHandle(event: MouseEvent): void;
   setValueTooltip( val: number ): void;
-    
 }
 
-export default class View implements IView {
+export default class View extends EventEmitter implements IView {
 
   private wrapper: any;
   private slider: HTMLDivElement;
@@ -19,8 +20,11 @@ export default class View implements IView {
   private handle: HTMLDivElement;
   private tooltip: HTMLDivElement;
   private scale: HTMLDivElement;
+  private shift: number;
+  private range: number;
   
   constructor( wrapper: any ) {
+    super();
 
     this.wrapper = wrapper;
     this.slider = this.createSlider();
@@ -28,6 +32,7 @@ export default class View implements IView {
     this.fill = this.createFill();
     this.scale = this.createScale();
 
+    this.handle.addEventListener('mousedown', this.dragHandle.bind(this));
   }
 
   renderTooltip(): void {
@@ -38,15 +43,14 @@ export default class View implements IView {
 
   renderHandle( value: number, shift: number, range: number ): void {
 
-    // let stepSize = (this.slider.offsetWidth-this.handle.offsetWidth)/numSteps; // размер шага
-    let shiftX = this.handle.offsetWidth / 2; // сдвиг на полразмера ползунка
-
+    this.shift = shift;
+    this.range = range;
     let width = this.slider.offsetWidth - this.handle.offsetWidth;
     
-    let newLeft = (value - shift) * width / range;
+    let newLeft = (value - this.shift) * width / this.range;
 
     this.handle.style.left = newLeft + 'px';
-    this.fill.style.width = this.handle.getBoundingClientRect().left - this.slider.getBoundingClientRect().left + shiftX + 'px';
+    this.fill.style.width = this.handle.getBoundingClientRect().left - this.slider.getBoundingClientRect().left + this.handle.offsetWidth / 2 + 'px';
 
   }
 
@@ -96,61 +100,27 @@ export default class View implements IView {
 
   }
 
-  dragHandle( step: number, maxVal: number, minVal: number, TooltipMask: boolean ): void {
+  dragHandle(event: MouseEvent): void {
+    let handle = event.target as HTMLElement;
+    let handleX = handle.offsetLeft;
+    let mouseX = event.clientX;
 
-    this.slider.onmousedown = (event: MouseEvent) => {
-      event.preventDefault(); // предотвратить запуск выделения (действие браузера)
+    event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
-      let slider: HTMLDivElement = this.slider;
-      let handle: HTMLDivElement = this.handle;
-      let tooltip: HTMLDivElement = this.tooltip;
-      let fill: HTMLDivElement = this.fill;
-
-      let leftMin = 0; // левый ограничитель
-      let leftMax = slider.clientWidth - handle.offsetWidth;  // правый ограничитель
-      let shiftX = handle.offsetWidth / 2; // сдвиг на полразмера ползунка
-
-      let widthSlider = this.slider.offsetWidth;
-      let numSteps = ( maxVal - minVal )/step; // кол-во шагов
-      let stepSize = ( widthSlider-handle.offsetWidth )/numSteps; // размер шага
-      
-      moveMouse(event);
-
-      document.onmousemove = (event: MouseEvent) => moveMouse(event);
-
-      document.onmouseup = () => document.onmousemove = document.onmouseup = null;
-    
-      function moveMouse(event: MouseEvent) {
-        let left = +(event.clientX - slider.getBoundingClientRect().left - shiftX).toFixed(); // выставляет ползунок под курсором
-        // границы слайдера
-        if (left < leftMin) {
-          handle.style.left = leftMin + 'px';
-        } else if (left > leftMax) {
-          handle.style.left = leftMax + 'px';
-        } else {
-          handle.style.left = Math.round(left/stepSize) * stepSize + 'px';
-          fill.style.width = handle.getBoundingClientRect().left - slider.getBoundingClientRect().left + shiftX + 'px';
-        }
-
-        // отображение tooltip
-        if ( TooltipMask ) {
-
-           // значение в tooltip
-          if (left < leftMin) {
-            tooltip.innerHTML = leftMin + '';
-          } else if (left > leftMax) {
-            tooltip.innerHTML = leftMax + '';
-          } else {
-            tooltip.innerHTML = Math.round(left/step) * step + '';
-          }
-
-          // позиция tooltip
-          tooltip.style.top = - handle.offsetHeight*1.4 + 'px';
-        }
-      }    
-
+    let moveHandle = (moveEvent: MouseEvent) => {
+      let leftX = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
+      let width = this.slider.offsetWidth;
+      this.emit('drag', { leftX, width });
     }
 
+    window.addEventListener('mousemove', moveHandle);
+
+    let handleMouseUp = () => {
+      window.removeEventListener('mousemove', moveHandle);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    window.addEventListener('mouseup', handleMouseUp);
   }
 
   getCurrentPositionHandle(): number {
