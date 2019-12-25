@@ -6,33 +6,32 @@ export default class Presenter {
   private model: IModel;
   private view: IView;
 
-  constructor( model: IModel, view: IView ) {
+  constructor(model: IModel, view: IView) {
 
     this.model = model;
     this.view = view;
     
-    view.renderHandle( this.model.getVal(), this.model.getMinVal(), this.model.getRange() );
-    view.on('drag', this.upDate.bind(this))
+    this.render();
 
-    if ( this.model.getTooltipMask() ) {
-
-      this.view.renderTooltip();
-      this.view.setValueTooltip( this.model.getVal() );
-
-    }
-    
-    if ( this.model.getScaleMask() ) {
-
-      this.view.createDivisionScale( this.model.getArrayOfDivisions() );
-      this.view.arrangeValuesOnTheScale( this.model.getArrayOfDivisions() );
-
-    };
-
+    this.view.on('drag', this.update.bind(this));
   }
 
-  upDate({ leftX, width }) {
+  render() {
+    this.view.renderHandle(this.model.getVal(), this.model.getMinVal(), this.model.getDifference());
+    this.view.renderFill();
+    
+    if (this.model.getTooltipMask()) {
+      this.view.renderTooltip(this.model.getVal());
+    }
+    
+    if (this.model.getScaleMask()) {
+      this.view.renderScale(this.model.getArrayDivisions());
+    };
+  }
+
+  update({ leftX, width }) {
     this.model.setVal(leftX, width);
-    this.view.renderHandle(this.model.getVal(), this.model.getMinVal(), this.model.getRange());
+    this.view.renderHandle(this.model.getVal(), this.model.getMinVal(), this.model.getDifference());
   }
   
 }

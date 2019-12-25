@@ -1,33 +1,31 @@
 import IOptions from './defaultOptions';
 
 export interface IModel {
-  setVal(leftX, width): void;
+  setVal(leftX: number, width: number): void;
 
   getVal(): number;
   getMinVal(): number;
   getMaxVal(): number;
   getStep(): number;
-  getRange(): number;
-
+  getDifference(): number;
   getScaleMask(): boolean;
   getRangeMask(): boolean;
   getTooltipMask(): boolean;
   getVerticalMask(): boolean;
 
-  getArrayOfDivisions(): number[];
-
+  getArrayDivisions(): number[];
 }
 
 export default class Model implements IModel {
-  private val: number; // первоначальное положение одиночного ползунка
-  private minVal: any; // минимальное значение диапазона, при слайдере с диапазоном
-  private maxVal: any; // маскимальное значение диапазона, при слайдере с диапазоном
+  private val: number; // значение ползунка
+  private minVal: number; // минимальное значение
+  private maxVal: number; // маскимальное значение
   private step: number; // шаг ползунка
-  private range: boolean; // диапазон слайдера
-  private tooltip: boolean; // подсказка над ползунком
-  private vertical: boolean; // вертикальный слайдер
-  private scale: boolean; // шкала
-  private arrrayOfDivisions: number[]; // массив делений
+  private range: boolean; // вкл/выкл диапазон слайдера
+  private tooltip: boolean; // вкл/выкл подсказку над ползунком
+  private vertical: boolean; // вкл/выкл слайдер вертикально
+  private scale: boolean; // вкл/выкл шкалу значений
+  private arrrayDivisions: number[]; // массив делений шкалы
 
   constructor(options: IOptions) {
     this.val = options.val;
@@ -38,66 +36,65 @@ export default class Model implements IModel {
     this.tooltip = options.tooltip;
     this.vertical = options.vertical;
     this.scale = options.scale;
-    this.arrrayOfDivisions = this.createArrayOfDivisions(options);
+    this.arrrayDivisions = this.createArrayDivisions();
   }
 
-  // создать массив делений
-  createArrayOfDivisions(options: IOptions): number[] {    
+  // создать массив делений для шкалы
+  private createArrayDivisions(): number[] {    
     let arr: number[] = [];
     let i: number;
-    for(i = options.minVal; i < options.maxVal; i = i + options.step) {
+    for(i = this.minVal; i < this.maxVal; i = i + this.step) {
       arr.push(i);
     }
-    arr.push(options.maxVal);
+    arr.push(this.maxVal);
 
     return arr;
   }
-  getArrayOfDivisions(): number[] {
 
-    return this.arrrayOfDivisions
-
+  public getArrayDivisions(): number[] {
+    return this.arrrayDivisions
   }
 
-  setVal(leftX, width): void {
+  public setVal(leftX: number, width: number): void {
     let val = Math.round(leftX * (this.maxVal-this.minVal)/width) + this.minVal;
-
     this.val = val;
   }
 
-  getRange(): number {
-    let range = this.maxVal-this.minVal;
-    return range;
+  public getDifference(): number {
+    let difference = this.maxVal-this.minVal;
+    return difference;
   }
 
-  getVal(): number {
+  public getVal(): number {
     return this.val
   }
 
-  getMinVal(): any {
+  public getMinVal(): any {
     return this.minVal
   }
 
-  getMaxVal(): any {
+  public getMaxVal(): any {
     return this.maxVal
   }
 
-  getStep(): number {
+  public getStep(): number {
     return this.step
   }
 
-  getRangeMask(): boolean {
+  public getRangeMask(): boolean {
     return this.range
   }
 
-  getTooltipMask(): boolean {
+  public getTooltipMask(): boolean {
     return this.tooltip
   }
 
-  getVerticalMask(): boolean {
+  public getVerticalMask(): boolean {
     return this.vertical
   }
 
-  getScaleMask(): boolean {
+  public getScaleMask(): boolean {
     return this.scale
   }
+  
 }
