@@ -21,7 +21,7 @@ export default class Presenter {
     this.view.renderFill();
     
     if (this.model.getTooltipMask()) {
-      this.view.renderTooltip(this.model.getVal());
+      this.view.renderTooltip(this.model.getVal(), this.model.getMinVal(), this.model.getMaxVal());
     }
     
     if (this.model.getScaleMask()) {
@@ -32,6 +32,7 @@ export default class Presenter {
   update({ leftX, width }) {
     this.model.setVal(leftX, width);
     this.view.renderHandle(this.model.getVal(), this.model.getMinVal(), this.model.getDifference());
+    this.view.renderTooltip(this.model.getVal(), this.model.getMinVal(), this.model.getMaxVal());
   }
   
 }

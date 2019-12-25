@@ -4,7 +4,7 @@ import createElement from './util';
 export interface IView extends EventEmitter {
   renderHandle( value: number, shift: number, range: number ): void;
   renderFill(): void;
-  renderTooltip(val: number): void;
+  renderTooltip(val: number, minVal: number, maxVal: number): void;
   renderScale(arrrayOfDivisions: number[]): void;
 }
 
@@ -48,7 +48,13 @@ export default class View extends EventEmitter implements IView {
     let width: number = this.slider.offsetWidth - this.handle.offsetWidth;
     let newLeft: number = (value - shift) * width / range;
 
-    this.handle.style.left = newLeft + 'px';
+    if(newLeft < 0) {
+      this.handle.style.left = 0 + 'px';
+    } else if(newLeft > width) {
+      this.handle.style.left = width + 'px';
+    } else {
+      this.handle.style.left = newLeft + 'px';
+    }
     this.fill.style.width = this.handle.getBoundingClientRect().left - this.slider.getBoundingClientRect().left + this.handle.offsetWidth / 2 + 'px';
   }
 
@@ -56,8 +62,15 @@ export default class View extends EventEmitter implements IView {
     this.fill.style.width = this.handle.getBoundingClientRect().left - this.slider.getBoundingClientRect().left + (this.handle.offsetWidth / 2) + 'px';
   }
 
-  public renderTooltip(val: number): void {
-    this.tooltip.innerHTML = val + '';
+  public renderTooltip(val: number, minVal: number, maxVal: number): void {
+    if(val < minVal) {
+      this.tooltip.innerHTML = `${minVal}`;
+    } else if(val > maxVal) {
+      this.tooltip.innerHTML = `${maxVal}`;
+    } else {
+      this.tooltip.innerHTML = `${val}`;
+    }
+
     this.tooltip.style.top = -this.handle.offsetHeight*1.4 + 'px';
   }
 
