@@ -1,4 +1,4 @@
-import IOptions from './defaultOptions';
+import IOptions from '../defaultOptions';
 
 export interface IModel {
   setVal(leftX: number, width: number): void;

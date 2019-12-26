@@ -1,8 +1,8 @@
 import "./index.scss";
-import View, { IView } from "./mvp/view";
-import Model, { IModel } from "./mvp/model";
+import View, { IView } from "./mvp/view/view";
+import Model, { IModel } from "./mvp/model/model";
 import { defaultOptions } from './mvp/defaultOptions';
-import Presenter from "./mvp/presenter";
+import Presenter from "./mvp/presenter/presenter";
 
 declare global {
   interface Window {

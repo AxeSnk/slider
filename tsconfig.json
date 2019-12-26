@@ -11,5 +11,5 @@
       "esModuleInterop": true,
       "lib": ["es2015", "es2017", "dom"]
     },
-    "include": ["./test/**/*"]
+    "include": ["./test/**/*", "src/mvp/view/view.spec.ts"]
 }
