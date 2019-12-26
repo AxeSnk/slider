@@ -16,7 +16,7 @@ export default class Presenter {
     this.view.on('drag', this.update.bind(this));
   }
 
-  render() {
+  private render(): void {
     this.view.renderHandle(this.model.getVal(), this.model.getMinVal(), this.model.getDifference());
     this.view.renderFill();
     
@@ -29,7 +29,7 @@ export default class Presenter {
     };
   }
 
-  update({ leftX, width }) {
+  private update({ leftX, width }: { leftX: number; width: number }): void {
     this.model.setVal(leftX, width);
     this.view.renderHandle(this.model.getVal(), this.model.getMinVal(), this.model.getDifference());
     this.view.renderTooltip(this.model.getVal(), this.model.getMinVal(), this.model.getMaxVal());

@@ -1,5 +1,5 @@
 import EventEmitter from './eventEmitter';
-import createElement from './util';
+import createElement from './utility';
 
 export interface IView extends EventEmitter {
   renderHandle( value: number, shift: number, range: number ): void;
@@ -21,27 +21,48 @@ export default class View extends EventEmitter implements IView {
     super();
 
     this.root = root;
-
-    this.createElements();
+    this.slider = this.createSlider();
+    this.fill = this.createFill();
+    this.handle = this.createHandle();
+    this.tooltip = this.createTooltip();
+    this.scale = this.createScale();
 
     this.handle.addEventListener('mousedown', this.dragHandle.bind(this));
   }
 
-  private createElements(): void {
-    this.slider = createElement('div', { className: 'slider' })  
-    this.root.appendChild(this.slider);
+  private createSlider(): HTMLElement {
+    let slider = createElement('div', { class: 'slider' })  
+    this.root.appendChild(slider);
 
-    this.fill = createElement('div', { className: 'slider__fill' })  
-    this.slider.appendChild(this.fill);
+    return slider;
+  }
 
-    this.handle = createElement('div', { className: 'slider__handle' })
-    this.slider.appendChild(this.handle);
-    
-    this.tooltip = createElement('div', { className: 'slider__tooltip' })
-    this.handle.appendChild(this.tooltip);
+  private createFill(): HTMLElement {
+    let fill = createElement('div', { class: 'slider__fill' });
+    this.slider.appendChild(fill);
 
-    this.scale = createElement('div', { className: 'slider__scale' })
-    this.slider.appendChild(this.scale);
+    return fill;
+  }
+
+  private createHandle(): HTMLElement {
+    let handle = createElement('div', { class: 'slider__handle' })
+    this.slider.appendChild(handle);
+
+    return handle
+  }
+
+  private createTooltip(): HTMLElement {
+    let tooltip = createElement('div', { class: 'slider__tooltip' })
+    this.handle.appendChild(tooltip);
+
+    return tooltip;
+  }
+
+  private createScale(): HTMLElement {
+    let scale = createElement('div', { class: 'slider__scale' })
+    this.slider.appendChild(scale);
+
+    return scale;
   }
 
   public renderHandle(value: number, shift: number, range: number): void {
@@ -121,7 +142,7 @@ export default class View extends EventEmitter implements IView {
   private arrangeValuesOnTheScale(arrrayOfDivisions: number[]): void { 
     // расставить значения на шкале
     for( let i: number = 0; i < arrrayOfDivisions.length; i++ ) {
-      document.getElementById(`slider__scale-division-${i}`).firstElementChild.innerHTML = `${arrrayOfDivisions[i]}`;
+      document.getElementById(`slider__scale-division-${i}`)!.firstElementChild!.innerHTML = `${arrrayOfDivisions[i]}`;
     }
   }
 
