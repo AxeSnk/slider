@@ -2,10 +2,10 @@ import createElement from '../../utility';
 import EventEmitter from '../../eventEmitter';
 
 export default class Fill extends EventEmitter {
-	fill: HTMLElement;
-	parent: HTMLElement;
+	private fill: HTMLElement;
+	private parent: HTMLElement;
 
-	constructor(parent: HTMLElement){
+	constructor(parent: HTMLElement) {
 		super()
 
 		this.parent = parent;

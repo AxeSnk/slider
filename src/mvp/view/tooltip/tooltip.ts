@@ -2,8 +2,8 @@ import createElement from '../../utility';
 import EventEmitter from '../../eventEmitter';
 
 export default class Tooltip extends EventEmitter {
-	tooltip: HTMLElement;
-	parent: HTMLElement;
+	private tooltip: HTMLElement;
+	private parent: HTMLElement;
 
 	constructor(parent: HTMLElement) {
 		super();

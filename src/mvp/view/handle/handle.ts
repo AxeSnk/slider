@@ -3,9 +3,9 @@ import EventEmitter from '../../eventEmitter';
 import Tooltip from './../tooltip/tooltip';
 
 export default class Handle extends EventEmitter {
-	handle: HTMLElement;
-	tooltip: Tooltip;
-  parent: HTMLElement;
+	private handle: HTMLElement;
+	private tooltip: Tooltip;
+  private parent: HTMLElement;
 
 	constructor(parent: HTMLElement) {
 		super();
@@ -18,10 +18,6 @@ export default class Handle extends EventEmitter {
 		this.handle.addEventListener('mousedown', this.dragHandle.bind(this));
 
 		this.tooltip = new Tooltip(this.handle);
-	}
-
-	public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
-		this.tooltip.renderTooltip(val, minVal, maxVal, handleHeight);
 	}
 
 	private dragHandle(event: MouseEvent): void {
@@ -45,7 +41,11 @@ export default class Handle extends EventEmitter {
 
     window.addEventListener('mouseup', handleMouseUp);
 	}
-	
+
+	public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
+		this.tooltip.renderTooltip(val, minVal, maxVal, handleHeight);
+	}
+
 	public renderHandle(value: number, shift: number, range: number, sliderWidth: number): void {
     let width: number = sliderWidth - this.handle.offsetWidth;
     let newLeft: number = (value - shift) * width / range;
@@ -59,17 +59,16 @@ export default class Handle extends EventEmitter {
 		}
 	}
 	
-	getPosition(): number {
+	public getPosition(): number {
 		return this.handle.getBoundingClientRect().left;
 	}
 
-	getWidth(): number {
+	public getWidth(): number {
 		return this.handle.offsetWidth;
 	}
 
-	getHeight(): number {
+	public getHeight(): number {
 		return this.handle.offsetHeight;
-		console.log('work!')
 	}
 
 }

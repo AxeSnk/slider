@@ -1,19 +1,20 @@
 import EventEmitter from '../eventEmitter';
-import createElement from '../utility';
 
+import Slider from './slider/slider';
 import Handle from './handle/handle';
 import Fill from './fill/fill';
 import Scale from './scale/scale';
 
 export interface IView extends EventEmitter {
+  addSlider(): void;
   addHandles(value: number, shift: number, range: number, sliderWidth: number): void;
   addFill(): void;
   addScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void;
 
-  renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void;
-
   updateHandles(value: number, shift: number, range: number, sliderWidth: number): void;
   updateFill(): void;
+
+  renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void;
 
   getWidth(): number;
   getHandleWidth(): number;
@@ -23,7 +24,7 @@ export interface IView extends EventEmitter {
 export default class View extends EventEmitter implements IView {
 
   private root: HTMLElement;
-  private slider: HTMLElement;
+  private slider: Slider;
   private fill: Fill;
   private handle: Handle;
   private scale: Scale;
@@ -32,58 +33,53 @@ export default class View extends EventEmitter implements IView {
     super();
 
     this.root = root;
-    this.slider = this.createSlider();
   }
 
-  emitDrag(leftX: number): void {
+  private emitDrag(leftX: number): void {
     this.emit('dragHandle', leftX);
   }
+
+  public addSlider(): void {
+    this.slider = new Slider(this.root);
+  }
   
-  addHandles(value: number, shift: number, range: number, sliderWidth: number): void {
-    this.handle = new Handle(this.slider);
+  public addHandles(value: number, shift: number, range: number, sliderWidth: number): void {
+    this.handle = new Handle(this.slider.getElement());
     this.handle.renderHandle(value, shift, range, sliderWidth);
     this.handle.on('drag', this.emitDrag.bind(this));
   }
 
-  renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
-    this.handle.renderTooltip(val, minVal, maxVal, handleHeight);
+  public addFill(): void {
+    this.fill = new Fill(this.slider.getElement());
+    this.fill.renderFill(this.handle.getPosition() - this.slider.getPosition() + (this.handle.getWidth() / 2));
   }
 
-  addFill(): void {
-    this.fill = new Fill(this.slider);
-    this.fill.renderFill(this.handle.getPosition() - this.slider.getBoundingClientRect().left + (this.handle.getWidth() / 2));
-  }
-
-  addScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void {
-    this.scale = new Scale(this.slider);
+  public addScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void {
+    this.scale = new Scale(this.slider.getElement());
     this.scale.renderScale(arrrayOfDivisions, sliderWidth, handleWidth);
   }
 
-  updateHandles(value: number, shift: number, range: number, sliderWidth: number): void {
+  public updateHandles(value: number, shift: number, range: number, sliderWidth: number): void {
     this.handle.renderHandle(value, shift, range, sliderWidth);
   }
 
-  updateFill(): void {
-    this.fill.renderFill(this.handle.getPosition() - this.slider.getBoundingClientRect().left + (this.handle.getWidth() / 2));
+  public updateFill(): void {
+    this.fill.renderFill(this.handle.getPosition() - this.slider.getPosition() + (this.handle.getWidth() / 2));
   }
 
-  private createSlider(): HTMLElement {
-    let slider = createElement('div', { class: 'slider' });
-    this.root.appendChild(slider);
-
-    return slider;
+  public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
+    this.handle.renderTooltip(val, minVal, maxVal, handleHeight);
   }
 
-
-  getWidth(): number {
-    return this.slider.offsetWidth;
+  public getWidth(): number {
+    return this.slider.getWidth();
   }
 
-  getHandleWidth(): number {
+  public getHandleWidth(): number {
     return this.handle.getWidth();
   }
 
-  getHandleHeight(): number {
+  public getHandleHeight(): number {
     return this.handle.getHeight();
   }
 

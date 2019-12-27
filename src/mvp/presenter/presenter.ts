@@ -17,6 +17,7 @@ export default class Presenter {
   }
 
   private render(): void {
+    this.view.addSlider();
     this.view.addHandles(this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth());
     this.view.addFill();
     
@@ -33,6 +34,7 @@ export default class Presenter {
     this.model.setVal(leftX, this.view.getWidth());
     this.view.updateHandles(this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth());
     this.view.updateFill();
+
     if(this.model.getTooltipMask()) {
       this.view.renderTooltip(this.model.getVal(), this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight());
     }

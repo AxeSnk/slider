@@ -1,7 +1,7 @@
 export default interface IOptions {
-  val: any; // первоначальное положение одиночного ползунка
-  minVal: any; // минимальное значение диапазона, при слайдере с диапазоном
-  maxVal: any; // максимальное значение диапазона, при слайдере с диапазоном
+  val: number; // первоначальное положение одиночного ползунка
+  minVal: number; // минимальное значение диапазона, при слайдере с диапазоном
+  maxVal: number; // максимальное значение диапазона, при слайдере с диапазоном
   step: number; // шаг ползунка
   range: boolean; // диапазон слайдера
   tooltip: boolean; // подсказка над ползунком
@@ -10,9 +10,9 @@ export default interface IOptions {
 }
 
 var defaultOptions: IOptions = {
-  val: 7,
-  minVal: -2,
-  maxVal: 9,
+  val: 0,
+  minVal: -8,
+  maxVal: 0,
   step: 1,
   range: false,
   tooltip: true,
