@@ -6,15 +6,10 @@ import Fill from './fill/fill';
 import Scale from './scale/scale';
 
 export interface IView extends EventEmitter {
-  addSlider(): void;
-  addHandles(value: number, shift: number, range: number, sliderWidth: number): void;
-  addFill(): void;
-  addScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void;
-
-  updateHandles(value: number, shift: number, range: number, sliderWidth: number): void;
-  updateFill(): void;
-
+  renderHandles(value: number, shift: number, range: number, sliderWidth: number): void;
+  renderFill(): void
   renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void;
+  renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void;
 
   getWidth(): number;
   getHandleWidth(): number;
@@ -33,42 +28,47 @@ export default class View extends EventEmitter implements IView {
     super();
 
     this.root = root;
+    this.slider = this.addSlider();
+    this.fill = this.addFill();
+    this.handle = this.addHandles();
+    this.handle.on('drag', this.emitDrag.bind(this));
+    this.scale = this.addScale();
+  }
+
+  private addSlider(): Slider {
+    return new Slider(this.root);
+  }
+  
+  private addFill(): Fill {
+    return new Fill(this.slider.getElement());
+  }
+
+  private addHandles(): Handle {
+    return new Handle(this.slider.getElement());
+  }
+
+  private addScale(): Scale {
+    return new Scale(this.slider.getElement());
   }
 
   private emitDrag(leftX: number): void {
     this.emit('dragHandle', leftX);
   }
 
-  public addSlider(): void {
-    this.slider = new Slider(this.root);
-  }
-  
-  public addHandles(value: number, shift: number, range: number, sliderWidth: number): void {
-    this.handle = new Handle(this.slider.getElement());
-    this.handle.renderHandle(value, shift, range, sliderWidth);
-    this.handle.on('drag', this.emitDrag.bind(this));
-  }
-
-  public addFill(): void {
-    this.fill = new Fill(this.slider.getElement());
+  public renderFill(): void {
     this.fill.renderFill(this.handle.getPosition() - this.slider.getPosition() + (this.handle.getWidth() / 2));
   }
 
-  public addScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void {
-    this.scale = new Scale(this.slider.getElement());
-    this.scale.renderScale(arrrayOfDivisions, sliderWidth, handleWidth);
-  }
-
-  public updateHandles(value: number, shift: number, range: number, sliderWidth: number): void {
-    this.handle.renderHandle(value, shift, range, sliderWidth);
-  }
-
-  public updateFill(): void {
-    this.fill.renderFill(this.handle.getPosition() - this.slider.getPosition() + (this.handle.getWidth() / 2));
+  public renderHandles(value: number, shift: number, difference: number, sliderWidth: number): void {
+    this.handle.renderHandle(value, shift, difference, sliderWidth);
   }
 
   public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
     this.handle.renderTooltip(val, minVal, maxVal, handleHeight);
+  }
+
+  public renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void {
+    this.scale.renderScale(arrrayOfDivisions, sliderWidth, handleWidth);
   }
 
   public getWidth(): number {

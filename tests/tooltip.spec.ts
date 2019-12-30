@@ -18,6 +18,8 @@ describe('Tooltip tests', () => {
 		tooltip.renderTooltip(val, minVal, maxVal, handleHeight);
 		let element: HTMLElement = document.querySelector('.slider__tooltip') as HTMLElement;
 		expect(element.innerHTML).to.equal('2');
+
+		// Тест не проходит!!???
 	});
 
 });

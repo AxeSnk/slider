@@ -46,9 +46,9 @@ export default class Handle extends EventEmitter {
 		this.tooltip.renderTooltip(val, minVal, maxVal, handleHeight);
 	}
 
-	public renderHandle(value: number, shift: number, range: number, sliderWidth: number): void {
+	public renderHandle(value: number, shift: number, difference: number, sliderWidth: number): void {
     let width: number = sliderWidth - this.handle.offsetWidth;
-    let newLeft: number = (value - shift) * width / range;
+    let newLeft: number = (value - shift) * width / difference;
 
     if(newLeft < 0) {
       this.handle.style.left = 0 + 'px';
@@ -69,6 +69,10 @@ export default class Handle extends EventEmitter {
 
 	public getHeight(): number {
 		return this.handle.offsetHeight;
+	}
+
+	public getHandle(): HTMLElement {
+		return this.handle;
 	}
 
 }
