@@ -10,9 +10,9 @@ export default interface IOptions {
 }
 
 var defaultOptions: IOptions = {
-  val: 0,
-  minVal: -8,
-  maxVal: 0,
+  val: 2,
+  minVal: -3,
+  maxVal: 5,
   step: 1,
   range: false,
   tooltip: true,

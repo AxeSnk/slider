@@ -1,5 +1,5 @@
 import 'mocha';
-import { expect, assert } from 'chai';
+import { expect } from 'chai';
 import Fill from '../src/mvp/view/fill/fill';
 
 describe('Fill tests', () => {

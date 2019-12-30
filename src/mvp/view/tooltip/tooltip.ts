@@ -26,4 +26,8 @@ export default class Tooltip extends EventEmitter {
 		this.tooltip.style.top = -handleHeight * 1.4 + 'px';
 	}
 
+	public getTooltip(): HTMLElement {
+		return this.tooltip;
+	}
+
 }
