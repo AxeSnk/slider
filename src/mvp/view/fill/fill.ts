@@ -14,7 +14,7 @@ export default class Fill extends EventEmitter {
 		this.parent.appendChild(this.fill);
 	}
 
-	public renderFill(width: number, ): void {
+	public renderFill(width: number): void {
 		this.fill.style.width = width + 'px';
 	}
 
