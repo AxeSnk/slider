@@ -13,7 +13,7 @@ var defaultOptions: IOptions = {
   val: 2,
   minVal: -3,
   maxVal: 5,
-  step: 1,
+  step: 2,
   range: false,
   tooltip: true,
   vertical: false,

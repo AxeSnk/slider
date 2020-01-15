@@ -6,7 +6,7 @@ import Fill from './fill/fill';
 import Scale from './scale/scale';
 
 export interface IView extends EventEmitter {
-  renderHandles(value: number, shift: number, range: number, sliderWidth: number): void;
+  renderHandles(value: number, shift: number, range: number, sliderWidth: number, step: number): void;
   renderFill(): void
   renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void;
   renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void;
@@ -59,8 +59,8 @@ export default class View extends EventEmitter implements IView {
     this.fill.renderFill(this.handle.getPosition() - this.slider.getPosition() + (this.handle.getWidth() / 2));
   }
 
-  public renderHandles(value: number, shift: number, difference: number, sliderWidth: number): void {
-    this.handle.renderHandle(value, shift, difference, sliderWidth);
+  public renderHandles(value: number, shift: number, difference: number, sliderWidth: number, step: number): void {
+    this.handle.renderHandle(value, shift, difference, sliderWidth, step);
   }
 
   public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {

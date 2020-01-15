@@ -46,16 +46,22 @@ export default class Handle extends EventEmitter {
 		this.tooltip.renderTooltip(val, minVal, maxVal, handleHeight);
 	}
 
-	public renderHandle(value: number, shift: number, difference: number, sliderWidth: number): void {
+	public renderHandle(value: number, shift: number, difference: number, sliderWidth: number, step: number): void {
     let width: number = sliderWidth - this.handle.offsetWidth;
-    let newLeft: number = (value - shift) * width / difference;
+		let stepCount: number = difference / step;
+		let stepSize: number = width / stepCount;
 
-    if(newLeft < 0) {
+		let newLeft: number = (value - shift) * width / difference;
+
+		let left: number = Math.round(newLeft / stepSize) * stepSize;
+
+
+    if(left < 0) {
       this.handle.style.left = 0 + 'px';
-    } else if(newLeft > width) {
+    } else if(left > width) {
       this.handle.style.left = width + 'px';
     } else {
-      this.handle.style.left = newLeft + 'px';
+      this.handle.style.left = left + 'px';
 		}
 	}
 	

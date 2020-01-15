@@ -43,7 +43,7 @@ export default class Model implements IModel {
   private createArrayDivisions(): number[] {    
     let arr: number[] = [];
     let i: number;
-    for(i = this.minVal; i < this.maxVal; i = i + this.step) {
+    for(i = this.minVal; i < this.maxVal; i = i + 1) {
       arr.push(i);
     }
     arr.push(this.maxVal);

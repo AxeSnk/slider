@@ -17,7 +17,7 @@ export default class Presenter {
   }
 
   private render(): void {
-    this.view.renderHandles(this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth());
+    this.view.renderHandles(this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth(), this.model.getStep());
     this.view.renderFill();
     
     if(this.model.getTooltipMask()) {
@@ -31,7 +31,7 @@ export default class Presenter {
 
   private update({ leftX }: { leftX: number }): void {
     this.model.setVal(leftX, this.view.getWidth());
-    this.view.renderHandles(this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth());
+    this.view.renderHandles(this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth(), this.model.getStep());
     this.view.renderFill();
 
     if(this.model.getTooltipMask()) {
