@@ -21,7 +21,7 @@ export default class Presenter {
     this.view.renderFill();
     
     if(this.model.getTooltipMask()) {
-      this.view.renderTooltip(this.model.getVal(), this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight());
+      this.view.renderTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.view.getPositionHandle(), this.view.getWidth());
     }
     
     if(this.model.getScaleMask()) {
@@ -35,7 +35,7 @@ export default class Presenter {
     this.view.renderFill();
 
     if(this.model.getTooltipMask()) {
-      this.view.renderTooltip(this.model.getVal(), this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight());
+      this.view.renderTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.view.getPositionHandle(), this.view.getWidth());
     }
   }
   

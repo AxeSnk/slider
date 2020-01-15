@@ -8,12 +8,13 @@ import Scale from './scale/scale';
 export interface IView extends EventEmitter {
   renderHandles(value: number, shift: number, range: number, sliderWidth: number, step: number): void;
   renderFill(): void
-  renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void;
+  renderTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void;
   renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void;
 
   getWidth(): number;
   getHandleWidth(): number;
   getHandleHeight(): number;
+  getPositionHandle(): number;
 }
 
 export default class View extends EventEmitter implements IView {
@@ -63,8 +64,8 @@ export default class View extends EventEmitter implements IView {
     this.handle.renderHandle(value, shift, difference, sliderWidth, step);
   }
 
-  public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
-    this.handle.renderTooltip(val, minVal, maxVal, handleHeight);
+  public renderTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void {
+    this.handle.renderTooltip(minVal, maxVal, handleHeight, position, width);
   }
 
   public renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void {
@@ -81,6 +82,10 @@ export default class View extends EventEmitter implements IView {
 
   public getHandleHeight(): number {
     return this.handle.getHeight();
+  }
+
+  public getPositionHandle(): number {
+    return this.handle.getPositionHandle();
   }
 
 }

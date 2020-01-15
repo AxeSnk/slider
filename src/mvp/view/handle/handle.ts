@@ -5,7 +5,8 @@ import Tooltip from './../tooltip/tooltip';
 export default class Handle extends EventEmitter {
 	private handle: HTMLElement;
 	private tooltip: Tooltip;
-  private parent: HTMLElement;
+	private parent: HTMLElement;
+	private position: number = 0;
 
 	constructor(parent: HTMLElement) {
 		super();
@@ -42,8 +43,8 @@ export default class Handle extends EventEmitter {
     window.addEventListener('mouseup', handleMouseUp);
 	}
 
-	public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
-		this.tooltip.renderTooltip(val, minVal, maxVal, handleHeight);
+	public renderTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void {
+		this.tooltip.renderTooltip(minVal, maxVal, handleHeight, position, width);
 	}
 
 	public renderHandle(value: number, shift: number, difference: number, sliderWidth: number, step: number): void {
@@ -53,15 +54,16 @@ export default class Handle extends EventEmitter {
 
 		let newLeft: number = (value - shift) * width / difference;
 
-		let left: number = Math.round(newLeft / stepSize) * stepSize;
+		let pos: number = Math.round(newLeft / stepSize) * stepSize;
+		this.position = pos;
 
 
-    if(left < 0) {
+    if(pos < 0) {
       this.handle.style.left = 0 + 'px';
-    } else if(left > width) {
+    } else if(pos > width) {
       this.handle.style.left = width + 'px';
     } else {
-      this.handle.style.left = left + 'px';
+      this.handle.style.left = pos + 'px';
 		}
 	}
 	
@@ -79,6 +81,10 @@ export default class Handle extends EventEmitter {
 
 	public getHandle(): HTMLElement {
 		return this.handle;
+	}
+
+	public getPositionHandle(): number {
+		return this.position;
 	}
 
 }
