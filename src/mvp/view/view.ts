@@ -9,6 +9,10 @@ export interface IView extends EventEmitter {
   updateHandles(value: number, shift: number, range: number, sliderWidth: number, step: number): void;
   updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void;
 
+  makeVerticalSlider(): void;
+  makeVerticalFill(): void;
+  makeVerticalScale(): void;
+
   renderFill(): void
   renderHandle(sliderWidth: number, value: number, shift: number, difference: number): void;
   renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void;
@@ -60,7 +64,7 @@ export default class View extends EventEmitter implements IView {
   }
 
   public renderFill(): void {
-    this.fill.renderFill(this.handle.getPosition() - this.slider.getPosition() + (this.handle.getWidth() / 2));
+    this.fill.renderFill(this.handle.getPositionX() - this.slider.getPositionX() + (this.handle.getWidth() / 2));
   }
 
   public renderHandle(sliderWidth: number, value: number, shift: number, difference: number): void {
@@ -69,6 +73,18 @@ export default class View extends EventEmitter implements IView {
 
   public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
     this.handle.renderTooltip(val, minVal, maxVal, handleHeight)
+  }
+
+  public makeVerticalScale(): void {
+    this.scale.makeVertical(this.slider.getHeight(), this.handle.getHeight());
+  }
+
+  public makeVerticalSlider(): void {
+    this.slider.makeVertical();
+  }
+
+  public makeVerticalFill(): void {
+    this.fill.makeVertical(this.handle.getPositionY() - this.slider.getPositionY() + (this.handle.getWidth() / 2), );
   }
 
   public updateHandles(value: number, shift: number, difference: number, sliderWidth: number, step: number): void {

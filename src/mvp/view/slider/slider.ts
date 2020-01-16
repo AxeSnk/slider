@@ -14,16 +14,28 @@ export default class Slider extends EventEmitter {
 		this.parent.appendChild(this.slider);
 	}
 
+	public makeVertical(): void {
+		this.slider.classList.add('slider--vertical')
+	}
+
 	public getElement(): HTMLElement {
 		return this.slider;
 	}
 
-	public getPosition(): number {
+	public getPositionX(): number {
 		return this.slider.getBoundingClientRect().left;
+	}
+
+	public getPositionY(): number {
+		return this.slider.getBoundingClientRect().top;
 	}
 
 	public getWidth(): number {
 		return this.slider.offsetWidth;
+	}
+
+	public getHeight(): number {
+		return this.slider.offsetHeight;
 	}
 
 }

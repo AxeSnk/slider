@@ -27,6 +27,13 @@ export default class Presenter {
     if(this.model.getScaleMask()) {
       this.view.renderScale(this.model.getArrayDivisions(), this.view.getWidth(), this.view.getHandleWidth());
     };
+
+    if(this.model.getVerticalMask()) {
+      this.view.makeVerticalSlider();
+      this.view.makeVerticalFill();
+      this.view.makeVerticalScale();
+    }
+
   }
 
   private update({ leftX }: { leftX: number }): void {

@@ -84,7 +84,7 @@ export default class Handle extends EventEmitter {
 		}
 	}
 	
-	public getPosition(): number {
+	public getPositionX(): number {
 		return this.handle.getBoundingClientRect().left;
 	}
 
@@ -102,6 +102,10 @@ export default class Handle extends EventEmitter {
 
 	public getPositionHandle(): number {
 		return this.position;
+	}
+
+	public getPositionY(): number {
+		return this.handle.getBoundingClientRect().top;
 	}
 
 }

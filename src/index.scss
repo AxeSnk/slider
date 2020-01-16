@@ -1,6 +1,7 @@
 .mySlider {
   margin: 50px;
   width: 400px;
+  height: 400px;
 
   .slider {
     position: relative;
@@ -40,7 +41,7 @@
       position: absolute;
       height: 5px;
       background-color: rgb(231, 87, 53);
-      border-radius: 6px 0 0 6px;
+      border-radius: 6px;
     }
 
     .slider__handle {
@@ -84,4 +85,35 @@
     }
     
   }
+
+  .slider--vertical {
+    flex-direction: column;
+    justify-content: center;
+    width: 5px;
+    height: 100%;
+
+    .scale--vertical {
+      flex-direction: column;
+
+      .slider__scale-division {
+        width: 5px;
+        height: 1px;
+        align-items: center;
+
+        .division__text {
+          top: auto;
+          left: 1.07rem;
+          display: flex;
+          justify-content: center;  
+        }
+      }
+    }
+
+    .fill--vertical {
+      align-self: flex-start;
+      width: 5px;
+      border-radius: 6px;
+    }
+  }
+
 }

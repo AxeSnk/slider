@@ -42,4 +42,10 @@ export default class Scale extends EventEmitter {
 		this.scale.style.left = (handleWidth / 2) + 'px';
   }
 
+  public makeVertical(sliderHeight: number, handleHeight: number): void {
+    this.scale.classList.add('scale--vertical');
+    this.scale.style.width = 'auto';
+    this.scale.style.height = (sliderHeight - handleHeight) + 'px';
+  }
+
 }
