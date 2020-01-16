@@ -17,32 +17,41 @@ export default class Presenter {
   }
 
   private render(): void {
-    this.view.renderHandle(this.view.getWidth(), this.model.getVal(), this.model.getMinVal(), this.model.getDifference());
-    this.view.renderFill();
-    
+    if(this.model.getVerticalMask()) {
+      this.view.makeVerticalSlider();
+      this.view.renderHandle(this.view.getWidth(), this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.model.getVerticalMask(), this.view.getHeight());
+      this.view.makeVerticalFill();
+      this.view.makeVerticalScale();
+    } else {
+      this.view.renderHandle(this.view.getWidth(), this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.model.getVerticalMask(), this.view.getWidth());
+      this.view.renderFill();
+    }
+
     if(this.model.getTooltipMask()) {
-      this.view.renderTooltip(this.model.getVal(), this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight());
+      this.view.renderTooltip(this.model.getVal(), this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.model.getVerticalMask());
     }
     
     if(this.model.getScaleMask()) {
       this.view.renderScale(this.model.getArrayDivisions(), this.view.getWidth(), this.view.getHandleWidth());
     };
-
-    if(this.model.getVerticalMask()) {
-      this.view.makeVerticalSlider();
-      this.view.makeVerticalFill();
-      this.view.makeVerticalScale();
-    }
-
   }
 
-  private update({ leftX }: { leftX: number }): void {
-    this.model.setVal(leftX, this.view.getWidth());
-    this.view.updateHandles(this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth(), this.model.getStep());
-    this.view.renderFill();
+  private update({ leftX, leftY }: { leftX: number, leftY: number }): void {
+    if(this.model.getVerticalMask()) {
+      this.model.setVal(leftY, this.view.getHeight());
+      this.view.makeVerticalFill();
+    } else {
+      this.model.setVal(leftX, this.view.getWidth());
+      this.view.renderFill();
+    }
+    this.view.updateHandles(this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth(), this.model.getStep(), this.model.getVerticalMask(), this.view.getHeight());
 
     if(this.model.getTooltipMask()) {
-      this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.view.getPositionHandle(), this.view.getWidth());
+      if(this.model.getVerticalMask()) {
+        this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.view.getPositionHandle(), this.view.getHeight(), this.model.getVerticalMask());
+      } else {
+        this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleWidth(), this.view.getPositionHandle(), this.view.getWidth(), this.model.getVerticalMask());
+      }
     }
   }
   

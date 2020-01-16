@@ -55,8 +55,8 @@ export default class Model implements IModel {
     return this.arrrayDivisions
   }
 
-  public setVal(leftX: number, width: number): void {
-    let val = Math.round(leftX * (this.maxVal-this.minVal)/width) + this.minVal;
+  public setVal(left: number, width: number): void {
+    let val = Math.round(left * (this.maxVal-this.minVal)/width) + this.minVal;
     this.val = val;
   }
 

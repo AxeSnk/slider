@@ -87,7 +87,7 @@
   }
 
   .slider--vertical {
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: center;
     width: 5px;
     height: 100%;
@@ -105,6 +105,17 @@
           left: 1.07rem;
           display: flex;
           justify-content: center;  
+        }
+      }
+    }
+
+    .slider__handle {
+
+      .tooltip--vertical {
+
+        &::after {
+          bottom: 40%;
+          left: 80%; 
         }
       }
     }

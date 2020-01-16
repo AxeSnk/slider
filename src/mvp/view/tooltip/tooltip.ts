@@ -14,7 +14,7 @@ export default class Tooltip extends EventEmitter {
 		this.parent.appendChild(this.tooltip);
 	}
 
-	public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
+	public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number, vertical: boolean): void {
 		if(val < minVal) {
 			this.tooltip.innerHTML = `${minVal}`;
 		} else if(val > maxVal) {
@@ -23,10 +23,15 @@ export default class Tooltip extends EventEmitter {
 			this.tooltip.innerHTML = `${val}`;
 		}
 
-		this.tooltip.style.top = -handleHeight * 1.4 + 'px';
+		if(vertical) {
+			this.tooltip.style.left = -handleHeight * 1.4 + 'px';
+			this.tooltip.classList.add('tooltip--vertical');
+		} else {
+			this.tooltip.style.top = -handleHeight * 1.4 + 'px';
+		}
 	}
 
-	public updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void {
+	public updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number, vertical: boolean): void {
 		let val: number = Math.round((position * (maxVal - minVal)) / (width - handleHeight) + minVal);
 		if(val < minVal) {
 			this.tooltip.innerHTML = `${minVal}`;
@@ -36,7 +41,11 @@ export default class Tooltip extends EventEmitter {
 			this.tooltip.innerHTML = `${val}`;
 		}
 
-		this.tooltip.style.top = -handleHeight * 1.4 + 'px';
+		if(vertical) {
+			this.tooltip.style.left = -handleHeight * 1.4 + 'px';
+		} else {
+			this.tooltip.style.top = -handleHeight * 1.4 + 'px';
+		}
 	}
 
 	public getTooltip(): HTMLElement {

@@ -20,7 +20,6 @@ export default class Fill extends EventEmitter {
 
 	public makeVertical(height: number): void {
 		this.fill.classList.add('fill--vertical')
-		this.fill.style.width = '100%';
 		this.fill.style.height = height + 'px';
 	}
 
