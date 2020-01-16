@@ -43,11 +43,28 @@ export default class Handle extends EventEmitter {
     window.addEventListener('mouseup', handleMouseUp);
 	}
 
-	public renderTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void {
-		this.tooltip.renderTooltip(minVal, maxVal, handleHeight, position, width);
+	public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
+		this.tooltip.renderTooltip(val, minVal, maxVal, handleHeight)
+	}
+	
+	public updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void {
+		this.tooltip.updateTooltip(minVal, maxVal, handleHeight, position, width);
 	}
 
-	public renderHandle(value: number, shift: number, difference: number, sliderWidth: number, step: number): void {
+	public renderHandle(sliderWidth: number, value: number, shift: number, difference: number): void {
+		let width: number = sliderWidth - this.handle.offsetWidth;
+		let newLeft: number = (value - shift) * width / difference;
+		
+    if(newLeft < 0) {
+      this.handle.style.left = 0 + 'px';
+    } else if(newLeft > width) {
+      this.handle.style.left = width + 'px';
+    } else {
+      this.handle.style.left = newLeft + 'px';
+		}
+	}
+
+	public updateHandle(value: number, shift: number, difference: number, sliderWidth: number, step: number): void {
     let width: number = sliderWidth - this.handle.offsetWidth;
 		let stepCount: number = difference / step;
 		let stepSize: number = width / stepCount;

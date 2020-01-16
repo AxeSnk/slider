@@ -6,9 +6,12 @@ import Fill from './fill/fill';
 import Scale from './scale/scale';
 
 export interface IView extends EventEmitter {
-  renderHandles(value: number, shift: number, range: number, sliderWidth: number, step: number): void;
+  updateHandles(value: number, shift: number, range: number, sliderWidth: number, step: number): void;
+  updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void;
+
   renderFill(): void
-  renderTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void;
+  renderHandle(sliderWidth: number, value: number, shift: number, difference: number): void;
+  renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void;
   renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void;
 
   getWidth(): number;
@@ -60,12 +63,20 @@ export default class View extends EventEmitter implements IView {
     this.fill.renderFill(this.handle.getPosition() - this.slider.getPosition() + (this.handle.getWidth() / 2));
   }
 
-  public renderHandles(value: number, shift: number, difference: number, sliderWidth: number, step: number): void {
-    this.handle.renderHandle(value, shift, difference, sliderWidth, step);
+  public renderHandle(sliderWidth: number, value: number, shift: number, difference: number): void {
+    this.handle.renderHandle(sliderWidth, value, shift, difference)
   }
 
-  public renderTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void {
-    this.handle.renderTooltip(minVal, maxVal, handleHeight, position, width);
+  public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
+    this.handle.renderTooltip(val, minVal, maxVal, handleHeight)
+  }
+
+  public updateHandles(value: number, shift: number, difference: number, sliderWidth: number, step: number): void {
+    this.handle.updateHandle(value, shift, difference, sliderWidth, step);
+  }
+
+  public updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void {
+    this.handle.updateTooltip(minVal, maxVal, handleHeight, position, width);
   }
 
   public renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void {

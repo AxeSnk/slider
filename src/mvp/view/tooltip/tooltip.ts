@@ -14,7 +14,19 @@ export default class Tooltip extends EventEmitter {
 		this.parent.appendChild(this.tooltip);
 	}
 
-	public renderTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void {
+	public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number): void {
+		if(val < minVal) {
+			this.tooltip.innerHTML = `${minVal}`;
+		} else if(val > maxVal) {
+			this.tooltip.innerHTML = `${maxVal}`;
+		} else {
+			this.tooltip.innerHTML = `${val}`;
+		}
+
+		this.tooltip.style.top = -handleHeight * 1.4 + 'px';
+	}
+
+	public updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number): void {
 		let val: number = Math.round((position * (maxVal - minVal)) / (width - handleHeight) + minVal);
 		if(val < minVal) {
 			this.tooltip.innerHTML = `${minVal}`;
