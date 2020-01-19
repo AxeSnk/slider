@@ -1,5 +1,7 @@
 export default interface IOptions {
   val: number; // первоначальное положение одиночного ползунка
+  valStart: number; // положение начального ползунка (range = true)
+  valEnd: number; // положение конечного ползунка (range = true)
   minVal: number; // минимальное значение диапазона, при слайдере с диапазоном
   maxVal: number; // максимальное значение диапазона, при слайдере с диапазоном
   step: number; // шаг ползунка
@@ -11,12 +13,14 @@ export default interface IOptions {
 
 var defaultOptions: IOptions = {
   val: 3,
+  valStart: -1,
+  valEnd: 4,
   minVal: -3,
   maxVal: 10,
   step: 3,
-  range: false,
+  range: true,
   tooltip: true,
-  vertical: true,
+  vertical: false,
   scale: true
 }
 

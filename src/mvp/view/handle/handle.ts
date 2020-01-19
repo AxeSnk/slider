@@ -7,8 +7,9 @@ export default class Handle extends EventEmitter {
 	private tooltip: Tooltip;
 	private parent: HTMLElement;
 	private position: number = 0;
+	private id: number;
 
-	constructor(parent: HTMLElement) {
+	constructor(parent: HTMLElement, id: number) {
 		super();
 
 		this.parent = parent;
@@ -17,6 +18,7 @@ export default class Handle extends EventEmitter {
 		this.parent.appendChild(this.handle);
 
 		this.handle.addEventListener('mousedown', this.dragHandle.bind(this));
+		this.id = id;
 
 		this.tooltip = new Tooltip(this.handle);
 	}

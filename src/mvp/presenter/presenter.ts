@@ -10,6 +10,9 @@ export default class Presenter {
 
     this.model = model;
     this.view = view;
+    if (this.model.getRangeMask()) {
+      this.view.setRange();
+    }
     
     this.render();
 
@@ -19,16 +22,16 @@ export default class Presenter {
   private render(): void {
     if(this.model.getVerticalMask()) {
       this.view.makeVerticalSlider();
-      this.view.renderHandle(this.view.getWidth(), this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.model.getVerticalMask(), this.view.getHeight());
+      this.view.renderHandle(this.view.getWidth(), this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getDifference(), this.model.getVerticalMask(), this.view.getHeight());
       this.view.makeVerticalFill();
       this.view.makeVerticalScale();
     } else {
-      this.view.renderHandle(this.view.getWidth(), this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.model.getVerticalMask(), this.view.getWidth());
+      this.view.renderHandle(this.view.getWidth(), this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getDifference(), this.model.getVerticalMask(), this.view.getWidth());
       this.view.renderFill();
     }
 
     if(this.model.getTooltipMask()) {
-      this.view.renderTooltip(this.model.getVal(), this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.model.getVerticalMask());
+      this.view.renderTooltip(this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.model.getVerticalMask());
     }
     
     if(this.model.getScaleMask()) {
@@ -44,13 +47,19 @@ export default class Presenter {
       this.model.setVal(leftX, this.view.getWidth());
       this.view.renderFill();
     }
-    this.view.updateHandles(this.model.getVal(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth(), this.model.getStep(), this.model.getVerticalMask(), this.view.getHeight());
+    this.view.updateHandles(this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth(), this.model.getStep(), this.model.getVerticalMask(), this.view.getHeight());
 
     if(this.model.getTooltipMask()) {
       if(this.model.getVerticalMask()) {
-        this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.view.getPositionHandle(), this.view.getHeight(), this.model.getVerticalMask());
+        this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.view.getPositionHandle(0), this.view.getHeight(), this.model.getVerticalMask());
+        if (this.model.getRangeMask()) {
+          this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.view.getPositionHandle(1), this.view.getHeight(), this.model.getVerticalMask());
+        }
       } else {
-        this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleWidth(), this.view.getPositionHandle(), this.view.getWidth(), this.model.getVerticalMask());
+        this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleWidth(), this.view.getPositionHandle(0), this.view.getWidth(), this.model.getVerticalMask());
+        if (this.model.getRangeMask()) {
+          this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.view.getPositionHandle(1), this.view.getHeight(), this.model.getVerticalMask());
+        }
       }
     }
   }

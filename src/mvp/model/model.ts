@@ -4,6 +4,8 @@ export interface IModel {
   setVal(leftX: number, width: number): void;
 
   getVal(): number;
+  getValStart(): number;
+  getValEnd(): number;
   getMinVal(): number;
   getMaxVal(): number;
   getStep(): number;
@@ -18,6 +20,8 @@ export interface IModel {
 
 export default class Model implements IModel {
   private val: number; // значение ползунка
+  private valStart: number; // положение начального ползунка (range = true)
+  private valEnd: number; // положение конечного ползунка (range = true)
   private minVal: number; // минимальное значение
   private maxVal: number; // маскимальное значение
   private step: number; // шаг ползунка
@@ -29,6 +33,8 @@ export default class Model implements IModel {
 
   constructor(options: IOptions) {
     this.val = options.val;
+    this.valStart = options.valStart;
+    this.valEnd = options.valEnd;
     this.minVal = options.minVal;
     this.maxVal = options.maxVal;  
     this.step = options.step;
@@ -67,6 +73,14 @@ export default class Model implements IModel {
 
   public getVal(): number {
     return this.val
+  }
+
+  public getValStart(): number {
+    return this.valStart
+  }
+
+  public getValEnd(): number {
+    return this.valEnd
   }
 
   public getMinVal(): any {
