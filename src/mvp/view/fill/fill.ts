@@ -18,6 +18,11 @@ export default class Fill extends EventEmitter {
 		this.fill.style.width = width + 'px';
 	}
 
+	public renderRangeFill(left: number, width: number): void {
+		this.fill.style.width = width + 'px';
+		this.fill.style.left = left + 'px';
+	}
+
 	public makeVertical(height: number): void {
 		this.fill.classList.add('fill--vertical')
 		this.fill.style.height = height + 'px';

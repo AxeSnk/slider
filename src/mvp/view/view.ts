@@ -84,10 +84,13 @@ export default class View extends EventEmitter implements IView {
   }
 
   public renderFill(): void {
-    this.fill.renderFill(this.handles[0].getPositionX() - this.slider.getPositionX() + (this.handles[0].getWidth() / 2));
     if (this.range) {
-      this.fill.renderFill(this.handles[1].getPositionX() - this.slider.getPositionX() + (this.handles[1].getWidth() / 2));
+      this.fill.renderRangeFill(this.handles[0].getPositionX() - this.slider.getPositionX(), this.handles[1].getPositionX() - this.handles[0].getPositionX() + (this.handles[0].getWidth() / 2));
+    } else {
+      this.fill.renderFill(this.handles[0].getPositionX() - this.slider.getPositionX() + (this.handles[1].getWidth() / 2));
     }
+    console.log('left = ' + (this.handles[0].getPositionX() - this.slider.getPositionX()));
+    console.log('width = ' + (this.handles[1].getPositionX() - this.handles[0].getPositionX() + (this.handles[0].getWidth() / 2)));
   }
 
   public renderHandle(sliderWidth: number, value: number, valEnd: number, shift: number, difference: number, vertical: boolean, sliderHeight: number): void {
