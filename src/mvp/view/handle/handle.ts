@@ -29,13 +29,14 @@ export default class Handle extends EventEmitter {
 		let handleY: number = handle.offsetTop;
 		let mouseX: number = event.clientX;
 		let mouseY: number = event.clientY;
+		let id: number = this.id;
 
     event.preventDefault(); // предотвратить запуск выделения (действие браузера)
 
     let moveHandle = (moveEvent: MouseEvent): void => {
 			let leftX: number = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
 			let leftY: number = handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
-      this.emit('drag', { leftX, leftY });
+      this.emit('drag', { leftX, leftY, id });
     }
 
     window.addEventListener('mousemove', moveHandle);

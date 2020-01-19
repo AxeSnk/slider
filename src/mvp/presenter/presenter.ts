@@ -13,7 +13,9 @@ export default class Presenter {
     if (this.model.getRangeMask()) {
       this.view.setRange();
     }
-    
+
+    this.view.addHandles();
+    this.view.addOnHandles();
     this.render();
 
     this.view.on('dragHandle', this.update.bind(this));
@@ -39,8 +41,8 @@ export default class Presenter {
     };
   }
 
-  private update({ leftX, leftY }: { leftX: number, leftY: number }): void {
-    if(this.model.getVerticalMask()) {
+  private update({ leftX, leftY, id }: { leftX: number, leftY: number, id: number }): void {
+    if (this.model.getVerticalMask()) {
       this.model.setVal(leftY, this.view.getHeight());
       this.view.makeVerticalFill();
     } else {

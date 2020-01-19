@@ -32,7 +32,6 @@ export default class Model implements IModel {
   private arrrayDivisions: number[]; // массив делений шкалы
 
   constructor(options: IOptions) {
-    this.val = options.val;
     this.valStart = options.valStart;
     this.valEnd = options.valEnd;
     this.minVal = options.minVal;
@@ -42,6 +41,13 @@ export default class Model implements IModel {
     this.tooltip = options.tooltip;
     this.vertical = options.vertical;
     this.scale = options.scale;
+    
+    if (this.range) {
+      this.val = this.valStart
+    } else {
+      this.val = options.val;
+    }
+
     this.arrrayDivisions = this.createArrayDivisions();
   }
 

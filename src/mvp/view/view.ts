@@ -25,6 +25,8 @@ export interface IView extends EventEmitter {
   getPositionHandle(id: number): number;
 
   setRange(): boolean;
+  addHandles(): void;
+  addOnHandles(): void
 }
 
 export default class View extends EventEmitter implements IView {
@@ -42,11 +44,6 @@ export default class View extends EventEmitter implements IView {
     this.root = root;
     this.slider = this.addSlider();
     this.fill = this.addFill();
-    this.addHandles();
-    this.handles[0].on('drag', this.emitDrag.bind(this));
-    if (this.range) {
-      this.handles[1].on('drag', this.emitDrag.bind(this));
-    }
     this.scale = this.addScale();
   }
 
@@ -62,7 +59,14 @@ export default class View extends EventEmitter implements IView {
     return new Fill(this.slider.getElement());
   }
 
-  private addHandles(): void {
+  public addOnHandles(): void {
+    this.handles[0].on('drag', this.emitDrag.bind(this));
+    if (this.range) {
+      this.handles[1].on('drag', this.emitDrag.bind(this));
+    }
+  }
+
+  public addHandles(): void {
     this.handles = [];
     this.handles.push(new Handle(this.slider.getElement(), 0));
 
@@ -75,8 +79,8 @@ export default class View extends EventEmitter implements IView {
     return new Scale(this.slider.getElement());
   }
 
-  private emitDrag(leftX: number): void {
-    this.emit('dragHandle', leftX);
+  private emitDrag(left: number): void {
+    this.emit('dragHandle', left);
   }
 
   public renderFill(): void {
