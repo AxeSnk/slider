@@ -43,13 +43,21 @@ export default class Presenter {
 
   private update({ leftX, leftY, id }: { leftX: number, leftY: number, id: number }): void {
     if (this.model.getVerticalMask()) {
-      this.model.setVal(leftY, this.view.getHeight());
+      if (id === 0) {
+        this.model.setVal(leftY, this.view.getHeight());
+      } else {
+        this.model.setValEnd(leftY, this.view.getHeight());
+      }
       this.view.makeVerticalFill();
     } else {
-      this.model.setVal(leftX, this.view.getWidth());
+      if (id === 0) {
+        this.model.setVal(leftX, this.view.getWidth());
+      } else {
+        this.model.setValEnd(leftX, this.view.getWidth());
+      }
       this.view.renderFill();
     }
-    this.view.updateHandles(this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth(), this.model.getStep(), this.model.getVerticalMask(), this.view.getHeight());
+    this.view.updateHandles(this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth(), this.model.getStep(), this.model.getVerticalMask(), this.view.getHeight(), id);
 
     if(this.model.getTooltipMask()) {
       if(this.model.getVerticalMask()) {

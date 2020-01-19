@@ -36,7 +36,7 @@ export default class Handle extends EventEmitter {
     let moveHandle = (moveEvent: MouseEvent): void => {
 			let leftX: number = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
 			let leftY: number = handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
-      this.emit('drag', { leftX, leftY, id });
+      this.emit(`drag_${id}`, { leftX, leftY, id });
     }
 
     window.addEventListener('mousemove', moveHandle);
@@ -107,6 +107,7 @@ export default class Handle extends EventEmitter {
 			let stepSize: number = width / stepCount;
 			let newLeft: number = (value - shift) * width / difference;
 			let pos: number = Math.round(newLeft / stepSize) * stepSize;
+
 
 			this.position = pos;
 

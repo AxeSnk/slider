@@ -2,6 +2,7 @@ import IOptions from '../defaultOptions';
 
 export interface IModel {
   setVal(leftX: number, width: number): void;
+  setValEnd(left: number, width: number): void;
 
   getVal(): number;
   getValStart(): number;
@@ -41,7 +42,7 @@ export default class Model implements IModel {
     this.tooltip = options.tooltip;
     this.vertical = options.vertical;
     this.scale = options.scale;
-    
+
     if (this.range) {
       this.val = this.valStart
     } else {
@@ -70,6 +71,12 @@ export default class Model implements IModel {
   public setVal(left: number, width: number): void {
     let val = Math.round(left * (this.maxVal-this.minVal)/width) + this.minVal;
     this.val = val;
+    console.log(left)
+  }
+
+  public setValEnd(left: number, width: number): void {
+    let valEnd = Math.round(left * (this.maxVal-this.minVal)/width) + this.minVal;
+    this.valEnd = valEnd;
   }
 
   public getDifference(): number {

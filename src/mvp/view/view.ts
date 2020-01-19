@@ -6,7 +6,7 @@ import Fill from './fill/fill';
 import Scale from './scale/scale';
 
 export interface IView extends EventEmitter {
-  updateHandles(value: number, valEnd: number, shift: number, range: number, sliderWidth: number, step: number, vertical: boolean, sliderHeight: number): void;
+  updateHandles(value: number, valEnd: number, shift: number, range: number, sliderWidth: number, step: number, vertical: boolean, sliderHeight: number, id: number): void;
   updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number, vertical: boolean): void;
 
   makeVerticalSlider(): void;
@@ -60,9 +60,11 @@ export default class View extends EventEmitter implements IView {
   }
 
   public addOnHandles(): void {
-    this.handles[0].on('drag', this.emitDrag.bind(this));
     if (this.range) {
-      this.handles[1].on('drag', this.emitDrag.bind(this));
+      this.handles[0].on('drag_0', this.emitDrag.bind(this));
+      this.handles[1].on('drag_1', this.emitDrag.bind(this));
+    } else {
+      this.handles[0].on('drag_0', this.emitDrag.bind(this));
     }
   }
 
@@ -79,7 +81,7 @@ export default class View extends EventEmitter implements IView {
     return new Scale(this.slider.getElement());
   }
 
-  private emitDrag(left: number): void {
+  private emitDrag( left: object ): void {
     this.emit('dragHandle', left);
   }
 
@@ -87,10 +89,8 @@ export default class View extends EventEmitter implements IView {
     if (this.range) {
       this.fill.renderRangeFill(this.handles[0].getPositionX() - this.slider.getPositionX(), this.handles[1].getPositionX() - this.handles[0].getPositionX() + (this.handles[0].getWidth() / 2));
     } else {
-      this.fill.renderFill(this.handles[0].getPositionX() - this.slider.getPositionX() + (this.handles[1].getWidth() / 2));
+      this.fill.renderFill(this.handles[0].getPositionX() - this.slider.getPositionX() + (this.handles[0].getWidth() / 2));
     }
-    console.log('left = ' + (this.handles[0].getPositionX() - this.slider.getPositionX()));
-    console.log('width = ' + (this.handles[1].getPositionX() - this.handles[0].getPositionX() + (this.handles[0].getWidth() / 2)));
   }
 
   public renderHandle(sliderWidth: number, value: number, valEnd: number, shift: number, difference: number, vertical: boolean, sliderHeight: number): void {
@@ -123,10 +123,15 @@ export default class View extends EventEmitter implements IView {
 
   }
 
-  public updateHandles(value: number, valEnd: number, shift: number, difference: number, sliderWidth: number, step: number, vertical: boolean, sliderHeight: number): void {
-    this.handles[0].updateHandle(value, shift, difference, sliderWidth, step, vertical, sliderHeight);
+  public updateHandles(value: number, valEnd: number, shift: number, difference: number, sliderWidth: number, step: number, vertical: boolean, sliderHeight: number, id: number): void {
     if (this.range) {
-      this.handles[1].updateHandle(valEnd, shift, difference, sliderWidth, step, vertical, sliderHeight);
+      if (id == 0) {
+        this.handles[0].updateHandle(value, shift, difference, sliderWidth, step, vertical, sliderHeight);
+      } else {
+        this.handles[1].updateHandle(valEnd, shift, difference, sliderWidth, step, vertical, sliderHeight);
+      }
+    } else {
+      this.handles[0].updateHandle(value, shift, difference, sliderWidth, step, vertical, sliderHeight);
     }
   }
 
