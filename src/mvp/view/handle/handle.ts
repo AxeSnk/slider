@@ -49,6 +49,26 @@ export default class Handle extends EventEmitter {
     window.addEventListener('mouseup', handleMouseUp);
 	}
 
+	public setPosition(vertical: boolean, value: number, shift: number, sliderHeight: number, sliderWidth: number, difference: number, step: number): void {
+		if(vertical) {
+			let height: number = sliderHeight - this.handle.offsetHeight;
+			let stepCount: number = difference / step;
+			let stepSize: number = height / stepCount;
+			let newLeft: number = (value - shift) * height / difference;
+			let pos: number = Math.round(newLeft / stepSize) * stepSize;
+
+			this.position = pos;
+		} else {
+			let width: number = sliderWidth - this.handle.offsetWidth;
+			let stepCount: number = difference / step;
+			let stepSize: number = width / stepCount;
+			let newLeft: number = (value - shift) * width / difference;
+			let pos: number = Math.round(newLeft / stepSize) * stepSize;
+
+			this.position = pos;
+		}
+	}
+
 	public renderTooltip(val: number, minVal: number, maxVal: number, handleHeight: number, vertical: boolean): void {
 		this.tooltip.renderTooltip(val, minVal, maxVal, handleHeight, vertical)
 	}
@@ -84,16 +104,12 @@ export default class Handle extends EventEmitter {
 
 	}
 
-	public updateHandle(value: number, shift: number, difference: number, sliderWidth: number, step: number, vertical: boolean, sliderHeight: number): void {
-    if(vertical) {
-			let height: number = sliderHeight - this.handle.offsetHeight;
-			let stepCount: number = difference / step;
-			let stepSize: number = height / stepCount;
-			let newLeft: number = (value - shift) * height / difference;
-			let pos: number = Math.round(newLeft / stepSize) * stepSize;
+	public updateHandle(vertical: boolean, sliderHeight: number, sliderWidth: number): void {
+		let pos = this.position
+		let height: number = sliderHeight - this.handle.offsetHeight;
+		let width: number = sliderWidth - this.handle.offsetWidth;
 
-			this.position = pos;
-
+		if(vertical) {
 			if(pos < 0) {
 				this.handle.style.top = 0 + 'px';
 			} else if(pos > height) {
@@ -102,15 +118,6 @@ export default class Handle extends EventEmitter {
 				this.handle.style.top = pos + 'px';
 			}
 		} else {
-			let width: number = sliderWidth - this.handle.offsetWidth;
-			let stepCount: number = difference / step;
-			let stepSize: number = width / stepCount;
-			let newLeft: number = (value - shift) * width / difference;
-			let pos: number = Math.round(newLeft / stepSize) * stepSize;
-
-
-			this.position = pos;
-
 			if(pos < 0) {
 				this.handle.style.left = 0 + 'px';
 			} else if(pos > width) {

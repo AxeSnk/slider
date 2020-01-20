@@ -42,6 +42,12 @@ export default class Presenter {
   }
 
   private update({ leftX, leftY, id }: { leftX: number, leftY: number, id: number }): void {
+    if (this.model.getRangeMask()) {
+      this.view.setPositionHandle(0, this.model.getVerticalMask(), this.model.getVal(), this.model.getMinVal(), this.view.getHeight(), this.view.getWidth(), this.model.getDifference(), this.model.getStep())
+      this.view.setPositionHandle(1, this.model.getVerticalMask(), this.model.getValEnd(), this.model.getMinVal(), this.view.getHeight(), this.view.getWidth(), this.model.getDifference(), this.model.getStep())
+    } else {
+      this.view.setPositionHandle(0, this.model.getVerticalMask(), this.model.getVal(), this.model.getMinVal(), this.view.getHeight(), this.view.getWidth(), this.model.getDifference(), this.model.getStep())
+    }
     if (this.model.getVerticalMask()) {
       this.model.setVal(leftY, this.view.getHeight(), id);
       this.view.makeVerticalFill();
@@ -55,7 +61,7 @@ export default class Presenter {
         this.view.updateTooltip(this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.view.getPositionHandle(id), this.view.getWidth(), this.model.getVerticalMask(), id);    
       }    
     }
-    this.view.updateHandles(this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getDifference(), this.view.getWidth(), this.model.getStep(), this.model.getVerticalMask(), this.view.getHeight(), id);
+    this.view.updateHandles(this.model.getVerticalMask(), this.view.getHeight(), this.view.getWidth(), id);
   }
   
 }

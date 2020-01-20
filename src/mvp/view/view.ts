@@ -6,7 +6,7 @@ import Fill from './fill/fill';
 import Scale from './scale/scale';
 
 export interface IView extends EventEmitter {
-  updateHandles(value: number, valEnd: number, shift: number, range: number, sliderWidth: number, step: number, vertical: boolean, sliderHeight: number, id: number): void;
+  updateHandles(vertical: boolean,  sliderHeight: number, sliderWidth: number, id: number): void;
   updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number, vertical: boolean, id: number): void;
 
   makeVerticalSlider(): void;
@@ -24,6 +24,7 @@ export interface IView extends EventEmitter {
   getHandleHeight(): number;
   getPositionHandle(id: number): number;
 
+  setPositionHandle(id: number, vertical: boolean, value: number, shift: number, sliderHeight: number, sliderWidth: number, difference: number, step: number): void;
   setRange(): boolean;
   addHandles(): void;
   addOnHandles(): void
@@ -45,6 +46,10 @@ export default class View extends EventEmitter implements IView {
     this.slider = this.addSlider();
     this.fill = this.addFill();
     this.scale = this.addScale();
+  }
+
+  public setPositionHandle(id: number, vertical: boolean, value: number, shift: number, sliderHeight: number, sliderWidth: number, difference: number, step: number): void {
+    this.handles[id].setPosition(vertical, value, shift, sliderHeight, sliderWidth, difference, step)
   }
 
   public setRange(): boolean {
@@ -123,15 +128,15 @@ export default class View extends EventEmitter implements IView {
 
   }
 
-  public updateHandles(value: number, valEnd: number, shift: number, difference: number, sliderWidth: number, step: number, vertical: boolean, sliderHeight: number, id: number): void {
+  public updateHandles(vertical: boolean,  sliderHeight: number, sliderWidth: number, id: number): void {
     if (this.range) {
       if (id == 0) {
-        this.handles[0].updateHandle(value, shift, difference, sliderWidth, step, vertical, sliderHeight);
+        this.handles[0].updateHandle(vertical, sliderHeight, sliderWidth);
       } else {
-        this.handles[1].updateHandle(valEnd, shift, difference, sliderWidth, step, vertical, sliderHeight);
+        this.handles[1].updateHandle(vertical, sliderHeight, sliderWidth);
       }
     } else {
-      this.handles[0].updateHandle(value, shift, difference, sliderWidth, step, vertical, sliderHeight);
+      this.handles[0].updateHandle(vertical, sliderHeight, sliderWidth);
     }
   }
 
