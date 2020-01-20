@@ -7,7 +7,7 @@ import Scale from './scale/scale';
 
 export interface IView extends EventEmitter {
   updateHandles(value: number, valEnd: number, shift: number, range: number, sliderWidth: number, step: number, vertical: boolean, sliderHeight: number, id: number): void;
-  updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number, vertical: boolean): void;
+  updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number, vertical: boolean, id: number): void;
 
   makeVerticalSlider(): void;
   makeVerticalFill(): void;
@@ -135,10 +135,11 @@ export default class View extends EventEmitter implements IView {
     }
   }
 
-  public updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number, vertical: boolean): void {
-    this.handles[0].updateTooltip(minVal, maxVal, handleHeight, position, width, vertical);
+  public updateTooltip(minVal: number, maxVal: number, handleHeight: number, position: number, width: number, vertical: boolean, id: number): void {
     if(this.range) {
-      this.handles[1].updateTooltip(minVal, maxVal, handleHeight, position, width, vertical);
+      this.handles[id].updateTooltip(minVal, maxVal, handleHeight, position, width, vertical);
+    } else {
+      this.handles[0].updateTooltip(minVal, maxVal, handleHeight, position, width, vertical);
     }
   }
 
@@ -162,7 +163,7 @@ export default class View extends EventEmitter implements IView {
     return this.handles[0].getHeight();
   }
 
-  public getPositionHandle(id): number {
+  public getPositionHandle(id: number): number {
     return this.handles[id].getPositionHandle();
   }
 

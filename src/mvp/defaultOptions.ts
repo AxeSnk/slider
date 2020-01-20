@@ -17,7 +17,7 @@ var defaultOptions: IOptions = {
   valEnd: 4,
   minVal: -3,
   maxVal: 10,
-  step: 3,
+  step: 2,
   range: true,
   tooltip: true,
   vertical: false,

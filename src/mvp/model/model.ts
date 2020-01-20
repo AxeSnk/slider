@@ -1,8 +1,7 @@
 import IOptions from '../defaultOptions';
 
 export interface IModel {
-  setVal(leftX: number, width: number): void;
-  setValEnd(left: number, width: number): void;
+  setVal(leftX: number, width: number, id: number): void;
 
   getVal(): number;
   getValStart(): number;
@@ -68,15 +67,14 @@ export default class Model implements IModel {
     return this.arrrayDivisions
   }
 
-  public setVal(left: number, width: number): void {
-    let val = Math.round(left * (this.maxVal-this.minVal)/width) + this.minVal;
-    this.val = val;
-    console.log(left)
-  }
-
-  public setValEnd(left: number, width: number): void {
-    let valEnd = Math.round(left * (this.maxVal-this.minVal)/width) + this.minVal;
-    this.valEnd = valEnd;
+  public setVal(left: number, width: number, id: number): void {
+    if (id === 0) {
+      let val = Math.round(left * (this.maxVal-this.minVal)/width) + this.minVal;
+      this.val = val;
+    } else {
+      let valEnd = Math.round(left * (this.maxVal-this.minVal)/width) + this.minVal;
+      this.valEnd = valEnd;
+    }
   }
 
   public getDifference(): number {
