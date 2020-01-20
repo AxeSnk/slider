@@ -103,6 +103,14 @@ export default class View extends EventEmitter implements IView {
     }
   }
 
+  public makeVerticalFill(): void {
+    if (this.range) {
+      this.fill.makeVertical(this.handles[0].getPositionY() - this.slider.getPositionY(), this.handles[1].getPositionY() - this.handles[0].getPositionY() + (this.handles[0].getWidth() / 2));
+    } else {
+      this.fill.makeVertical(0, this.handles[0].getPositionY() - this.slider.getPositionY() + (this.handles[0].getWidth() / 2));
+    }
+  }
+
   public renderHandle(sliderWidth: number, value: number, valEnd: number, shift: number, difference: number, vertical: boolean, sliderHeight: number): void {
     this.handles[0].renderHandle(sliderWidth, value, shift, difference, vertical, sliderHeight);
     if (this.range) {
@@ -127,14 +135,6 @@ export default class View extends EventEmitter implements IView {
 
   public makeVerticalSlider(): void {
     this.slider.makeVertical();
-  }
-
-  public makeVerticalFill(): void {
-    this.fill.makeVertical(this.handles[0].getPositionY() - this.slider.getPositionY() + (this.handles[0].getWidth() / 2), );
-    if (this.range) {
-      this.fill.makeVertical(this.handles[1].getPositionY() - this.slider.getPositionY() + (this.handles[1].getWidth() / 2), );
-    }
-
   }
 
   public updateHandles(vertical: boolean,  sliderHeight: number, sliderWidth: number, id: number): void {

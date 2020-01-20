@@ -23,7 +23,7 @@
         justify-content: center;
         width: 1px;
         height: 10px;
-        background-color: black;
+        background-color: rgb(229, 229, 229);
         z-index: 98;
 
         .division__text {
@@ -39,6 +39,7 @@
 
     .slider__fill {
       position: absolute;
+      justify-self: flex-start; // не работает
       height: 5px;
       background-color: rgb(231, 87, 53);
       border-radius: 6px;

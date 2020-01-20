@@ -27,9 +27,10 @@ export default class Fill extends EventEmitter {
 		}
 	}
 
-	public makeVertical(height: number): void {
+	public makeVertical(left: number, height: number): void {
 		this.fill.classList.add('fill--vertical')
 		this.fill.style.height = height + 'px';
+		this.fill.style.top = left + 'px';
 	}
 
 	public getFill(): HTMLElement {
