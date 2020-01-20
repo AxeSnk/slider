@@ -34,18 +34,20 @@ export default class Scale extends EventEmitter {
     }
   }
 
-  public renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void {
+  public render(arrrayOfDivisions: number[]): void {
     this.createDivisionScale(arrrayOfDivisions);
     this.arrangeValuesOnTheScale(arrrayOfDivisions);
+  }
 
+  public makeHorizontal(sliderWidth: number, handleWidth: number): void {
     this.scale.style.width = (sliderWidth - handleWidth) + 'px';
-		this.scale.style.left = (handleWidth / 2) + 'px';
+    this.scale.style.top = '5px';
   }
 
   public makeVertical(sliderHeight: number, handleHeight: number): void {
     this.scale.classList.add('scale--vertical');
-    this.scale.style.width = 'auto';
     this.scale.style.height = (sliderHeight - handleHeight) + 'px';
+    this.scale.style.left = '5px';
   }
 
 }

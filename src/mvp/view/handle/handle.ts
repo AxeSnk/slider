@@ -133,7 +133,7 @@ export default class Handle extends EventEmitter {
 	}
 
 	public getWidth(): number {
-		return 10;
+		return this.handle.offsetWidth;
 	}
 
 	public getHeight(): number {

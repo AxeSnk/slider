@@ -18,9 +18,13 @@ export default class Fill extends EventEmitter {
 		this.fill.style.width = width + 'px';
 	}
 
-	public renderRangeFill(left: number, width: number): void {
-		this.fill.style.width = width + 'px';
-		this.fill.style.left = left + 'px';
+	public renderRangeFill(posHandle_0: number, posHandle_1: number, left: number, width: number): void {
+		if (posHandle_0 > posHandle_1) {
+			console.log('test')
+		} else {
+			this.fill.style.width = width + 'px';
+			this.fill.style.left = left + 'px';
+		}
 	}
 
 	public makeVertical(height: number): void {

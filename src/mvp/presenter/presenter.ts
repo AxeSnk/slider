@@ -26,19 +26,23 @@ export default class Presenter {
       this.view.makeVerticalSlider();
       this.view.renderHandle(this.view.getWidth(), this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getDifference(), this.model.getVerticalMask(), this.view.getHeight());
       this.view.makeVerticalFill();
-      this.view.makeVerticalScale();
+      if (this.model.getScaleMask()) {
+        this.view.renderScale(this.model.getArrayDivisions());
+        this.view.makeVerticalScale();
+      }
     } else {
       this.view.renderHandle(this.view.getWidth(), this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getDifference(), this.model.getVerticalMask(), this.view.getWidth());
       this.view.renderFill();
+      if(this.model.getScaleMask()) {
+        this.view.renderScale(this.model.getArrayDivisions());
+        this.view.makeHorizontalScale();
+      };
     }
 
     if(this.model.getTooltipMask()) {
       this.view.renderTooltip(this.model.getVal(), this.model.getValEnd(), this.model.getMinVal(), this.model.getMaxVal(), this.view.getHandleHeight(), this.model.getVerticalMask());
     }
     
-    if(this.model.getScaleMask()) {
-      this.view.renderScale(this.model.getArrayDivisions(), this.view.getWidth(), this.view.getHandleWidth());
-    };
   }
 
   private update({ leftX, leftY, id }: { leftX: number, leftY: number, id: number }): void {

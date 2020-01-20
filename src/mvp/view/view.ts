@@ -12,11 +12,12 @@ export interface IView extends EventEmitter {
   makeVerticalSlider(): void;
   makeVerticalFill(): void;
   makeVerticalScale(): void;
+  makeHorizontalScale(): void;
 
   renderFill(): void
   renderHandle(sliderWidth: number, value: number, valEnd: number, shift: number, difference: number, vertical: boolean, sliderHeight: number): void;
   renderTooltip(val: number, valEnd: number, minVal: number, maxVal: number, handleHeight: number, vertical: boolean): void;
-  renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void;
+  renderScale(arrrayOfDivisions: number[]): void;
 
   getHeight(): number;
   getWidth(): number;
@@ -90,9 +91,13 @@ export default class View extends EventEmitter implements IView {
     this.emit('dragHandle', left);
   }
 
+  public renderScale(arrrayOfDivisions: number[]): void {
+    this.scale.render(arrrayOfDivisions);
+  }
+
   public renderFill(): void {
     if (this.range) {
-      this.fill.renderRangeFill(this.handles[0].getPositionX() - this.slider.getPositionX(), this.handles[1].getPositionX() - this.handles[0].getPositionX() + (this.handles[0].getWidth() / 2));
+      this.fill.renderRangeFill(this.handles[0].getPositionHandle(), this.handles[1].getPositionHandle(), this.handles[0].getPositionX() - this.slider.getPositionX(), this.handles[1].getPositionX() - this.handles[0].getPositionX() + (this.handles[0].getWidth() / 2));
     } else {
       this.fill.renderFill(this.handles[0].getPositionX() - this.slider.getPositionX() + (this.handles[0].getWidth() / 2));
     }
@@ -110,6 +115,10 @@ export default class View extends EventEmitter implements IView {
     if (this.range) {
       this.handles[1].renderTooltip(valEnd, minVal, maxVal, handleHeight, vertical)
     }
+  }
+
+  public makeHorizontalScale(): void {
+    this.scale.makeHorizontal(this.slider.getWidth(), this.handles[0].getWidth());
   }
 
   public makeVerticalScale(): void {
@@ -146,10 +155,6 @@ export default class View extends EventEmitter implements IView {
     } else {
       this.handles[0].updateTooltip(minVal, maxVal, handleHeight, position, width, vertical);
     }
-  }
-
-  public renderScale(arrrayOfDivisions: number[], sliderWidth: number, handleWidth: number): void {
-    this.scale.renderScale(arrrayOfDivisions, sliderWidth, handleWidth);
   }
 
   public getHeight(): number {
