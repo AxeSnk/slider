@@ -5,7 +5,7 @@
 
   .slider {
     position: relative;
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
     height: 5px;
@@ -16,6 +16,7 @@
       position: absolute;
       display: flex;
       justify-content: space-between;
+      justify-self: center;
        
 
       &-division {
@@ -39,7 +40,6 @@
 
     .slider__fill {
       position: absolute;
-      justify-self: flex-start; // не работает
       height: 5px;
       background-color: rgb(231, 87, 53);
       border-radius: 6px;
@@ -90,6 +90,7 @@
   .slider--vertical {
     width: 5px;
     height: 100%;
+    justify-items: center;
 
     .scale--vertical {
       flex-direction: column;
