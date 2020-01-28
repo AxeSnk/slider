@@ -26,8 +26,7 @@ export default class Fill extends EventEmitter {
     sliderWidth: number
   ): void {
     if (posHandle_0 > posHandle_1) {
-      this.fill.style.left = 0 + "px";
-      this.fill.style.width = 0 + "px";
+      false
     } else {
       this.fill.style.width = width + "px";
       this.fill.style.left = left + "px";
