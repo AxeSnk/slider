@@ -95,7 +95,9 @@ export default class Handle extends EventEmitter {
     handleHeight: number,
     position: number,
     width: number,
-    vertical: boolean
+    vertical: boolean,
+    id: number,
+    posOther: number
   ): void {
     this.tooltip.updateTooltip(
       minVal,
@@ -103,7 +105,9 @@ export default class Handle extends EventEmitter {
       handleHeight,
       position,
       width,
-      vertical
+      vertical,
+      id,
+      posOther
     );
   }
 

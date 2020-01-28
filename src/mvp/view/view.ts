@@ -20,7 +20,8 @@ export interface IView extends EventEmitter {
     position: number,
     width: number,
     vertical: boolean,
-    id: number
+    id: number,
+    posOther: number
   ): void;
 
   makeVerticalSlider(): void;
@@ -294,7 +295,8 @@ export default class View extends EventEmitter implements IView {
     position: number,
     width: number,
     vertical: boolean,
-    id: number
+    id: number,
+    posOther: number
   ): void {
     if (this.range) {
       this.handles[id].updateTooltip(
@@ -303,7 +305,9 @@ export default class View extends EventEmitter implements IView {
         handleHeight,
         position,
         width,
-        vertical
+        vertical,
+        id,
+        posOther
       );
     } else {
       this.handles[0].updateTooltip(
@@ -312,7 +316,9 @@ export default class View extends EventEmitter implements IView {
         handleHeight,
         position,
         width,
-        vertical
+        vertical,
+        id,
+        posOther
       );
     }
   }

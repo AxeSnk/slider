@@ -43,17 +43,33 @@ export default class Tooltip extends EventEmitter {
     handleHeight: number,
     position: number,
     width: number,
-    vertical: boolean
+    vertical: boolean,
+    id: number,
+    posOther: number
   ): void {
     let val: number = Math.round(
       (position * (maxVal - minVal)) / (width - handleHeight) + minVal
     );
-    if (val < minVal) {
-      this.tooltip.innerHTML = `${minVal}`;
-    } else if (val > maxVal) {
-      this.tooltip.innerHTML = `${maxVal}`;
+    if (id === 0) {
+      if (position >= posOther) {
+        false;
+      } else if (minVal > val) {
+        this.tooltip.innerHTML = `${minVal}`;
+      } else if (val > maxVal) {
+        this.tooltip.innerHTML = `${maxVal}`;
+      } else {
+        this.tooltip.innerHTML = `${val}`;
+      }
     } else {
-      this.tooltip.innerHTML = `${val}`;
+      if (position <= posOther) {
+        false;
+      } else if (minVal > val) {
+        this.tooltip.innerHTML = `${minVal}`;
+      } else if (val > maxVal) {
+        this.tooltip.innerHTML = `${maxVal}`;
+      } else {
+        this.tooltip.innerHTML = `${val}`;
+      }
     }
 
     if (vertical) {

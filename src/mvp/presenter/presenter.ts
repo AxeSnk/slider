@@ -118,7 +118,8 @@ export default class Presenter {
           this.view.getPositionHandle(id),
           this.view.getHeight(),
           this.model.getVerticalMask(),
-          id
+          id,
+          this.view.getPositionHandle(Math.abs(id - 1))
         );
       }
     } else {
@@ -132,7 +133,8 @@ export default class Presenter {
           this.view.getPositionHandle(id),
           this.view.getWidth(),
           this.model.getVerticalMask(),
-          id
+          id,
+          this.view.getPositionHandle(Math.abs(id - 1))
         );
       }
     }
