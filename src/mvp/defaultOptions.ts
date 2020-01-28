@@ -14,7 +14,7 @@ export default interface IOptions {
 var defaultOptions: IOptions = {
   val: 3,
   valStart: -1,
-  valEnd: 4,
+  valEnd: 3,
   minVal: -3,
   maxVal: 10,
   step: 2,
@@ -22,6 +22,6 @@ var defaultOptions: IOptions = {
   tooltip: true,
   vertical: false,
   scale: true
-}
+};
 
 export { defaultOptions };

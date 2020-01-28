@@ -17,7 +17,6 @@ import { assert } from "chai";
 //         }
 
 //     });
-  
 
 //     it("для отрицательных n возвращает NaN", () => {
 //         assert.isNaN(pow(2, -1));
@@ -26,5 +25,5 @@ import { assert } from "chai";
 //     it("для дробных n возвращает NaN", () => {
 //         assert.isNaN(pow(2, 1.5));
 //     });
-    
+
 // });

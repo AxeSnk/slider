@@ -1,4 +1,4 @@
-import IOptions from '../defaultOptions';
+import IOptions from "../defaultOptions";
 
 export interface IModel {
   setVal(leftX: number, width: number, id: number): void;
@@ -35,7 +35,7 @@ export default class Model implements IModel {
     this.valStart = options.valStart;
     this.valEnd = options.valEnd;
     this.minVal = options.minVal;
-    this.maxVal = options.maxVal;  
+    this.maxVal = options.maxVal;
     this.step = options.step;
     this.range = options.range;
     this.tooltip = options.tooltip;
@@ -43,7 +43,7 @@ export default class Model implements IModel {
     this.scale = options.scale;
 
     if (this.range) {
-      this.val = this.valStart
+      this.val = this.valStart;
     } else {
       this.val = options.val;
     }
@@ -52,10 +52,10 @@ export default class Model implements IModel {
   }
 
   // создать массив делений для шкалы
-  private createArrayDivisions(): number[] {    
+  private createArrayDivisions(): number[] {
     let arr: number[] = [];
     let i: number;
-    for(i = this.minVal; i < this.maxVal; i = i + 1) {
+    for (i = this.minVal; i < this.maxVal; i = i + 1) {
       arr.push(i);
     }
     arr.push(this.maxVal);
@@ -64,62 +64,63 @@ export default class Model implements IModel {
   }
 
   public getArrayDivisions(): number[] {
-    return this.arrrayDivisions
+    return this.arrrayDivisions;
   }
 
   public setVal(left: number, width: number, id: number): void {
     if (id === 0) {
-      let val = Math.round(left * (this.maxVal-this.minVal)/width) + this.minVal;
+      let val =
+        Math.round((left * (this.maxVal - this.minVal)) / width) + this.minVal;
       this.val = val;
     } else {
-      let valEnd = Math.round(left * (this.maxVal-this.minVal)/width) + this.minVal;
+      let valEnd =
+        Math.round((left * (this.maxVal - this.minVal)) / width) + this.minVal;
       this.valEnd = valEnd;
     }
   }
 
   public getDifference(): number {
-    let difference = this.maxVal-this.minVal;
+    let difference = this.maxVal - this.minVal;
     return difference;
   }
 
   public getVal(): number {
-    return this.val
+    return this.val;
   }
 
   public getValStart(): number {
-    return this.valStart
+    return this.valStart;
   }
 
   public getValEnd(): number {
-    return this.valEnd
+    return this.valEnd;
   }
 
   public getMinVal(): any {
-    return this.minVal
+    return this.minVal;
   }
 
   public getMaxVal(): any {
-    return this.maxVal
+    return this.maxVal;
   }
 
   public getStep(): number {
-    return this.step
+    return this.step;
   }
 
   public getRangeMask(): boolean {
-    return this.range
+    return this.range;
   }
 
   public getTooltipMask(): boolean {
-    return this.tooltip
+    return this.tooltip;
   }
 
   public getVerticalMask(): boolean {
-    return this.vertical
+    return this.vertical;
   }
 
   public getScaleMask(): boolean {
-    return this.scale
+    return this.scale;
   }
-  
 }

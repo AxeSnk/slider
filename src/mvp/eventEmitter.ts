@@ -15,5 +15,4 @@ export default class EventEmitter {
       this.events[type].forEach(callback => callback(arg));
     }
   }
-    
 }
