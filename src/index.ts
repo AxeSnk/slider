@@ -28,4 +28,4 @@ declare global {
   };
 })(jQuery);
 
-$(".mySlider").slider();
+$(".js-mySlider").slider();

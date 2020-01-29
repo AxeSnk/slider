@@ -95,6 +95,13 @@ export default class Presenter {
         this.model.getDifference(),
         this.model.getStep()
       );
+      this.view.updateHandles(
+        this.model.getVerticalMask(),
+        this.view.getHeight(),
+        this.view.getWidth(),
+        this.view.getPositionHandle(Math.abs(id - 1)),
+        id
+      );  
     } else {
       this.view.setPositionHandle(
         0,
@@ -106,44 +113,70 @@ export default class Presenter {
         this.model.getDifference(),
         this.model.getStep()
       );
+      this.view.updateHandles(
+        this.model.getVerticalMask(),
+        this.view.getHeight(),
+        this.view.getWidth(),
+        null,
+        id
+      );  
     }
     if (this.model.getVerticalMask()) {
       this.model.setVal(leftY, this.view.getHeight(), id);
       this.view.makeVerticalFill();
       if (this.model.getTooltipMask()) {
-        this.view.updateTooltip(
-          this.model.getMinVal(),
-          this.model.getMaxVal(),
-          this.view.getHandleHeight(),
-          this.view.getPositionHandle(id),
-          this.view.getHeight(),
-          this.model.getVerticalMask(),
-          id,
-          this.view.getPositionHandle(Math.abs(id - 1))
-        );
+        if (this.model.getRangeMask()) {
+          this.view.updateTooltip(
+            this.model.getMinVal(),
+            this.model.getMaxVal(),
+            this.view.getHandleHeight(),
+            this.view.getPositionHandle(id),
+            this.view.getHeight(),
+            this.model.getVerticalMask(),
+            id,
+            this.view.getPositionHandle(Math.abs(id - 1))
+          );  
+        } else {
+          this.view.updateTooltip(
+            this.model.getMinVal(),
+            this.model.getMaxVal(),
+            this.view.getHandleHeight(),
+            this.view.getPositionHandle(id),
+            this.view.getHeight(),
+            this.model.getVerticalMask(),
+            id,
+            null
+          );  
+        }
       }
     } else {
       this.model.setVal(leftX, this.view.getWidth(), id);
       this.view.renderFill();
       if (this.model.getTooltipMask()) {
-        this.view.updateTooltip(
-          this.model.getMinVal(),
-          this.model.getMaxVal(),
-          this.view.getHandleHeight(),
-          this.view.getPositionHandle(id),
-          this.view.getWidth(),
-          this.model.getVerticalMask(),
-          id,
-          this.view.getPositionHandle(Math.abs(id - 1))
-        );
+        if (this.model.getRangeMask()) {
+          this.view.updateTooltip(
+            this.model.getMinVal(),
+            this.model.getMaxVal(),
+            this.view.getHandleHeight(),
+            this.view.getPositionHandle(id),
+            this.view.getWidth(),
+            this.model.getVerticalMask(),
+            id,
+            this.view.getPositionHandle(Math.abs(id - 1))
+          );
+        } else {
+          this.view.updateTooltip(
+            this.model.getMinVal(),
+            this.model.getMaxVal(),
+            this.view.getHandleHeight(),
+            this.view.getPositionHandle(id),
+            this.view.getWidth(),
+            this.model.getVerticalMask(),
+            id,
+            null
+          );
+        }
       }
     }
-    this.view.updateHandles(
-      this.model.getVerticalMask(),
-      this.view.getHeight(),
-      this.view.getWidth(),
-      this.view.getPositionHandle(Math.abs(id - 1)),
-      id
-    );
   }
 }

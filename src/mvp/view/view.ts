@@ -259,7 +259,7 @@ export default class View extends EventEmitter implements IView {
     vertical: boolean,
     sliderHeight: number,
     sliderWidth: number,
-    posOther: number,
+    posOther: number | null,
     id: number
   ): void {
     if (this.range) {
@@ -296,7 +296,7 @@ export default class View extends EventEmitter implements IView {
     width: number,
     vertical: boolean,
     id: number,
-    posOther: number
+    posOther: number | null,
   ): void {
     if (this.range) {
       this.handles[id].updateTooltip(

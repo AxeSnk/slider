@@ -97,7 +97,7 @@ export default class Handle extends EventEmitter {
     width: number,
     vertical: boolean,
     id: number,
-    posOther: number
+    posOther: number | null
   ): void {
     this.tooltip.updateTooltip(
       minVal,
@@ -156,7 +156,7 @@ export default class Handle extends EventEmitter {
 
     if (vertical) {
       if (this.id === 0) {
-        if (pos >= posOther) {
+        if (posOther ? pos >= posOther : false) {
           false;
         } else if (0 > pos) {
           this.handle.style.top = 0 + "px";
@@ -178,7 +178,7 @@ export default class Handle extends EventEmitter {
       }
     } else {
       if (this.id === 0) {
-        if (pos >= posOther) {
+        if (posOther ? pos >= posOther : false) {
           false;
         } else if (0 > pos) {
           this.handle.style.left = 0 + "px";
