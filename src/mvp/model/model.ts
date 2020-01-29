@@ -2,6 +2,7 @@ import IOptions from "../defaultOptions";
 
 export interface IModel {
   setVal(leftX: number, width: number, id: number): void;
+  setValue(value: number): void;
 
   getVal(): number;
   getValStart(): number;
@@ -77,6 +78,10 @@ export default class Model implements IModel {
         Math.round((left * (this.maxVal - this.minVal)) / width) + this.minVal;
       this.valEnd = valEnd;
     }
+  }
+
+  public setValue(value: number): void {
+    this.val = value;
   }
 
   public getDifference(): number {
