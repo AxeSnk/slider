@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PATHS = {
   src: path.join(__dirname, "src"),
-  docs: path.join(__dirname, "docs")
+  docs: path.join(__dirname, "dist")
 };
 
 module.exports = {

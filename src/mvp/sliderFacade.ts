@@ -1,20 +1,22 @@
 import View, { IView } from "./view/view";
-import Model, { IModel } from "./model/model";
-import { defaultOptions } from "./defaultOptions";
 import Presenter from "./presenter/presenter";
+import Model, { IModel } from "./model/model";
+import IOptions from './defaultOptions';
 
-export default class SliderFacade {
-	private model: IModel;
-	private view: IView;
-	private presenter: Presenter;
+class SliderFacade{
+  model: IModel;
+  view: IView;
+  presenter: Presenter;
 
-	constructor(parent, options) {
-		this.model = new Model(options);
-		this.view = new View(this);
-		this.presenter = new Presenter(this.model, this.view);
-	}
-
-	public setValue(value: number) {
-		this.model.setValue(value)
-	}
+  constructor(root: HTMLElement, options: IOptions){
+    this.model = new Model(options);
+    this.view = new View(root);
+    this.presenter = new Presenter(this.model, this.view);
+  }
+  
+  public setValue(value): void {
+    this.presenter.setValue(value)
+  }
 }
+
+export default SliderFacade;

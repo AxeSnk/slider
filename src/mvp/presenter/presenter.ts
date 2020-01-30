@@ -18,6 +18,9 @@ export default class Presenter {
 
     this.view.on("dragHandle", this.update.bind(this));
   }
+  public setValue(value: number): void {
+    this.model.setValue(value);
+  }
 
   private render(): void {
     if (this.model.getVerticalMask()) {
@@ -101,7 +104,7 @@ export default class Presenter {
         this.view.getWidth(),
         this.view.getPositionHandle(Math.abs(id - 1)),
         id
-      );  
+      );
     } else {
       this.view.setPositionHandle(
         0,
@@ -119,7 +122,7 @@ export default class Presenter {
         this.view.getWidth(),
         null,
         id
-      );  
+      );
     }
     if (this.model.getVerticalMask()) {
       this.model.setVal(leftY, this.view.getHeight(), id);
@@ -135,7 +138,7 @@ export default class Presenter {
             this.model.getVerticalMask(),
             id,
             this.view.getPositionHandle(Math.abs(id - 1))
-          );  
+          );
         } else {
           this.view.updateTooltip(
             this.model.getMinVal(),
@@ -146,7 +149,7 @@ export default class Presenter {
             this.model.getVerticalMask(),
             id,
             null
-          );  
+          );
         }
       }
     } else {

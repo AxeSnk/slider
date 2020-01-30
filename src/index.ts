@@ -1,6 +1,9 @@
 import "./index.scss";
+import View, { IView } from "./mvp/view/view";
+import Model, { IModel } from "./mvp/model/model";
 import { defaultOptions } from "./mvp/defaultOptions";
-import SliderFacade from "./mvp/sliderFacade";
+import Presenter from "./mvp/presenter/presenter";
+import SliderFacade from './mvp/SliderFacade';
 
 declare global {
   interface Window {
@@ -13,12 +16,14 @@ declare global {
 }
 
 (function($) {
-  $.fn.slider = function(options?: any) {
-    options = $.extend(defaultOptions, options);
+    $.fn.slider = function(options?: any) {
 
-    let con: SliderFacade = new SliderFacade(this, options)
-    return con
-  };
+      let settings = $.extend(defaultOptions, options)
+
+      let sliderFacade = new SliderFacade(this.get(0), settings)
+      
+      return sliderFacade;
+    }
 })(jQuery);
 
-$(".js-mySlider").slider();
+$(".js-mySlider").slider()
