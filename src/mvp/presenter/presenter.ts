@@ -19,6 +19,10 @@ export default class Presenter {
     this.view.on("dragHandle", this.update.bind(this));
   }
 
+  public setValue(value: number) {
+    this.model.setValue(value)
+  }
+
   private render(): void {
     if (this.model.getVerticalMask()) {
       this.view.makeVerticalSlider();
