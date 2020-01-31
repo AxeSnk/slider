@@ -11,7 +11,7 @@ declare global {
   }
 
   interface JQuery {
-    slider(...arg: any): JQuery<Element> | void;
+    slider(...arg: any): any;
   }
 }
 

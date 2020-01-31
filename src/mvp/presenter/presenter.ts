@@ -22,10 +22,6 @@ export default class Presenter {
     this.model.setValue(value);
   }
 
-  public setValue(value: number) {
-    this.model.setValue(value)
-  }
-
   private render(): void {
     if (this.model.getVerticalMask()) {
       this.view.makeVerticalSlider();

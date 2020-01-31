@@ -14,7 +14,7 @@ class SliderFacade{
     this.presenter = new Presenter(this.model, this.view);
   }
   
-  public setValue(value): void {
+  public setValue(value: number): void {
     this.presenter.setValue(value)
   }
 }
