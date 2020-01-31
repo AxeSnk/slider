@@ -27,5 +27,5 @@ declare global {
     return this.each(make);
   };
 })(jQuery);
-
+//
 $(".js-mySlider").slider();
