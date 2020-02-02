@@ -18,6 +18,9 @@ export default class Presenter {
 
     this.view.on("dragHandle", this.update.bind(this));
   }
+  public getValue(): number {
+    return this.model.getVal()
+  }
   public setValue(value: number): void {
     this.model.setValue(value);
   }
