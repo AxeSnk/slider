@@ -1,7 +1,7 @@
 import "./index.scss";
-import './mvp/sliderFacade';
-import Demo from './demo/Demo'
+import "./mvp/sliderFacade";
+import Demo from "./demo/Demo";
 
-$('.demo__slider').slider()
-let test = $('.demo__slider').slider('getValue')
-console.log(test[0])
+window.onload = function windowHasLoaded() {
+  document.querySelectorAll(".demo").forEach(demo => new Demo(demo));
+};
