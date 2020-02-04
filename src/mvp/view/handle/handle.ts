@@ -130,8 +130,6 @@ export default class Handle extends EventEmitter {
       let width: number = sliderWidth - this.handle.offsetWidth;
       let newLeft: number = ((val - minVal) * width) / (maxVal - minVal);
 
-      console.log(minVal);
-
       if (newLeft < 0) {
         this.handle.style.left = 0 + "px";
       } else if (newLeft > width) {

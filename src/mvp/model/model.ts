@@ -39,6 +39,9 @@ export default class Model {
 
     this.arrrayDivisions = this.createArrayDivisions();
   }
+  public setState(options) {
+
+  }
 
   public getState(): {} {
     return this.state;
@@ -72,8 +75,10 @@ export default class Model {
     }
   }
 
-  public setValue(value: number): void {
-    this.val = value;
+  public setValue(key: string, newValue: number): void {
+    let { range, valStart, valEnd } = this.state
+
+
   }
 
   public getDifference(): number {

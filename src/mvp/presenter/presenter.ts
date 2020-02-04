@@ -15,15 +15,15 @@ export default class Presenter {
 
     this.view.on("dragHandle", this.update.bind(this));
   }
+  public setState(options): void {
+    this.model.setState(options)
+  }
   public getState(): {} {
     return this.model.getState();
   }
 
   public getValue(): number {
     return this.model.getVal();
-  }
-  public setValue(value: number): void {
-    this.model.setValue(value);
   }
 
   private render(): void {
