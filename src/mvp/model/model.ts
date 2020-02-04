@@ -1,25 +1,7 @@
 import IOptions from "../defaultOptions";
 
-export interface IModel {
-  setVal(leftX: number, width: number, id: number): void;
-  setValue(value: number): void;
-
-  getVal(): number;
-  getValStart(): number;
-  getValEnd(): number;
-  getMinVal(): number;
-  getMaxVal(): number;
-  getStep(): number;
-  getDifference(): number;
-  getScaleMask(): boolean;
-  getRangeMask(): boolean;
-  getTooltipMask(): boolean;
-  getVerticalMask(): boolean;
-
-  getArrayDivisions(): number[];
-}
-
-export default class Model implements IModel {
+export default class Model {
+  private state: IOptions;
   private val: number; // значение ползунка
   private valStart: number; // положение начального ползунка (range = true)
   private valEnd: number; // положение конечного ползунка (range = true)
@@ -33,6 +15,12 @@ export default class Model implements IModel {
   private arrrayDivisions: number[]; // массив делений шкалы
 
   constructor(options: IOptions) {
+    if (options.range) {
+      this.state = options;
+      this.state.val = options.valStart
+    } else this.state = options;
+
+
     this.valStart = options.valStart;
     this.valEnd = options.valEnd;
     this.minVal = options.minVal;
@@ -50,6 +38,10 @@ export default class Model implements IModel {
     }
 
     this.arrrayDivisions = this.createArrayDivisions();
+  }
+
+  public getState(): {} {
+    return this.state;
   }
 
   // создать массив делений для шкалы

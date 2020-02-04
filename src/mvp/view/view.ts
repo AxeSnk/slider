@@ -5,78 +5,12 @@ import Handle from "./handle/handle";
 import Fill from "./fill/fill";
 import Scale from "./scale/scale";
 
-export interface IView extends EventEmitter {
-  updateHandles(
-    vertical: boolean,
-    sliderHeight: number,
-    sliderWidth: number,
-    posOther: number,
-    id: number
-  ): void;
-  updateTooltip(
-    minVal: number,
-    maxVal: number,
-    handleHeight: number,
-    position: number,
-    width: number,
-    vertical: boolean,
-    id: number,
-    posOther: number
-  ): void;
-
-  makeVerticalSlider(): void;
-  makeVerticalFill(): void;
-  makeVerticalScale(): void;
-  makeHorizontalScale(): void;
-
-  renderFill(): void;
-  renderHandle(
-    sliderWidth: number,
-    value: number,
-    valEnd: number,
-    shift: number,
-    difference: number,
-    vertical: boolean,
-    sliderHeight: number
-  ): void;
-  renderTooltip(
-    val: number,
-    valEnd: number,
-    minVal: number,
-    maxVal: number,
-    handleHeight: number,
-    vertical: boolean
-  ): void;
-  renderScale(arrrayOfDivisions: number[]): void;
-
-  getHeight(): number;
-  getWidth(): number;
-  getHandleWidth(): number;
-  getHandleHeight(): number;
-  getPositionHandle(id: number): number;
-
-  setPositionHandle(
-    id: number,
-    vertical: boolean,
-    value: number,
-    shift: number,
-    sliderHeight: number,
-    sliderWidth: number,
-    difference: number,
-    step: number
-  ): void;
-  setRange(): boolean;
-  addHandles(): void;
-  addOnHandles(): void;
-}
-
-export default class View extends EventEmitter implements IView {
+export default class View extends EventEmitter {
   private root: HTMLElement;
   private slider: Slider;
   private fill: Fill;
   private handles: Handle[];
   private scale: Scale;
-  private range: boolean = false;
 
   constructor(root: HTMLElement) {
     super();
@@ -108,10 +42,6 @@ export default class View extends EventEmitter implements IView {
     );
   }
 
-  public setRange(): boolean {
-    return (this.range = true);
-  }
-
   private addSlider(): Slider {
     return new Slider(this.root);
   }
@@ -120,8 +50,8 @@ export default class View extends EventEmitter implements IView {
     return new Fill(this.slider.getElement());
   }
 
-  public addOnHandles(): void {
-    if (this.range) {
+  public addOnHandles(state): void {
+    if (state.range) {
       this.handles[0].on("drag_0", this.emitDrag.bind(this));
       this.handles[1].on("drag_1", this.emitDrag.bind(this));
     } else {
@@ -129,11 +59,11 @@ export default class View extends EventEmitter implements IView {
     }
   }
 
-  public addHandles(): void {
+  public addHandles(state): void {
     this.handles = [];
     this.handles.push(new Handle(this.slider.getElement(), 0));
 
-    if (this.range) {
+    if (state.range) {
       this.handles.push(new Handle(this.slider.getElement(), 1));
     }
   }
@@ -150,8 +80,8 @@ export default class View extends EventEmitter implements IView {
     this.scale.render(arrrayOfDivisions);
   }
 
-  public renderFill(): void {
-    if (this.range) {
+  public renderFill(state): void {
+    if (state.range) {
       this.fill.renderRangeFill(
         this.handles[0].getPositionHandle(),
         this.handles[1].getPositionHandle(),
@@ -170,8 +100,8 @@ export default class View extends EventEmitter implements IView {
     }
   }
 
-  public makeVerticalFill(): void {
-    if (this.range) {
+  public makeVerticalFill(state): void {
+    if (state.range) {
       this.fill.makeVertical(
         this.handles[0].getPositionY() - this.slider.getPositionY(),
         this.handles[1].getPositionY() -
@@ -188,52 +118,31 @@ export default class View extends EventEmitter implements IView {
     }
   }
 
-  public renderHandle(
-    sliderWidth: number,
-    value: number,
-    valEnd: number,
-    shift: number,
-    difference: number,
-    vertical: boolean,
-    sliderHeight: number
-  ): void {
+  public renderHandle(state, sliderWidth: number, sliderHeight: number): void {
     this.handles[0].renderHandle(
+      state.val,
+      state.minVal,
+      state.maxVal,
+      state.vertical,
       sliderWidth,
-      value,
-      shift,
-      difference,
-      vertical,
       sliderHeight
     );
-    if (this.range) {
+    if (state.range) {
       this.handles[1].renderHandle(
+        state.valEnd,
+        state.minVal,
+        state.maxVal,
+        state.vertical,
         sliderWidth,
-        valEnd,
-        shift,
-        difference,
-        vertical,
         sliderHeight
       );
     }
   }
 
-  public renderTooltip(
-    val: number,
-    valEnd: number,
-    minVal: number,
-    maxVal: number,
-    handleHeight: number,
-    vertical: boolean
-  ): void {
-    this.handles[0].renderTooltip(val, minVal, maxVal, handleHeight, vertical);
-    if (this.range) {
-      this.handles[1].renderTooltip(
-        valEnd,
-        minVal,
-        maxVal,
-        handleHeight,
-        vertical
-      );
+  public renderTooltip(state, handleHeight: number): void {
+    this.handles[0].renderTooltip(state.val, state.minVal, state.maxVal, state.vertical, handleHeight);
+    if (state.range) {
+      this.handles[1].renderTooltip(state.valEnd, state.minVal, state.maxVal, state.vertical, handleHeight);
     }
   }
 
@@ -256,23 +165,23 @@ export default class View extends EventEmitter implements IView {
   }
 
   public updateHandles(
-    vertical: boolean,
+    state,
     sliderHeight: number,
     sliderWidth: number,
     posOther: number | null,
     id: number
   ): void {
-    if (this.range) {
+    if (state.range) {
       if (id == 0) {
         this.handles[0].updateHandle(
-          vertical,
+          state.vertical,
           sliderHeight,
           sliderWidth,
           posOther
         );
       } else {
         this.handles[1].updateHandle(
-          vertical,
+          state.vertical,
           sliderHeight,
           sliderWidth,
           posOther
@@ -280,7 +189,7 @@ export default class View extends EventEmitter implements IView {
       }
     } else {
       this.handles[0].updateHandle(
-        vertical,
+        state.vertical,
         sliderHeight,
         sliderWidth,
         posOther
@@ -289,34 +198,28 @@ export default class View extends EventEmitter implements IView {
   }
 
   public updateTooltip(
-    minVal: number,
-    maxVal: number,
+    state: any,
     handleHeight: number,
     position: number,
     width: number,
-    vertical: boolean,
     id: number,
-    posOther: number | null,
+    posOther: number | null
   ): void {
-    if (this.range) {
+    if (state.range) {
       this.handles[id].updateTooltip(
-        minVal,
-        maxVal,
+        state,
         handleHeight,
         position,
         width,
-        vertical,
         id,
         posOther
       );
     } else {
       this.handles[0].updateTooltip(
-        minVal,
-        maxVal,
+        state,
         handleHeight,
         position,
         width,
-        vertical,
         id,
         posOther
       );

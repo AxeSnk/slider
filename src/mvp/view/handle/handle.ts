@@ -83,45 +83,41 @@ export default class Handle extends EventEmitter {
     val: number,
     minVal: number,
     maxVal: number,
-    handleHeight: number,
-    vertical: boolean
+    vertical: boolean,
+    handleHeight: number
   ): void {
-    this.tooltip.renderTooltip(val, minVal, maxVal, handleHeight, vertical);
+    this.tooltip.renderTooltip(val, minVal, maxVal, vertical, handleHeight);
   }
 
   public updateTooltip(
-    minVal: number,
-    maxVal: number,
+    state: { minVal: number; maxVal: number; vertical: boolean },
     handleHeight: number,
     position: number,
     width: number,
-    vertical: boolean,
     id: number,
     posOther: number | null
   ): void {
     this.tooltip.updateTooltip(
-      minVal,
-      maxVal,
+      state,
       handleHeight,
       position,
       width,
-      vertical,
       id,
       posOther
     );
   }
 
   public renderHandle(
-    sliderWidth: number,
-    value: number,
-    shift: number,
-    difference: number,
+    val: number,
+    minVal: number,
+    maxVal: number,
     vertical: boolean,
+    sliderWidth: number,
     sliderHeight: number
   ): void {
     if (vertical) {
       let height: number = sliderHeight - this.handle.offsetHeight;
-      let newLeft: number = ((value - shift) * height) / difference;
+      let newLeft: number = ((val - minVal) * height) / (maxVal - minVal);
 
       if (newLeft < 0) {
         this.handle.style.top = 0 + "px";
@@ -132,7 +128,9 @@ export default class Handle extends EventEmitter {
       }
     } else {
       let width: number = sliderWidth - this.handle.offsetWidth;
-      let newLeft: number = ((value - shift) * width) / difference;
+      let newLeft: number = ((val - minVal) * width) / (maxVal - minVal);
+
+      console.log(minVal);
 
       if (newLeft < 0) {
         this.handle.style.left = 0 + "px";

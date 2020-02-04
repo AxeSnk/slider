@@ -18,8 +18,8 @@ export default class Tooltip extends EventEmitter {
     val: number,
     minVal: number,
     maxVal: number,
-    handleHeight: number,
-    vertical: boolean
+    vertical: boolean,
+    handleHeight: number
   ): void {
     if (val < minVal) {
       this.tooltip.innerHTML = `${minVal}`;
@@ -38,41 +38,40 @@ export default class Tooltip extends EventEmitter {
   }
 
   public updateTooltip(
-    minVal: number,
-    maxVal: number,
+    state: { minVal: number; maxVal: number; vertical: boolean },
     handleHeight: number,
     position: number,
     width: number,
-    vertical: boolean,
     id: number,
     posOther: number | null
   ): void {
     let val: number = Math.round(
-      (position * (maxVal - minVal)) / (width - handleHeight) + minVal
+      (position * (state.maxVal - state.minVal)) / (width - handleHeight) +
+        state.minVal
     );
     if (id === 0) {
       if (posOther ? position >= posOther : false) {
         false;
-      } else if (minVal > val) {
-        this.tooltip.innerHTML = `${minVal}`;
-      } else if (val > maxVal) {
-        this.tooltip.innerHTML = `${maxVal}`;
+      } else if (state.minVal > val) {
+        this.tooltip.innerHTML = `${state.minVal}`;
+      } else if (val > state.maxVal) {
+        this.tooltip.innerHTML = `${state.maxVal}`;
       } else {
         this.tooltip.innerHTML = `${val}`;
       }
     } else {
-      if (posOther ? position <= posOther: false) {
+      if (posOther ? position <= posOther : false) {
         false;
-      } else if (minVal > val) {
-        this.tooltip.innerHTML = `${minVal}`;
-      } else if (val > maxVal) {
-        this.tooltip.innerHTML = `${maxVal}`;
+      } else if (state.minVal > val) {
+        this.tooltip.innerHTML = `${state.minVal}`;
+      } else if (val > state.maxVal) {
+        this.tooltip.innerHTML = `${state.maxVal}`;
       } else {
         this.tooltip.innerHTML = `${val}`;
       }
     }
 
-    if (vertical) {
+    if (state.vertical) {
       this.tooltip.style.left = -handleHeight * 1.4 + "px";
     } else {
       this.tooltip.style.top = -handleHeight * 1.4 + "px";
