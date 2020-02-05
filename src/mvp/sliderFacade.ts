@@ -17,12 +17,11 @@ declare global {
   $.fn.slider = function(options, ...args) {
     const init = () =>
       this.map(function() {
+        const data = $(this).data();
         options = $.extend(defaultOptions, options);
 
         const settings =
-          typeof options === "object"
-            ? { ...$(this).data(), ...options }
-            : $(this).data();
+          typeof options === "object" ? { ...data, ...options } : data;
 
         const model = new Model(settings);
         const view = new View(this);

@@ -40,7 +40,8 @@ export default class Model {
     this.arrrayDivisions = this.createArrayDivisions();
   }
   public setState(options) {
-
+    
+    this.setState = options;
   }
 
   public getState(): {} {

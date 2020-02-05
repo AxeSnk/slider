@@ -22,7 +22,20 @@ class Panel {
   }
 
   handleChange(event: Event) {
+    event.preventDefault();
 
+    const options: { [key: string]: any } = {};
+    const target = event.currentTarget as HTMLFormElement;
+
+    [...target.elements].forEach(input => {
+      const { name, type, value, checked } = input as HTMLInputElement;
+      const hasChecked = type === "radio" || type === "checkbox";
+      if (type === "submit") return;
+
+      options[name] = hasChecked ? checked : value.trim();
+    });
+
+    this.$slider.slider("setState", options);
   }
 }
 

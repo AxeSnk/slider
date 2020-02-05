@@ -17,6 +17,7 @@ export default class Presenter {
   }
   public setState(options): void {
     this.model.setState(options)
+    console.log("setState = ", options)
   }
   public getState(): {} {
     return this.model.getState();
