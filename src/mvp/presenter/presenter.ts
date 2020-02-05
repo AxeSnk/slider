@@ -1,5 +1,6 @@
 import Model from "../model/model";
 import View from "../view/view";
+import IOptions from "../defaultOptions";
 
 export default class Presenter {
   private model: Model;
@@ -15,9 +16,8 @@ export default class Presenter {
 
     this.view.on("dragHandle", this.update.bind(this));
   }
-  public setState(options): void {
+  public setState(options: Partial<IOptions>): void {
     this.model.setState(options)
-    console.log("setState = ", options)
   }
   public getState(): {} {
     return this.model.getState();

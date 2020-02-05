@@ -9,7 +9,7 @@ declare global {
   }
 
   interface JQuery {
-    slider(options?: any, method?: any): any;
+    slider: (options?: any, args?: any) => any;
   }
 }
 
@@ -18,8 +18,6 @@ declare global {
     const init = () =>
       this.map(function() {
         const data = $(this).data();
-        options = $.extend(defaultOptions, options);
-
         const settings =
           typeof options === "object" ? { ...data, ...options } : data;
 

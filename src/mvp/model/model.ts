@@ -1,47 +1,28 @@
-import IOptions from "../defaultOptions";
+import IOptions, { defaultOptions } from "../defaultOptions";
 
 export default class Model {
   private state: IOptions;
-  private val: number; // значение ползунка
-  private valStart: number; // положение начального ползунка (range = true)
-  private valEnd: number; // положение конечного ползунка (range = true)
-  private minVal: number; // минимальное значение
-  private maxVal: number; // маскимальное значение
-  private step: number; // шаг ползунка
-  private range: boolean; // вкл/выкл диапазон слайдера
-  private tooltip: boolean; // вкл/выкл подсказку над ползунком
-  private vertical: boolean; // вкл/выкл слайдер вертикально
-  private scale: boolean; // вкл/выкл шкалу значений
   private arrrayDivisions: number[]; // массив делений шкалы
 
   constructor(options: IOptions) {
-    if (options.range) {
-      this.state = options;
-      this.state.val = options.valStart
-    } else this.state = options;
+    if (defaultOptions.range) {
+      this.state = options ? { ...defaultOptions, ...options } : defaultOptions;
+      this.state.val = defaultOptions.valStart;
+    } else
+      this.state = options ? { ...defaultOptions, ...options } : defaultOptions;
 
-
-    this.valStart = options.valStart;
-    this.valEnd = options.valEnd;
-    this.minVal = options.minVal;
-    this.maxVal = options.maxVal;
-    this.step = options.step;
-    this.range = options.range;
-    this.tooltip = options.tooltip;
-    this.vertical = options.vertical;
-    this.scale = options.scale;
-
-    if (this.range) {
-      this.val = this.valStart;
+    if (this.state.range) {
+      this.state.val = this.state.valStart;
     } else {
-      this.val = options.val;
+      this.state.val = this.state.val;
     }
-
     this.arrrayDivisions = this.createArrayDivisions();
   }
-  public setState(options) {
-    
-    this.setState = options;
+  public setState(options: Partial<IOptions>) {
+    let state = this.state;
+    let newOptions = { ...state, ...options };
+    this.state = newOptions;
+    console.log(newOptions);
   }
 
   public getState(): {} {
@@ -52,10 +33,10 @@ export default class Model {
   private createArrayDivisions(): number[] {
     let arr: number[] = [];
     let i: number;
-    for (i = this.minVal; i < this.maxVal; i = i + 1) {
+    for (i = this.state.minVal; i < this.state.maxVal; i = i + 1) {
       arr.push(i);
     }
-    arr.push(this.maxVal);
+    arr.push(this.state.maxVal);
 
     return arr;
   }
@@ -67,63 +48,59 @@ export default class Model {
   public setVal(left: number, width: number, id: number): void {
     if (id === 0) {
       let val =
-        Math.round((left * (this.maxVal - this.minVal)) / width) + this.minVal;
-      this.val = val;
+        Math.round((left * (this.state.maxVal - this.state.minVal)) / width) +
+        this.state.minVal;
+      this.state.val = val;
     } else {
       let valEnd =
-        Math.round((left * (this.maxVal - this.minVal)) / width) + this.minVal;
-      this.valEnd = valEnd;
+        Math.round((left * (this.state.maxVal - this.state.minVal)) / width) +
+        this.state.minVal;
+      this.state.valEnd = valEnd;
     }
   }
 
-  public setValue(key: string, newValue: number): void {
-    let { range, valStart, valEnd } = this.state
-
-
-  }
-
   public getDifference(): number {
-    let difference = this.maxVal - this.minVal;
+    let difference = this.state.maxVal - this.state.minVal;
     return difference;
   }
 
   public getVal(): number {
-    return this.val;
+    return this.state.val;
   }
 
   public getValStart(): number {
-    return this.valStart;
+    return this.state.valStart;
   }
 
   public getValEnd(): number {
-    return this.valEnd;
+    return this.state.valEnd;
   }
 
   public getMinVal(): any {
-    return this.minVal;
+    return this.state.minVal;
   }
 
   public getMaxVal(): any {
-    return this.maxVal;
+    return this.state.maxVal;
   }
 
   public getStep(): number {
-    return this.step;
+    return this.state.step;
   }
 
   public getRangeMask(): boolean {
-    return this.range;
+    return this.state.range;
   }
 
   public getTooltipMask(): boolean {
-    return this.tooltip;
+    return this.state.tooltip;
   }
 
   public getVerticalMask(): boolean {
-    return this.vertical;
+    return this.state.vertical;
   }
 
   public getScaleMask(): boolean {
-    return this.scale;
+    return this.state.scale;
   }
 }
