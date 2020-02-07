@@ -20,9 +20,17 @@ export default class Model {
   }
   public setState(options: Partial<IOptions>) {
     let state = this.state;
+    
+    function convOptions(obj): void {
+      for (let key in obj) {
+        obj[key] = +obj[key]
+      }
+    }
+
+    convOptions(options)
+
     let newOptions = { ...state, ...options };
     this.state = newOptions;
-    console.log(newOptions);
   }
 
   public getState(): {} {

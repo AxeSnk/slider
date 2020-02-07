@@ -8,6 +8,8 @@ class Panel {
     this.root = root;
     this.$slider = $slider;
 
+    this.handleChange = this.handleChange.bind(this);
+
     this.init();
   }
 
