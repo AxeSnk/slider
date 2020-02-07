@@ -19,16 +19,23 @@ export default class Model {
     this.arrrayDivisions = this.createArrayDivisions();
   }
   public setState(options: Partial<IOptions>) {
-    let state = this.state;
-    
+    let isValue = (key: string) =>
+      ["val", "minVal", "maxVal", "valStart", "valEnd", "step"].indexOf(key) !== -1;
+      
     function convOptions(obj): void {
       for (let key in obj) {
-        obj[key] = +obj[key]
+        if (isValue(key)) {
+          obj[key] = Number(obj[key]);
+        } else {
+          obj[key] = Boolean(obj[key]);
+        }
       }
     }
 
-    convOptions(options)
+    convOptions(options);
+    console.log(options);
 
+    let state = this.state;
     let newOptions = { ...state, ...options };
     this.state = newOptions;
   }

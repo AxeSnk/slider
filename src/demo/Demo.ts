@@ -12,7 +12,7 @@ class Demo {
 
   init(options: Partial<IOptions>) {
     const slider = this.root.querySelector('.js-demo__slider .slider__wrapper');
-    const panel = this.root.querySelector('.js-demo__panel .panel__wrapper .panel');
+    const panel = this.root.querySelector('.js-demo__panel .panel__wrapper');
 
     this.$slider = $(slider).slider(options) as JQuery<Element>;
     this.panel = new Panel(panel as HTMLElement, this.$slider);
