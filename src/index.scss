@@ -137,11 +137,24 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    
-    .panel__inputs {
+
+    .panel__form {
       display: flex;
-      flex-direction: column;
+
+      .panel__checkbox {
+        margin-right: 20px;
+      }
+
+      .panel__inputs {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          margin-bottom: 10px;
+        }
+      }
     }
+    
   }
 }
         

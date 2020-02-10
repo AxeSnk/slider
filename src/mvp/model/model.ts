@@ -9,10 +9,10 @@ export default class Model extends EventEmitter {
     super();
 
     if (defaultOptions.range) {
-      this.state = options ? { ...defaultOptions, ...options } : defaultOptions;
+      options ? this.setState({ ...defaultOptions, ...options }) : this.setState(defaultOptions);
       this.state.val = defaultOptions.valStart;
     } else
-      this.state = options ? { ...defaultOptions, ...options } : defaultOptions;
+      options ? this.setState({ ...defaultOptions, ...options }) : this.setState(defaultOptions);
 
     if (this.state.range) {
       this.state.val = this.state.valStart;
@@ -20,6 +20,8 @@ export default class Model extends EventEmitter {
       this.state.val = this.state.val;
     }
     this.arrrayDivisions = this.createArrayDivisions();
+
+    this.setState = this.setState.bind(this)
   }
   public setState(options: Partial<IOptions>) {
     let isValue = (key: string) =>
@@ -43,6 +45,7 @@ export default class Model extends EventEmitter {
     this.state = newOptions;
 
     this.emit("updateState", newOptions);
+    console.log(this.events)
   }
 
   public getState(): {} {

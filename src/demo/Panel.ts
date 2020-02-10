@@ -1,3 +1,5 @@
+import IOptions from "../mvp/defaultOptions";
+
 class Panel {
   root: HTMLElement;
   $slider: JQuery<Element>;
@@ -15,7 +17,8 @@ class Panel {
   }
 
   init(): void {
-    this.$slider.slider('subscribeToUpdates', this.update);
+    this.$slider.slider("subscribeToUpdates", this.update);
+
     let form = this.root.querySelector("form");
     let input = form.querySelector("input");
 
@@ -43,20 +46,21 @@ class Panel {
   }
 
   update(state) {
-    [...this.form.elements].forEach((element) => {
-      const input = element as HTMLInputElement;
-      const { name, type } = input;
-      const defaultValue = state[name];
-      const hasChecked = type === 'radio' || type === 'checkbox';
+    console.log(state);
+    // [...this.form.elements].forEach((element) => {
+    //   const input = element as HTMLInputElement;
+    //   const { name, type } = input;
+    //   const defaultValue = state[name];
+    //   const hasChecked = type === 'radio' || type === 'checkbox';
 
-      if (defaultValue === undefined) return;
+    //   if (defaultValue === undefined) return;
 
-      if (hasChecked) {
-        input.checked = defaultValue as boolean;
-      } else {
-        input.value = defaultValue.toString();
-      }
-    });
+    //   if (hasChecked) {
+    //     input.checked = defaultValue as boolean;
+    //   } else {
+    //     input.value = defaultValue.toString();
+    //   }
+    // });
   }
 }
 

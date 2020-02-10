@@ -1,8 +1,10 @@
 export default class EventEmitter {
-  private events: { [key: string]: Array<Function> };
+  public events: { [key: string]: Array<Function> };
 
   constructor() {
     this.events = {};
+    this.on = this.on.bind(this);
+    this.emit = this.emit.bind(this);
   }
 
   public on(type: string, callback: Function): void {

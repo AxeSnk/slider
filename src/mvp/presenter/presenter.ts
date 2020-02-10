@@ -15,16 +15,12 @@ export default class Presenter {
     this.render();
 
     this.view.on("dragHandle", this.update.bind(this));
+    this.subscribeToUpdates = this.subscribeToUpdates.bind(this);
+    this.setState = this.setState.bind(this);
   }
 
   subscribeToUpdates(callback: Function) {
-    const updateEvents = [
-      'updateState',
-    ];
-
-    updateEvents.forEach(event =>
-      this.model.on(event, () => callback(this.model.getState())),
-    );
+    this.model.on('updateState', () => callback(this.model.getState()))
   }
 
   public setState(options: Partial<IOptions>): void {
@@ -177,5 +173,7 @@ export default class Presenter {
         }
       }
     }
+
+    
   }
 }
