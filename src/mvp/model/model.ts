@@ -1,10 +1,13 @@
 import IOptions, { defaultOptions } from "../defaultOptions";
+import EventEmitter from "../eventEmitter";
 
-export default class Model {
+export default class Model extends EventEmitter {
   private state: IOptions;
   private arrrayDivisions: number[]; // массив делений шкалы
 
   constructor(options: IOptions) {
+    super();
+
     if (defaultOptions.range) {
       this.state = options ? { ...defaultOptions, ...options } : defaultOptions;
       this.state.val = defaultOptions.valStart;
@@ -20,8 +23,9 @@ export default class Model {
   }
   public setState(options: Partial<IOptions>) {
     let isValue = (key: string) =>
-      ["val", "minVal", "maxVal", "valStart", "valEnd", "step"].indexOf(key) !== -1;
-      
+      ["val", "minVal", "maxVal", "valStart", "valEnd", "step"].indexOf(key) !==
+      -1;
+
     function convOptions(obj): void {
       for (let key in obj) {
         if (isValue(key)) {
@@ -33,11 +37,12 @@ export default class Model {
     }
 
     convOptions(options);
-    console.log(options);
 
     let state = this.state;
     let newOptions = { ...state, ...options };
     this.state = newOptions;
+
+    this.emit("updateState", newOptions);
   }
 
   public getState(): {} {

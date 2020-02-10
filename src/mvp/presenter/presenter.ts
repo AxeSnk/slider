@@ -16,6 +16,17 @@ export default class Presenter {
 
     this.view.on("dragHandle", this.update.bind(this));
   }
+
+  subscribeToUpdates(callback: Function) {
+    const updateEvents = [
+      'updateState',
+    ];
+
+    updateEvents.forEach(event =>
+      this.model.on(event, () => callback(this.model.getState())),
+    );
+  }
+
   public setState(options: Partial<IOptions>): void {
     this.model.setState(options)
   }

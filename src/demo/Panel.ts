@@ -9,11 +9,13 @@ class Panel {
     this.$slider = $slider;
 
     this.handleChange = this.handleChange.bind(this);
+    this.update = this.update.bind(this);
 
     this.init();
   }
 
   init(): void {
+    this.$slider.slider('subscribeToUpdates', this.update);
     let form = this.root.querySelector("form");
     let input = form.querySelector("input");
 
@@ -38,6 +40,23 @@ class Panel {
     });
 
     this.$slider.slider("setState", options);
+  }
+
+  update(state) {
+    [...this.form.elements].forEach((element) => {
+      const input = element as HTMLInputElement;
+      const { name, type } = input;
+      const defaultValue = state[name];
+      const hasChecked = type === 'radio' || type === 'checkbox';
+
+      if (defaultValue === undefined) return;
+
+      if (hasChecked) {
+        input.checked = defaultValue as boolean;
+      } else {
+        input.value = defaultValue.toString();
+      }
+    });
   }
 }
 
