@@ -1,0 +1,13 @@
+mixin slider({ value = 3, valStart = -1, valEnd = 3, minVal = -3, maxVal = 10, step = 2, range = true, tooltip = true, scale = true, vertical = false } = {})
+	.js-slider(
+            data-val= value,
+            data-val-start= valStart,
+            data-val-end= valEnd,
+            data-min-val= minVal,
+            data-max-val= maxVal,
+            data-step= step,
+            data-range= range.toString(),
+            data-tooltip= tooltip.toString(),
+            data-scale= scale.toString(),
+            data-vertical= vertical.toString()
+          )
