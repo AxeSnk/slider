@@ -7,7 +7,6 @@ export default class Slider {
 
   constructor(parent: HTMLElement) {
     this.parent = parent;
-
     this.slider = createElement("div", { class: "slider" });
     this.parent.appendChild(this.slider);
   }

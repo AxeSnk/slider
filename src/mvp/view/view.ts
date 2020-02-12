@@ -4,6 +4,7 @@ import Slider from "./slider/slider";
 import Handle from "./handle/handle";
 import Fill from "./fill/fill";
 import Scale from "./scale/scale";
+import IOptions from "../defaultOptions";
 
 export default class View extends EventEmitter {
   private root: HTMLElement;
@@ -74,8 +75,8 @@ export default class View extends EventEmitter {
     this.emit("dragHandle", left);
   }
 
-  public renderScale(arrrayOfDivisions: number[]): void {
-    this.scale.render(arrrayOfDivisions);
+  public renderScale(state: IOptions): void {
+    this.scale.render(state);
   }
 
   public renderFill(state): void {
@@ -142,18 +143,8 @@ export default class View extends EventEmitter {
     }
   }
 
-  public makeHorizontalScale(state): void {
-    this.scale.makeHorizontal(
-      this.slider.getLength(state),
-      this.handles[0].getWidth()
-    );
-  }
-
-  public makeVerticalScale(state): void {
-    this.scale.makeVertical(
-      this.slider.getLength(state),
-      this.handles[0].getHeight()
-    );
+  setOrientationScale(state: IOptions): void {
+    this.scale.setOrientation(state, this.slider.getLength(state), this.handles[0].getWidth())
   }
 
   public setOrientationSlider(state): void {

@@ -43,8 +43,8 @@ export default class Presenter {
       );
       this.view.makeVerticalFill(this.model.getState());
       if (this.model.getScaleMask()) {
-        this.view.renderScale(this.model.getArrayDivisions());
-        this.view.makeVerticalScale(this.getState());
+        this.view.renderScale(this.model.getState());
+        this.view.setOrientationScale(this.model.getState());
       }
     } else {
       this.view.setOrientationSlider(this.model.getState());
@@ -54,8 +54,8 @@ export default class Presenter {
       );
       this.view.renderFill(this.model.getState());
       if (this.model.getScaleMask()) {
-        this.view.renderScale(this.model.getArrayDivisions());
-        this.view.makeHorizontalScale(this.getState());
+        this.view.renderScale(this.model.getState());
+        this.view.setOrientationScale(this.model.getState());
       }
     }
 

@@ -3,7 +3,6 @@ import EventEmitter from "../eventEmitter";
 
 export default class Model extends EventEmitter {
   private state: IOptions;
-  private arrrayDivisions: number[]; // массив делений шкалы
 
   constructor(options: IOptions) {
     super();
@@ -19,10 +18,10 @@ export default class Model extends EventEmitter {
     } else {
       this.state.val = this.state.val;
     }
-    this.arrrayDivisions = this.createArrayDivisions();
 
     this.setState = this.setState.bind(this)
   }
+
   public setState(options: Partial<IOptions>) {
     let isValue = (key: string) =>
       ["val", "minVal", "maxVal", "valStart", "valEnd", "step"].indexOf(key) !==
@@ -47,24 +46,8 @@ export default class Model extends EventEmitter {
     this.emit("updateState", newOptions);
   }
 
-  public getState(): {} {
+  public getState(): IOptions {
     return this.state;
-  }
-
-  // создать массив делений для шкалы
-  private createArrayDivisions(): number[] {
-    let arr: number[] = [];
-    let i: number;
-    for (i = this.state.minVal; i < this.state.maxVal; i = i + 1) {
-      arr.push(i);
-    }
-    arr.push(this.state.maxVal);
-
-    return arr;
-  }
-
-  public getArrayDivisions(): number[] {
-    return this.arrrayDivisions;
   }
 
   public setVal(left: number, sliderLenght: number, id: number): void {
