@@ -55,13 +55,12 @@ export default class Handle extends EventEmitter {
     vertical: boolean,
     value: number,
     shift: number,
-    sliderHeight: number,
-    sliderWidth: number,
+    sliderLenght: number,
     difference: number,
     step: number
   ): void {
     if (vertical) {
-      let height: number = sliderHeight - this.handle.offsetHeight;
+      let height: number = sliderLenght - this.handle.offsetHeight;
       let stepCount: number = difference / step;
       let stepSize: number = height / stepCount;
       let newLeft: number = ((value - shift) * height) / difference;
@@ -69,7 +68,7 @@ export default class Handle extends EventEmitter {
 
       this.position = pos;
     } else {
-      let width: number = sliderWidth - this.handle.offsetWidth;
+      let width: number = sliderLenght - this.handle.offsetWidth;
       let stepCount: number = difference / step;
       let stepSize: number = width / stepCount;
       let newLeft: number = ((value - shift) * width) / difference;
@@ -93,7 +92,7 @@ export default class Handle extends EventEmitter {
     state: { minVal: number; maxVal: number; vertical: boolean },
     handleHeight: number,
     position: number,
-    width: number,
+    sliderLenght: number,
     id: number,
     posOther: number | null
   ): void {
@@ -101,7 +100,7 @@ export default class Handle extends EventEmitter {
       state,
       handleHeight,
       position,
-      width,
+      sliderLenght,
       id,
       posOther
     );
@@ -112,11 +111,10 @@ export default class Handle extends EventEmitter {
     minVal: number,
     maxVal: number,
     vertical: boolean,
-    sliderWidth: number,
-    sliderHeight: number
+    sliderLenght: number,
   ): void {
     if (vertical) {
-      let height: number = sliderHeight - this.handle.offsetHeight;
+      let height: number = sliderLenght - this.handle.offsetHeight;
       let newLeft: number = ((val - minVal) * height) / (maxVal - minVal);
 
       if (newLeft < 0) {
@@ -127,7 +125,7 @@ export default class Handle extends EventEmitter {
         this.handle.style.top = newLeft + "px";
       }
     } else {
-      let width: number = sliderWidth - this.handle.offsetWidth;
+      let width: number = sliderLenght - this.handle.offsetWidth;
       let newLeft: number = ((val - minVal) * width) / (maxVal - minVal);
 
       if (newLeft < 0) {
@@ -142,13 +140,12 @@ export default class Handle extends EventEmitter {
 
   public updateHandle(
     vertical: boolean,
-    sliderHeight: number,
-    sliderWidth: number,
+    sliderLenght: number,
     posOther: number
   ): void {
     let pos = this.position;
-    let height: number = sliderHeight - this.handle.offsetHeight;
-    let width: number = sliderWidth - this.handle.offsetWidth;
+    let height: number = sliderLenght - this.handle.offsetHeight;
+    let width: number = sliderLenght - this.handle.offsetWidth;
 
     if (vertical) {
       if (this.id === 0) {

@@ -26,8 +26,7 @@ export default class View extends EventEmitter {
     vertical: boolean,
     value: number,
     shift: number,
-    sliderHeight: number,
-    sliderWidth: number,
+    sliderLenght: number,
     difference: number,
     step: number
   ): void {
@@ -35,8 +34,7 @@ export default class View extends EventEmitter {
       vertical,
       value,
       shift,
-      sliderHeight,
-      sliderWidth,
+      sliderLenght,
       difference,
       step
     );
@@ -85,16 +83,16 @@ export default class View extends EventEmitter {
       this.fill.renderRangeFill(
         this.handles[0].getPositionHandle(),
         this.handles[1].getPositionHandle(),
-        this.handles[0].getPositionX() - this.slider.getPositionX(),
+        this.handles[0].getPositionX() - this.slider.getPosition(state),
         this.handles[1].getPositionX() -
           this.handles[0].getPositionX() +
           this.handles[0].getWidth() / 2,
-        this.slider.getWidth()
+        this.slider.getLength(state)
       );
     } else {
       this.fill.renderFill(
         this.handles[0].getPositionX() -
-          this.slider.getPositionX() +
+          this.slider.getPosition(state) +
           this.handles[0].getWidth() / 2
       );
     }
@@ -103,7 +101,7 @@ export default class View extends EventEmitter {
   public makeVerticalFill(state): void {
     if (state.range) {
       this.fill.makeVertical(
-        this.handles[0].getPositionY() - this.slider.getPositionY(),
+        this.handles[0].getPositionY() - this.slider.getPosition(state),
         this.handles[1].getPositionY() -
           this.handles[0].getPositionY() +
           this.handles[0].getWidth() / 2
@@ -112,20 +110,19 @@ export default class View extends EventEmitter {
       this.fill.makeVertical(
         0,
         this.handles[0].getPositionY() -
-          this.slider.getPositionY() +
+          this.slider.getPosition(state) +
           this.handles[0].getWidth() / 2
       );
     }
   }
 
-  public renderHandle(state, sliderWidth: number, sliderHeight: number): void {
+  public renderHandle(state, sliderLenght: number): void {
     this.handles[0].renderHandle(
       state.val,
       state.minVal,
       state.maxVal,
       state.vertical,
-      sliderWidth,
-      sliderHeight
+      sliderLenght,
     );
     if (state.range) {
       this.handles[1].renderHandle(
@@ -133,8 +130,7 @@ export default class View extends EventEmitter {
         state.minVal,
         state.maxVal,
         state.vertical,
-        sliderWidth,
-        sliderHeight
+        sliderLenght,
       );
     }
   }
@@ -146,28 +142,27 @@ export default class View extends EventEmitter {
     }
   }
 
-  public makeHorizontalScale(): void {
+  public makeHorizontalScale(state): void {
     this.scale.makeHorizontal(
-      this.slider.getWidth(),
+      this.slider.getLength(state),
       this.handles[0].getWidth()
     );
   }
 
-  public makeVerticalScale(): void {
+  public makeVerticalScale(state): void {
     this.scale.makeVertical(
-      this.slider.getHeight(),
+      this.slider.getLength(state),
       this.handles[0].getHeight()
     );
   }
 
-  public makeVerticalSlider(): void {
-    this.slider.makeVertical();
+  public setOrientationSlider(state): void {
+    this.slider.setOrientation(state);
   }
 
   public updateHandles(
     state,
-    sliderHeight: number,
-    sliderWidth: number,
+    sliderLenght: number,
     posOther: number | null,
     id: number
   ): void {
@@ -175,23 +170,20 @@ export default class View extends EventEmitter {
       if (id == 0) {
         this.handles[0].updateHandle(
           state.vertical,
-          sliderHeight,
-          sliderWidth,
+          sliderLenght,
           posOther
         );
       } else {
         this.handles[1].updateHandle(
           state.vertical,
-          sliderHeight,
-          sliderWidth,
+          sliderLenght,
           posOther
         );
       }
     } else {
       this.handles[0].updateHandle(
         state.vertical,
-        sliderHeight,
-        sliderWidth,
+        sliderLenght,
         posOther
       );
     }
@@ -201,7 +193,7 @@ export default class View extends EventEmitter {
     state: any,
     handleHeight: number,
     position: number,
-    width: number,
+    sliderLenght: number,
     id: number,
     posOther: number | null
   ): void {
@@ -210,7 +202,7 @@ export default class View extends EventEmitter {
         state,
         handleHeight,
         position,
-        width,
+        sliderLenght,
         id,
         posOther
       );
@@ -219,19 +211,15 @@ export default class View extends EventEmitter {
         state,
         handleHeight,
         position,
-        width,
+        sliderLenght,
         id,
         posOther
       );
     }
   }
 
-  public getHeight(): number {
-    return this.slider.getHeight();
-  }
-
-  public getWidth(): number {
-    return this.slider.getWidth();
+  getLenhgtSlider(state): number {
+    return this.slider.getLength(state);
   }
 
   public getHandleWidth(): number {

@@ -41,12 +41,12 @@ export default class Tooltip extends EventEmitter {
     state: { minVal: number; maxVal: number; vertical: boolean },
     handleHeight: number,
     position: number,
-    width: number,
+    sliderLenght: number,
     id: number,
     posOther: number | null
   ): void {
     let val: number = Math.round(
-      (position * (state.maxVal - state.minVal)) / (width - handleHeight) +
+      (position * (state.maxVal - state.minVal)) / (sliderLenght - handleHeight) +
         state.minVal
     );
     if (id === 0) {

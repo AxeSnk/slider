@@ -45,7 +45,6 @@ export default class Model extends EventEmitter {
     this.state = newOptions;
 
     this.emit("updateState", newOptions);
-    console.log(this.events)
   }
 
   public getState(): {} {
@@ -68,15 +67,15 @@ export default class Model extends EventEmitter {
     return this.arrrayDivisions;
   }
 
-  public setVal(left: number, width: number, id: number): void {
+  public setVal(left: number, sliderLenght: number, id: number): void {
     if (id === 0) {
       let val =
-        Math.round((left * (this.state.maxVal - this.state.minVal)) / width) +
+        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght) +
         this.state.minVal;
       this.state.val = val;
     } else {
       let valEnd =
-        Math.round((left * (this.state.maxVal - this.state.minVal)) / width) +
+        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght) +
         this.state.minVal;
       this.state.valEnd = valEnd;
     }

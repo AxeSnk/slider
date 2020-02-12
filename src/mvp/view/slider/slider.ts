@@ -1,4 +1,5 @@
 import createElement from "../../utility";
+import IOptions from "../../defaultOptions";
 
 export default class Slider {
   private slider: HTMLElement;
@@ -11,27 +12,23 @@ export default class Slider {
     this.parent.appendChild(this.slider);
   }
 
-  public makeVertical(): void {
-    this.slider.classList.add("slider--vertical");
+  setOrientation(state: IOptions): void {
+    state.vertical
+      ? this.slider.classList.add("slider--vertical")
+      : this.slider.classList.remove("slider--vertical");
   }
 
-  public getElement(): HTMLElement {
+  getPosition(state: IOptions): number {
+    return state.vertical
+      ? this.slider.getBoundingClientRect().top
+      : this.slider.getBoundingClientRect().left;
+  }
+
+  getLength(state: IOptions): number {
+    return state.vertical ? this.slider.offsetHeight : this.slider.offsetWidth;
+  }
+
+  getElement(): HTMLElement {
     return this.slider;
-  }
-
-  public getPositionX(): number {
-    return this.slider.getBoundingClientRect().left;
-  }
-
-  public getPositionY(): number {
-    return this.slider.getBoundingClientRect().top;
-  }
-
-  public getWidth(): number {
-    return this.slider.offsetWidth;
-  }
-
-  public getHeight(): number {
-    return this.slider.offsetHeight;
   }
 }

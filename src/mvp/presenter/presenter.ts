@@ -35,28 +35,27 @@ export default class Presenter {
   }
 
   private render(): void {
-    if (this.model.getVerticalMask()) {
-      this.view.makeVerticalSlider();
+    if (this.model.getState()['vertical']) {
+      this.view.setOrientationSlider(this.model.getState());
       this.view.renderHandle(
         this.model.getState(),
-        this.view.getWidth(),
-        this.view.getHeight()
+        this.view.getLenhgtSlider(this.model.getState()),
       );
       this.view.makeVerticalFill(this.model.getState());
       if (this.model.getScaleMask()) {
         this.view.renderScale(this.model.getArrayDivisions());
-        this.view.makeVerticalScale();
+        this.view.makeVerticalScale(this.getState());
       }
     } else {
+      this.view.setOrientationSlider(this.model.getState());
       this.view.renderHandle(
         this.model.getState(),
-        this.view.getWidth(),
-        this.view.getHeight()
+        this.view.getLenhgtSlider(this.model.getState()),
       );
       this.view.renderFill(this.model.getState());
       if (this.model.getScaleMask()) {
         this.view.renderScale(this.model.getArrayDivisions());
-        this.view.makeHorizontalScale();
+        this.view.makeHorizontalScale(this.getState());
       }
     }
 
@@ -83,8 +82,7 @@ export default class Presenter {
         this.model.getVerticalMask(),
         this.model.getVal(),
         this.model.getMinVal(),
-        this.view.getHeight(),
-        this.view.getWidth(),
+        this.view.getLenhgtSlider(this.model.getState()),
         this.model.getDifference(),
         this.model.getStep()
       );
@@ -93,15 +91,13 @@ export default class Presenter {
         this.model.getVerticalMask(),
         this.model.getValEnd(),
         this.model.getMinVal(),
-        this.view.getHeight(),
-        this.view.getWidth(),
+        this.view.getLenhgtSlider(this.model.getState()),
         this.model.getDifference(),
         this.model.getStep()
       );
       this.view.updateHandles(
         this.model.getState(),
-        this.view.getHeight(),
-        this.view.getWidth(),
+        this.view.getLenhgtSlider(this.model.getState()),
         this.view.getPositionHandle(Math.abs(id - 1)),
         id
       );
@@ -111,21 +107,19 @@ export default class Presenter {
         this.model.getVerticalMask(),
         this.model.getVal(),
         this.model.getMinVal(),
-        this.view.getHeight(),
-        this.view.getWidth(),
+        this.view.getLenhgtSlider(this.model.getState()),
         this.model.getDifference(),
         this.model.getStep()
       );
       this.view.updateHandles(
         this.model.getState(),
-        this.view.getHeight(),
-        this.view.getWidth(),
+        this.view.getLenhgtSlider(this.model.getState()),
         null,
         id
       );
     }
     if (this.model.getVerticalMask()) {
-      this.model.setVal(leftY, this.view.getHeight(), id);
+      this.model.setVal(leftY, this.view.getLenhgtSlider(this.model.getState()), id);
       this.view.makeVerticalFill(this.model.getState());
       if (this.model.getTooltipMask()) {
         if (this.model.getRangeMask()) {
@@ -133,7 +127,7 @@ export default class Presenter {
             this.model.getState(),
             this.view.getHandleHeight(),
             this.view.getPositionHandle(id),
-            this.view.getHeight(),
+            this.view.getLenhgtSlider(this.model.getState()),
             id,
             this.view.getPositionHandle(Math.abs(id - 1))
           );
@@ -142,14 +136,14 @@ export default class Presenter {
             this.model.getState(),
             this.view.getHandleHeight(),
             this.view.getPositionHandle(id),
-            this.view.getHeight(),
+            this.view.getLenhgtSlider(this.model.getState()),
             id,
             null
           );
         }
       }
     } else {
-      this.model.setVal(leftX, this.view.getWidth(), id);
+      this.model.setVal(leftX, this.view.getLenhgtSlider(this.model.getState()), id);
       this.view.renderFill(this.model.getState());
       if (this.model.getTooltipMask()) {
         if (this.model.getRangeMask()) {
@@ -157,7 +151,7 @@ export default class Presenter {
             this.model.getState(),
             this.view.getHandleHeight(),
             this.view.getPositionHandle(id),
-            this.view.getWidth(),
+            this.view.getLenhgtSlider(this.model.getState()),
             id,
             this.view.getPositionHandle(Math.abs(id - 1))
           );
@@ -166,7 +160,7 @@ export default class Presenter {
             this.model.getState(),
             this.view.getHandleHeight(),
             this.view.getPositionHandle(id),
-            this.view.getWidth(),
+            this.view.getLenhgtSlider(this.model.getState()),
             id,
             null
           );
