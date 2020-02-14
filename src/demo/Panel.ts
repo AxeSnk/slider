@@ -17,7 +17,7 @@ class Panel {
   }
 
   init(): void {
-    this.$slider.slider("subscribeToUpdates", this.update);
+    this.$slider.slider("subscribeToUpdates", this.update.bind(this));
 
     let form = this.root.querySelector("form");
     let input = form.querySelector("input");
@@ -28,7 +28,7 @@ class Panel {
     this.form.addEventListener("change", this.handleChange);
   }
 
-  handleChange(event: Event) {
+  handleChange(event: Event): void {
     event.preventDefault();
 
     const options: { [key: string]: any } = {};
@@ -45,22 +45,21 @@ class Panel {
     this.$slider.slider("setState", options);
   }
 
-  update(state) {
-    console.log(state);
-    // [...this.form.elements].forEach((element) => {
-    //   const input = element as HTMLInputElement;
-    //   const { name, type } = input;
-    //   const defaultValue = state[name];
-    //   const hasChecked = type === 'radio' || type === 'checkbox';
+  update(state): void {
+    [...this.form.elements].forEach((element) => {
+      const input = element as HTMLInputElement;
+      const { name, type } = input;
+      const defaultValue = state[name];
+      const hasChecked = type === 'radio' || type === 'checkbox';
 
-    //   if (defaultValue === undefined) return;
+      if (defaultValue === undefined) return;
 
-    //   if (hasChecked) {
-    //     input.checked = defaultValue as boolean;
-    //   } else {
-    //     input.value = defaultValue.toString();
-    //   }
-    // });
+      if (hasChecked) {
+        input.checked = defaultValue as boolean;
+      } else {
+        input.value = defaultValue.toString();
+      }
+    });
   }
 }
 

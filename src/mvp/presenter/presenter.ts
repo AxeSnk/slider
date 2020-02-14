@@ -15,16 +15,24 @@ export default class Presenter {
     this.render();
 
     this.view.on("dragHandle", this.update.bind(this));
+    this.model.on("updateState", this.updateRender.bind(this));
     this.subscribeToUpdates = this.subscribeToUpdates.bind(this);
     this.setState = this.setState.bind(this);
   }
 
   subscribeToUpdates(callback: Function) {
-    this.model.on('updateState', () => callback(this.model.getState()))
+    this.model.on("updateState", () => callback(this.model.getState()));
+  }
+
+  updateRender(state: IOptions): void {
+    this.view.renderHandle(state, this.view.getLenhgtSlider(state));
+    this.view.renderFill(state);
+    this.view.renderTooltip(state, this.view.getHandleHeight());
+    this.view.renderScale(state);
   }
 
   public setState(options: Partial<IOptions>): void {
-    this.model.setState(options)
+    this.model.setState(options);
   }
   public getState(): {} {
     return this.model.getState();
@@ -35,11 +43,11 @@ export default class Presenter {
   }
 
   private render(): void {
-    if (this.model.getState()['vertical']) {
+    if (this.model.getState()["vertical"]) {
       this.view.setOrientationSlider(this.model.getState());
       this.view.renderHandle(
         this.model.getState(),
-        this.view.getLenhgtSlider(this.model.getState()),
+        this.view.getLenhgtSlider(this.model.getState())
       );
       this.view.makeVerticalFill(this.model.getState());
       if (this.model.getScaleMask()) {
@@ -50,7 +58,7 @@ export default class Presenter {
       this.view.setOrientationSlider(this.model.getState());
       this.view.renderHandle(
         this.model.getState(),
-        this.view.getLenhgtSlider(this.model.getState()),
+        this.view.getLenhgtSlider(this.model.getState())
       );
       this.view.renderFill(this.model.getState());
       if (this.model.getScaleMask()) {
@@ -119,7 +127,11 @@ export default class Presenter {
       );
     }
     if (this.model.getVerticalMask()) {
-      this.model.setVal(leftY, this.view.getLenhgtSlider(this.model.getState()), id);
+      this.model.setVal(
+        leftY,
+        this.view.getLenhgtSlider(this.model.getState()),
+        id
+      );
       this.view.makeVerticalFill(this.model.getState());
       if (this.model.getTooltipMask()) {
         if (this.model.getRangeMask()) {
@@ -143,7 +155,11 @@ export default class Presenter {
         }
       }
     } else {
-      this.model.setVal(leftX, this.view.getLenhgtSlider(this.model.getState()), id);
+      this.model.setVal(
+        leftX,
+        this.view.getLenhgtSlider(this.model.getState()),
+        id
+      );
       this.view.renderFill(this.model.getState());
       if (this.model.getTooltipMask()) {
         if (this.model.getRangeMask()) {
@@ -167,7 +183,5 @@ export default class Presenter {
         }
       }
     }
-
-    
   }
 }

@@ -111,7 +111,7 @@ export default class Handle extends EventEmitter {
     minVal: number,
     maxVal: number,
     vertical: boolean,
-    sliderLenght: number,
+    sliderLenght: number
   ): void {
     if (vertical) {
       let height: number = sliderLenght - this.handle.offsetHeight;

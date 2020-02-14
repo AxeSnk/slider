@@ -12,6 +12,13 @@ export default class Scale {
   }
 
   render(state: IOptions): void {
+    let old = document.querySelector(".slider__scale");
+    if (old) {
+      while (old.firstChild) {
+        old.removeChild(old.firstChild);
+      }
+    }
+
     let i: number;
     for (i = state.minVal; i <= state.maxVal; i = i + 1) {
       let division: HTMLElement = createElement("div", {
