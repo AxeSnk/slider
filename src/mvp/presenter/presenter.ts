@@ -28,6 +28,7 @@ export default class Presenter {
     this.view.renderHandle(state, this.view.getLenhgtSlider(state));
     this.view.renderFill(state);
     this.view.renderTooltip(state, this.view.getHandleHeight());
+    this.view.clearScale();
     this.view.renderScale(state);
   }
 

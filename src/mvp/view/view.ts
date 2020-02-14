@@ -78,6 +78,9 @@ export default class View extends EventEmitter {
   public renderScale(state: IOptions): void {
     this.scale.render(state);
   }
+  clearScale(): void {
+    this.scale.clear()
+  }
 
   public renderFill(state): void {
     if (state.range) {

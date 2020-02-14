@@ -1,0 +1,13 @@
+include input.pug
+
+mixin panel()
+	.panel__wrapper
+		h2 Настройки
+		form.panel__form
+			.panel__checkbox
+				+input('scale', 'checkbox')
+			.panel__inputs
+				+input('minVal', 'number')
+				+input('maxVal', 'number')
+				+input('val', 'number')
+				+input('valEnd', 'number')

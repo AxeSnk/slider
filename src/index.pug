@@ -1,4 +1,5 @@
 include slider.pug
+include demo/panel.pug
 
 <!DOCTYPE html>
 html(lang="ru")
@@ -13,31 +14,11 @@ html(lang="ru")
         .slider__wrapper
           +slider({valEnd : 5 })
       .js-demo__panel
-        .panel__wrapper
-          h2 Настройки
-          form.panel__form
-            .panel__checkbox
-              label(for="scale") scale
-                input(type="checkbox" name="scale")
-            .panel__inputs
-              label(for="minVal") minVal
-                input(type="number" name="minVal")
-              label(for="maxVal") maxVal
-                input(type="number" name="maxVal")
+        +panel
     .demo
       .js-demo__slider
         .slider__wrapper
           +slider({vertical : true, range: false })
       .js-demo__panel
-        .panel__wrapper
-          h2 Настройки
-          form.panel__form
-            .panel__checkbox
-              label(for="scale") scale
-                input(type="checkbox" name="scale")
-            .panel__inputs
-              label(for="minVal") minVal
-                input(type="number" name="minVal")
-              label(for="maxVal") maxVal
-                input(type="number" name="maxVal")
+        +panel
 

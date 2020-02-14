@@ -10,23 +10,24 @@ export default class Scale {
     this.scale = createElement("div", { class: "slider__scale" });
     this.parent.appendChild(this.scale);
   }
-
-  render(state: IOptions): void {
-    let old = document.querySelector(".slider__scale");
+  clear(): void {
+    const old = document.querySelector(".slider__scale");
     if (old) {
       while (old.firstChild) {
         old.removeChild(old.firstChild);
       }
     }
+  }
 
+  render(state: IOptions): void {
     let i: number;
     for (i = state.minVal; i <= state.maxVal; i = i + 1) {
-      let division: HTMLElement = createElement("div", {
+      const division: HTMLElement = createElement("div", {
         class: "slider__scale-division"
       });
       division.id = `slider__scale-division-${i}`;
       this.scale.appendChild(division);
-      let division__text: HTMLElement = createElement("div", {
+      const division__text: HTMLElement = createElement("div", {
         class: "division__text"
       });
       division__text.innerHTML = `${i}`;
