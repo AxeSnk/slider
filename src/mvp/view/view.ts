@@ -3,7 +3,6 @@ import EventEmitter from "../eventEmitter";
 import Slider from "./slider/slider";
 import Handle from "./handle/handle";
 import Fill from "./fill/fill";
-import Scale from "./scale/scale";
 import IOptions from "../defaultOptions";
 
 export default class View extends EventEmitter {
@@ -11,7 +10,6 @@ export default class View extends EventEmitter {
   private slider: Slider;
   private fill: Fill;
   private handles: Handle[];
-  private scale: Scale;
 
   constructor(root: HTMLElement) {
     super();
@@ -19,7 +17,6 @@ export default class View extends EventEmitter {
     this.root = root;
     this.slider = this.addSlider();
     this.fill = this.addFill();
-    this.scale = this.addScale();
   }
 
   public setPositionHandle(
@@ -67,19 +64,8 @@ export default class View extends EventEmitter {
     }
   }
 
-  private addScale(): Scale {
-    return new Scale(this.slider.getElement());
-  }
-
   private emitDrag(left: object): void {
     this.emit("dragHandle", left);
-  }
-
-  public renderScale(state: IOptions): void {
-    this.scale.render(state);
-  }
-  clearScale(): void {
-    this.scale.clear()
   }
 
   public renderFill(state): void {
@@ -126,7 +112,7 @@ export default class View extends EventEmitter {
       state.minVal,
       state.maxVal,
       state.vertical,
-      sliderLenght,
+      sliderLenght
     );
     if (state.range) {
       this.handles[1].renderHandle(
@@ -134,20 +120,28 @@ export default class View extends EventEmitter {
         state.minVal,
         state.maxVal,
         state.vertical,
-        sliderLenght,
+        sliderLenght
       );
     }
   }
 
   public renderTooltip(state, handleHeight: number): void {
-    this.handles[0].renderTooltip(state.val, state.minVal, state.maxVal, state.vertical, handleHeight);
+    this.handles[0].renderTooltip(
+      state.val,
+      state.minVal,
+      state.maxVal,
+      state.vertical,
+      handleHeight
+    );
     if (state.range) {
-      this.handles[1].renderTooltip(state.valEnd, state.minVal, state.maxVal, state.vertical, handleHeight);
+      this.handles[1].renderTooltip(
+        state.valEnd,
+        state.minVal,
+        state.maxVal,
+        state.vertical,
+        handleHeight
+      );
     }
-  }
-
-  setOrientationScale(state: IOptions): void {
-    this.scale.setOrientation(state, this.slider.getLength(state), this.handles[0].getWidth())
   }
 
   public setOrientationSlider(state): void {
@@ -162,24 +156,12 @@ export default class View extends EventEmitter {
   ): void {
     if (state.range) {
       if (id == 0) {
-        this.handles[0].updateHandle(
-          state.vertical,
-          sliderLenght,
-          posOther
-        );
+        this.handles[0].updateHandle(state.vertical, sliderLenght, posOther);
       } else {
-        this.handles[1].updateHandle(
-          state.vertical,
-          sliderLenght,
-          posOther
-        );
+        this.handles[1].updateHandle(state.vertical, sliderLenght, posOther);
       }
     } else {
-      this.handles[0].updateHandle(
-        state.vertical,
-        sliderLenght,
-        posOther
-      );
+      this.handles[0].updateHandle(state.vertical, sliderLenght, posOther);
     }
   }
 

@@ -8,7 +8,6 @@ export default interface IOptions {
   range: boolean; // диапазон слайдера
   tooltip: boolean; // подсказка над ползунком
   vertical: boolean; // вертикальный слайдер
-  scale: boolean; // шкала
 }
 
 var defaultOptions: IOptions = {
@@ -20,8 +19,7 @@ var defaultOptions: IOptions = {
   step: 2,
   range: true,
   tooltip: true,
-  vertical: false,
-  scale: true
+  vertical: false
 };
 
 export { defaultOptions };

@@ -1,4 +1,4 @@
- .demo {
+.demo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,10 +6,10 @@
   .js-demo__slider {
     display: flex;
     justify-content: center;
-  
+
     .slider__wrapper {
       padding: 50px;
-  
+
       .slider {
         width: 400px;
         position: relative;
@@ -19,13 +19,14 @@
         height: 5px;
         background-color: rgb(229, 229, 229);
         border-radius: 6px;
-    
+
         .slider__scale {
           position: absolute;
           display: flex;
           justify-content: space-between;
           justify-self: center;
-    
+          width: 95%;
+
           &-division {
             display: flex;
             justify-content: center;
@@ -33,7 +34,7 @@
             height: 10px;
             background-color: rgb(229, 229, 229);
             z-index: 98;
-    
+
             .division__text {
               position: absolute;
               top: 1.07rem;
@@ -44,14 +45,14 @@
             }
           }
         }
-    
+
         .slider__fill {
           position: absolute;
           height: 5px;
           background-color: rgb(231, 87, 53);
           border-radius: 6px;
         }
-    
+
         .slider__handle {
           display: flex;
           align-items: center;
@@ -64,7 +65,7 @@
           border-radius: 50%;
           cursor: pointer;
           z-index: 100;
-    
+
           .slider__tooltip {
             position: relative;
             width: fit-content;
@@ -76,7 +77,7 @@
             color: #fff;
             z-index: 99;
             pointer-events: none;
-    
+
             &::after {
               content: "";
               position: absolute;
@@ -92,20 +93,21 @@
           }
         }
       }
-    
+
       .slider--vertical {
         width: 5px;
         height: 400px;
         justify-items: center;
-    
+
         .scale--vertical {
           flex-direction: column;
-    
+          height: 95%;
+
           .slider__scale-division {
             width: 10px;
             height: 1px;
             align-items: center;
-    
+
             .division__text {
               top: auto;
               left: 1.07rem;
@@ -114,7 +116,7 @@
             }
           }
         }
-    
+
         .slider__handle {
           .tooltip--vertical {
             &::after {
@@ -123,7 +125,7 @@
             }
           }
         }
-    
+
         .fill--vertical {
           align-self: flex-start;
           width: 5px;
@@ -131,35 +133,38 @@
         }
       }
     }
-    
   }
-  
-  
+
   .js-demo__panel {
-  
     .panel__wrapper {
       align-items: center;
       display: flex;
       flex-direction: column;
-  
+
       .panel__form {
         display: flex;
-  
+
         .panel__checkbox {
           margin-right: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
         }
-  
+
         .panel__inputs {
           display: flex;
           flex-direction: column;
-  
+          align-items: flex-end;
+
           label {
             margin-bottom: 10px;
+
+            input {
+              padding: 0 5px;
+            }
           }
         }
       }
-      
     }
   }
-  
 }

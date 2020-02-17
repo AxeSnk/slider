@@ -28,8 +28,6 @@ export default class Presenter {
     this.view.renderHandle(state, this.view.getLenhgtSlider(state));
     this.view.renderFill(state);
     this.view.renderTooltip(state, this.view.getHandleHeight());
-    this.view.clearScale();
-    this.view.renderScale(state);
   }
 
   public setState(options: Partial<IOptions>): void {
@@ -51,10 +49,6 @@ export default class Presenter {
         this.view.getLenhgtSlider(this.model.getState())
       );
       this.view.makeVerticalFill(this.model.getState());
-      if (this.model.getScaleMask()) {
-        this.view.renderScale(this.model.getState());
-        this.view.setOrientationScale(this.model.getState());
-      }
     } else {
       this.view.setOrientationSlider(this.model.getState());
       this.view.renderHandle(
@@ -62,10 +56,6 @@ export default class Presenter {
         this.view.getLenhgtSlider(this.model.getState())
       );
       this.view.renderFill(this.model.getState());
-      if (this.model.getScaleMask()) {
-        this.view.renderScale(this.model.getState());
-        this.view.setOrientationScale(this.model.getState());
-      }
     }
 
     if (this.model.getTooltipMask()) {

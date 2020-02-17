@@ -104,8 +104,4 @@ export default class Model extends EventEmitter {
   public getVerticalMask(): boolean {
     return this.state.vertical;
   }
-
-  public getScaleMask(): boolean {
-    return this.state.scale;
-  }
 }

@@ -5,9 +5,11 @@ mixin panel()
 		h2 Настройки
 		form.panel__form
 			.panel__checkbox
-				+input('scale', 'checkbox')
+				+input('интервал', 'range', 'checkbox')
+				+input('подсказка', 'tooltip', 'checkbox')
+				+input('вертикальный вид', 'vertical', 'checkbox')
 			.panel__inputs
-				+input('minVal', 'number')
-				+input('maxVal', 'number')
-				+input('val', 'number')
-				+input('valEnd', 'number')
+				+input('минимальное значение', 'minVal', 'number')
+				+input('максимальное значение', 'maxVal', 'number')
+				+input('стартовое значение', 'val', 'number')
+				+input('конечное значение', 'valEnd', 'number')
