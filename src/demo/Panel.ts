@@ -17,7 +17,7 @@ class Panel {
   }
 
   init(): void {
-    this.$slider.slider("subscribeToUpdates", this.update.bind(this));
+    this.$slider.slider("subscribeToUpdates", this.update);
 
     let form = this.root.querySelector("form");
     let input = form.querySelector("input");
@@ -45,12 +45,12 @@ class Panel {
     this.$slider.slider("setState", options);
   }
 
-  update(state): void {
-    [...this.form.elements].forEach((element) => {
+  update(state: IOptions): void {
+    [...this.form.elements].forEach(element => {
       const input = element as HTMLInputElement;
       const { name, type } = input;
       const defaultValue = state[name];
-      const hasChecked = type === 'radio' || type === 'checkbox';
+      const hasChecked = type === "radio" || type === "checkbox";
 
       if (defaultValue === undefined) return;
 

@@ -20,6 +20,7 @@ export default class Presenter extends EventEmitter {
     this.view.on("dragHandle", this.update.bind(this));
     this.model.on("updateState", this.updateRender.bind(this));
     this.on("updateSlider", this.model.setState.bind(this));
+
     this.subscribeToUpdates = this.subscribeToUpdates.bind(this);
     this.setState = this.setState.bind(this);
   }
@@ -52,7 +53,7 @@ export default class Presenter extends EventEmitter {
         this.model.getState(),
         this.view.getLenhgtSlider(this.model.getState())
       );
-      this.view.makeVerticalFill(this.model.getState());
+      this.view.renderFill(this.model.getState());
     } else {
       this.view.setOrientationSlider(this.model.getState());
       this.view.renderHandle(
@@ -127,7 +128,7 @@ export default class Presenter extends EventEmitter {
         this.view.getLenhgtSlider(this.model.getState()),
         id
       );
-      this.view.makeVerticalFill(this.model.getState());
+      this.view.renderFill(this.model.getState());
       if (this.model.getTooltipMask()) {
         if (this.model.getRangeMask()) {
           this.view.updateTooltip(

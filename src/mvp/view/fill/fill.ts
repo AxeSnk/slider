@@ -1,5 +1,6 @@
 import createElement from "../../utility";
 import EventEmitter from "../../eventEmitter";
+import IOptions from "../../defaultOptions";
 
 export default class Fill extends EventEmitter {
   private fill: HTMLElement;
@@ -14,29 +15,44 @@ export default class Fill extends EventEmitter {
     this.parent.appendChild(this.fill);
   }
 
-  public renderFill(width: number): void {
-    this.fill.style.width = width + "px";
-  }
-
-  public renderRangeFill(
-    posHandle_0: number,
-    posHandle_1: number,
-    left: number,
-    width: number,
-    sliderWidth: number
-  ): void {
-    if (posHandle_0 > posHandle_1) {
-      false;
+  public renderFill(state: IOptions, shift: number, lenght: number): void {
+    if (state.vertical) {
+      this.fill.classList.add("fill--vertical");
+      this.fill.style.height = lenght + "px";
+      this.fill.style.top = 0 + "px";
     } else {
-      this.fill.style.width = width + "px";
-      this.fill.style.left = left + "px";
+      this.fill.classList.remove(".fill--vertical");
+      this.fill.removeAttribute('top');
+      this.fill.style.width = lenght + "px";
+      this.fill.style.left = shift + "px";
     }
   }
 
-  public makeVertical(left: number, height: number): void {
-    this.fill.classList.add("fill--vertical");
-    this.fill.style.height = height + "px";
-    this.fill.style.top = left + "px";
+  public renderRangeFill(
+    state: IOptions,
+    posHandle_0: number,
+    posHandle_1: number,
+    shift: number,
+    lenght: number,
+  ): void {
+    if (state.vertical) {
+      if (posHandle_0 > posHandle_1) {
+        false;
+      } else {
+        this.fill.classList.add("fill--vertical");
+        this.fill.style.height = lenght + "px";
+        this.fill.style.top = shift + "px";
+      }
+    } else {
+      if (posHandle_0 > posHandle_1) {
+        false;
+      } else {
+        this.fill.classList.remove(".fill--vertical");
+        this.fill.removeAttribute('top');
+        this.fill.style.width = lenght + "px";
+        this.fill.style.left = shift + "px";
+      }  
+    }
   }
 
   public getFill(): HTMLElement {

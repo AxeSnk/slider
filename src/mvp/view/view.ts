@@ -68,40 +68,24 @@ export default class View extends EventEmitter {
     this.emit("dragHandle", left);
   }
 
-  public renderFill(state): void {
+  public renderFill(state: IOptions): void {
     if (state.range) {
       this.fill.renderRangeFill(
+        state,
         this.handles[0].getPositionHandle(),
         this.handles[1].getPositionHandle(),
-        this.handles[0].getPositionX() - this.slider.getPosition(state),
-        this.handles[1].getPositionX() -
-          this.handles[0].getPositionX() +
-          this.handles[0].getWidth() / 2,
-        this.slider.getLength(state)
+        this.handles[0].getPosition(state) - this.slider.getPosition(state),
+        this.handles[1].getPosition(state) -
+          this.handles[0].getPosition(state) +
+          this.handles[0].getWidth() / 2
       );
     } else {
       this.fill.renderFill(
-        this.handles[0].getPositionX() -
+        state,
+        this.handles[0].getPosition(state) -
           this.slider.getPosition(state) +
-          this.handles[0].getWidth() / 2
-      );
-    }
-  }
-
-  public makeVerticalFill(state): void {
-    if (state.range) {
-      this.fill.makeVertical(
-        this.handles[0].getPositionY() - this.slider.getPosition(state),
-        this.handles[1].getPositionY() -
-          this.handles[0].getPositionY() +
-          this.handles[0].getWidth() / 2
-      );
-    } else {
-      this.fill.makeVertical(
-        0,
-        this.handles[0].getPositionY() -
-          this.slider.getPosition(state) +
-          this.handles[0].getWidth() / 2
+          this.handles[0].getWidth() / 2,
+          this.handles[0].getPosition(state) - this.slider.getPosition(state),
       );
     }
   }
@@ -149,7 +133,7 @@ export default class View extends EventEmitter {
   }
 
   public updateHandles(
-    state,
+    state: IOptions,
     sliderLenght: number,
     posOther: number | null,
     id: number

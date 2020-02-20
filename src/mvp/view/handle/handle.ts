@@ -1,6 +1,7 @@
 import createElement from "../../utility";
 import EventEmitter from "../../eventEmitter";
 import Tooltip from "./../tooltip/tooltip";
+import IOptions from "../../defaultOptions";
 
 export default class Handle extends EventEmitter {
   private handle: HTMLElement;
@@ -194,8 +195,12 @@ export default class Handle extends EventEmitter {
     }
   }
 
-  public getPositionX(): number {
-    return this.handle.getBoundingClientRect().left;
+  public getPosition(state: IOptions): number {
+    if (state.vertical) {
+      return this.handle.getBoundingClientRect().top;
+    } else {
+      return this.handle.getBoundingClientRect().left;
+    }
   }
 
   public getWidth(): number {
@@ -214,7 +219,4 @@ export default class Handle extends EventEmitter {
     return this.position;
   }
 
-  public getPositionY(): number {
-    return this.handle.getBoundingClientRect().top;
-  }
 }
