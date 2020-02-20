@@ -1,12 +1,15 @@
 import Model from "../model/model";
 import View from "../view/view";
 import IOptions from "../defaultOptions";
+import EventEmitter from "../eventEmitter";
 
-export default class Presenter {
+export default class Presenter extends EventEmitter {
   private model: Model;
   private view: View;
 
   constructor(model: Model, view: View) {
+    super();
+
     this.model = model;
     this.view = view;
 
@@ -16,6 +19,7 @@ export default class Presenter {
 
     this.view.on("dragHandle", this.update.bind(this));
     this.model.on("updateState", this.updateRender.bind(this));
+    this.on("updateSlider", this.model.setState.bind(this));
     this.subscribeToUpdates = this.subscribeToUpdates.bind(this);
     this.setState = this.setState.bind(this);
   }
@@ -174,5 +178,6 @@ export default class Presenter {
         }
       }
     }
+    this.emit("updateSlider", this.model.getState());
   }
 }
