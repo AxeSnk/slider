@@ -1,7 +1,7 @@
 import createElement from "../../utility";
 import IOptions from "../../defaultOptions";
 
-export default class Slider {
+class Slider {
   private slider: HTMLElement;
   private parent: HTMLElement;
 
@@ -31,3 +31,5 @@ export default class Slider {
     return this.slider;
   }
 }
+
+export default Slider;

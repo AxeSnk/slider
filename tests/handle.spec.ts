@@ -1,6 +1,6 @@
 import "mocha";
 import { expect } from "chai";
-import Handle from "../src/mvp/view/handle/handle";
+import Handle from "../src/mvp/View/handle/handle";
 
 describe("Handle tests", () => {
   let handle: Handle = new Handle(document.body);

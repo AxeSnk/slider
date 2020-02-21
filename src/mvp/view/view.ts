@@ -1,11 +1,11 @@
 import EventEmitter from "../eventEmitter";
-
-import Slider from "./slider/slider";
-import Handle from "./handle/handle";
-import Fill from "./fill/fill";
 import IOptions from "../defaultOptions";
 
-export default class View extends EventEmitter {
+import Slider from "./Slider/slider";
+import Handle from "./Handle/handle";
+import Fill from "./Fill/fill";
+
+class View extends EventEmitter {
   private root: HTMLElement;
   private slider: Slider;
   private fill: Fill;
@@ -85,7 +85,7 @@ export default class View extends EventEmitter {
         this.handles[0].getPosition(state) -
           this.slider.getPosition(state) +
           this.handles[0].getWidth() / 2,
-          this.handles[0].getPosition(state) - this.slider.getPosition(state),
+        this.handles[0].getPosition(state) - this.slider.getPosition(state)
       );
     }
   }
@@ -165,3 +165,5 @@ export default class View extends EventEmitter {
     return this.handles[id].getPositionHandle();
   }
 }
+
+export default View;

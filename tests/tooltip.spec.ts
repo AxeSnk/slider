@@ -1,6 +1,6 @@
 import "mocha";
 import { expect } from "chai";
-import Tooltip from "../src/mvp/view/tooltip/tooltip";
+import Tooltip from "../src/mvp/View/tooltip/tooltip";
 
 describe("Tooltip tests", () => {
   let tooltip: Tooltip = new Tooltip(document.body);

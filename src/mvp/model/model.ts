@@ -1,17 +1,21 @@
 import IOptions, { defaultOptions } from "../defaultOptions";
 import EventEmitter from "../eventEmitter";
 
-export default class Model extends EventEmitter {
+class Model extends EventEmitter {
   private state: IOptions;
 
   constructor(options: IOptions) {
     super();
 
     if (defaultOptions.range) {
-      options ? this.setState({ ...defaultOptions, ...options }) : this.setState(defaultOptions);
+      options
+        ? this.setState({ ...defaultOptions, ...options })
+        : this.setState(defaultOptions);
       this.state.val = defaultOptions.valStart;
     } else
-      options ? this.setState({ ...defaultOptions, ...options }) : this.setState(defaultOptions);
+      options
+        ? this.setState({ ...defaultOptions, ...options })
+        : this.setState(defaultOptions);
 
     if (this.state.range) {
       this.state.val = this.state.valStart;
@@ -19,7 +23,7 @@ export default class Model extends EventEmitter {
       this.state.val = this.state.val;
     }
 
-    this.setState = this.setState.bind(this)
+    this.setState = this.setState.bind(this);
   }
 
   public setState(options: Partial<IOptions>) {
@@ -53,13 +57,15 @@ export default class Model extends EventEmitter {
   public setVal(left: number, sliderLenght: number, id: number): void {
     if (id === 0) {
       let val =
-        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght) +
-        this.state.minVal;
+        Math.round(
+          (left * (this.state.maxVal - this.state.minVal)) / sliderLenght
+        ) + this.state.minVal;
       this.state.val = val;
     } else {
       let valEnd =
-        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght) +
-        this.state.minVal;
+        Math.round(
+          (left * (this.state.maxVal - this.state.minVal)) / sliderLenght
+        ) + this.state.minVal;
       this.state.valEnd = valEnd;
     }
   }
@@ -105,3 +111,5 @@ export default class Model extends EventEmitter {
     return this.state.vertical;
   }
 }
+
+export default Model;

@@ -1,6 +1,6 @@
 import "mocha";
 import { expect } from "chai";
-import Fill from "../src/mvp/view/fill/fill";
+import Fill from "../src/mvp/View/fill/fill";
 
 describe("Fill tests", () => {
   let fill: Fill = new Fill(document.body);

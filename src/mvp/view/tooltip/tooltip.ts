@@ -1,7 +1,7 @@
 import createElement from "../../utility";
 import EventEmitter from "../../eventEmitter";
 
-export default class Tooltip extends EventEmitter {
+class Tooltip extends EventEmitter {
   private tooltip: HTMLElement;
   private parent: HTMLElement;
 
@@ -41,3 +41,5 @@ export default class Tooltip extends EventEmitter {
     return this.tooltip;
   }
 }
+
+export default Tooltip;

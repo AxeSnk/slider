@@ -1,4 +1,4 @@
-export default class EventEmitter {
+class EventEmitter {
   public events: { [key: string]: Array<Function> };
 
   constructor() {
@@ -18,3 +18,5 @@ export default class EventEmitter {
     }
   }
 }
+
+export default EventEmitter;

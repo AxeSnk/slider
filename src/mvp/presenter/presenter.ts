@@ -1,9 +1,9 @@
-import Model from "../model/model";
-import View from "../view/view";
+import Model from "../Model/model";
+import View from "../View/View";
 import IOptions from "../defaultOptions";
 import EventEmitter from "../eventEmitter";
 
-export default class Presenter extends EventEmitter {
+class Presenter extends EventEmitter {
   private model: Model;
   private view: View;
 
@@ -30,7 +30,7 @@ export default class Presenter extends EventEmitter {
   }
 
   updateRender(state: IOptions): void {
-    this.view.renderSlider(state)
+    this.view.renderSlider(state);
     // this.view.renderHandle(state, this.view.getLenhgtSlider(state));
     this.view.renderFill(state);
     this.view.renderTooltip(state, this.view.getHandleHeight());
@@ -139,3 +139,5 @@ export default class Presenter extends EventEmitter {
     this.emit("updateSlider", this.model.getState());
   }
 }
+
+export default Presenter;

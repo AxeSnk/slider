@@ -1,9 +1,9 @@
 import createElement from "../../utility";
 import EventEmitter from "../../eventEmitter";
-import Tooltip from "./../tooltip/tooltip";
+import Tooltip from "../Tooltip/tooltip";
 import IOptions from "../../defaultOptions";
 
-export default class Handle extends EventEmitter {
+class Handle extends EventEmitter {
   private handle: HTMLElement;
   private tooltip: Tooltip;
   private parent: HTMLElement;
@@ -87,24 +87,6 @@ export default class Handle extends EventEmitter {
     handleHeight: number
   ): void {
     this.tooltip.renderTooltip(val, minVal, maxVal, vertical, handleHeight);
-  }
-
-  public updateTooltip(
-    state: { minVal: number; maxVal: number; vertical: boolean },
-    handleHeight: number,
-    position: number,
-    sliderLenght: number,
-    id: number,
-    posOther: number | null
-  ): void {
-    this.tooltip.updateTooltip(
-      state,
-      handleHeight,
-      position,
-      sliderLenght,
-      id,
-      posOther
-    );
   }
 
   public renderHandle(
@@ -218,5 +200,6 @@ export default class Handle extends EventEmitter {
   public getPositionHandle(): number {
     return this.position;
   }
-
 }
+
+export default Handle;

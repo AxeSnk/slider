@@ -1,4 +1,4 @@
-export default function createElement(
+function createElement(
   tag: string,
   props: { [key: string]: string }
 ): HTMLElement {
@@ -8,3 +8,5 @@ export default function createElement(
 
   return element;
 }
+
+export default createElement;

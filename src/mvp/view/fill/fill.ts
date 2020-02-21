@@ -2,7 +2,7 @@ import createElement from "../../utility";
 import EventEmitter from "../../eventEmitter";
 import IOptions from "../../defaultOptions";
 
-export default class Fill extends EventEmitter {
+class Fill extends EventEmitter {
   private fill: HTMLElement;
   private parent: HTMLElement;
 
@@ -22,7 +22,7 @@ export default class Fill extends EventEmitter {
       this.fill.style.top = 0 + "px";
     } else {
       this.fill.classList.remove(".fill--vertical");
-      this.fill.removeAttribute('top');
+      this.fill.removeAttribute("top");
       this.fill.style.width = lenght + "px";
       this.fill.style.left = shift + "px";
     }
@@ -33,7 +33,7 @@ export default class Fill extends EventEmitter {
     posHandle_0: number,
     posHandle_1: number,
     shift: number,
-    lenght: number,
+    lenght: number
   ): void {
     if (state.vertical) {
       if (posHandle_0 > posHandle_1) {
@@ -48,10 +48,10 @@ export default class Fill extends EventEmitter {
         false;
       } else {
         this.fill.classList.remove(".fill--vertical");
-        this.fill.removeAttribute('top');
+        this.fill.removeAttribute("top");
         this.fill.style.width = lenght + "px";
         this.fill.style.left = shift + "px";
-      }  
+      }
     }
   }
 
@@ -59,3 +59,5 @@ export default class Fill extends EventEmitter {
     return this.fill;
   }
 }
+
+export default Fill;

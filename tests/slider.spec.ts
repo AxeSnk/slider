@@ -1,6 +1,6 @@
 import "mocha";
 import { expect } from "chai";
-import Slider from "../src/mvp/view/slider/slider";
+import Slider from "../src/mvp/View/slider/slider";
 
 const { JSDOM } = require("jsdom");
 
