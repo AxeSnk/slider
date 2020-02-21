@@ -30,7 +30,8 @@ export default class Presenter extends EventEmitter {
   }
 
   updateRender(state: IOptions): void {
-    this.view.renderHandle(state, this.view.getLenhgtSlider(state));
+    this.view.renderSlider(state)
+    // this.view.renderHandle(state, this.view.getLenhgtSlider(state));
     this.view.renderFill(state);
     this.view.renderTooltip(state, this.view.getHandleHeight());
   }
@@ -48,14 +49,14 @@ export default class Presenter extends EventEmitter {
 
   private render(): void {
     if (this.model.getState()["vertical"]) {
-      this.view.setOrientationSlider(this.model.getState());
+      this.view.renderSlider(this.model.getState());
       this.view.renderHandle(
         this.model.getState(),
         this.view.getLenhgtSlider(this.model.getState())
       );
       this.view.renderFill(this.model.getState());
     } else {
-      this.view.setOrientationSlider(this.model.getState());
+      this.view.renderSlider(this.model.getState());
       this.view.renderHandle(
         this.model.getState(),
         this.view.getLenhgtSlider(this.model.getState())
@@ -128,56 +129,12 @@ export default class Presenter extends EventEmitter {
         this.view.getLenhgtSlider(this.model.getState()),
         id
       );
-      this.view.renderFill(this.model.getState());
-      if (this.model.getTooltipMask()) {
-        if (this.model.getRangeMask()) {
-          this.view.updateTooltip(
-            this.model.getState(),
-            this.view.getHandleHeight(),
-            this.view.getPositionHandle(id),
-            this.view.getLenhgtSlider(this.model.getState()),
-            id,
-            this.view.getPositionHandle(Math.abs(id - 1))
-          );
-        } else {
-          this.view.updateTooltip(
-            this.model.getState(),
-            this.view.getHandleHeight(),
-            this.view.getPositionHandle(id),
-            this.view.getLenhgtSlider(this.model.getState()),
-            id,
-            null
-          );
-        }
-      }
     } else {
       this.model.setVal(
         leftX,
         this.view.getLenhgtSlider(this.model.getState()),
         id
       );
-      this.view.renderFill(this.model.getState());
-      if (this.model.getTooltipMask()) {
-        if (this.model.getRangeMask()) {
-          this.view.updateTooltip(
-            this.model.getState(),
-            this.view.getHandleHeight(),
-            this.view.getPositionHandle(id),
-            this.view.getLenhgtSlider(this.model.getState()),
-            id,
-            this.view.getPositionHandle(Math.abs(id - 1))
-          );
-        } else {
-          this.view.updateTooltip(
-            this.model.getState(),
-            this.view.getHandleHeight(),
-            this.view.getPositionHandle(id),
-            this.view.getLenhgtSlider(this.model.getState()),
-            id,
-            null
-          );
-        }
-      }
     }
     this.emit("updateSlider", this.model.getState());
   }

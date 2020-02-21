@@ -11,7 +11,7 @@ export default class Slider {
     this.parent.appendChild(this.slider);
   }
 
-  setOrientation(state: IOptions): void {
+  render(state: IOptions): void {
     state.vertical
       ? this.slider.classList.add("slider--vertical")
       : this.slider.classList.remove("slider--vertical");

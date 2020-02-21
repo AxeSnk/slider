@@ -128,8 +128,8 @@ export default class View extends EventEmitter {
     }
   }
 
-  public setOrientationSlider(state): void {
-    this.slider.setOrientation(state);
+  public renderSlider(state: IOptions): void {
+    this.slider.render(state);
   }
 
   public updateHandles(
@@ -146,35 +146,6 @@ export default class View extends EventEmitter {
       }
     } else {
       this.handles[0].updateHandle(state.vertical, sliderLenght, posOther);
-    }
-  }
-
-  public updateTooltip(
-    state: any,
-    handleHeight: number,
-    position: number,
-    sliderLenght: number,
-    id: number,
-    posOther: number | null
-  ): void {
-    if (state.range) {
-      this.handles[id].updateTooltip(
-        state,
-        handleHeight,
-        position,
-        sliderLenght,
-        id,
-        posOther
-      );
-    } else {
-      this.handles[0].updateTooltip(
-        state,
-        handleHeight,
-        position,
-        sliderLenght,
-        id,
-        posOther
-      );
     }
   }
 

@@ -37,47 +37,6 @@ export default class Tooltip extends EventEmitter {
     }
   }
 
-  public updateTooltip(
-    state: { minVal: number; maxVal: number; vertical: boolean },
-    handleHeight: number,
-    position: number,
-    sliderLenght: number,
-    id: number,
-    posOther: number | null
-  ): void {
-    let val: number = Math.round(
-      (position * (state.maxVal - state.minVal)) / (sliderLenght - handleHeight) +
-        state.minVal
-    );
-    if (id === 0) {
-      if (posOther ? position >= posOther : false) {
-        false;
-      } else if (state.minVal > val) {
-        this.tooltip.innerHTML = `${state.minVal}`;
-      } else if (val > state.maxVal) {
-        this.tooltip.innerHTML = `${state.maxVal}`;
-      } else {
-        this.tooltip.innerHTML = `${val}`;
-      }
-    } else {
-      if (posOther ? position <= posOther : false) {
-        false;
-      } else if (state.minVal > val) {
-        this.tooltip.innerHTML = `${state.minVal}`;
-      } else if (val > state.maxVal) {
-        this.tooltip.innerHTML = `${state.maxVal}`;
-      } else {
-        this.tooltip.innerHTML = `${val}`;
-      }
-    }
-
-    if (state.vertical) {
-      this.tooltip.style.left = -handleHeight * 1.4 + "px";
-    } else {
-      this.tooltip.style.top = -handleHeight * 1.4 + "px";
-    }
-  }
-
   public getTooltip(): HTMLElement {
     return this.tooltip;
   }
