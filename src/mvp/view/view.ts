@@ -1,9 +1,9 @@
 import EventEmitter from "../eventEmitter";
 import IOptions from "../defaultOptions";
 
-import Slider from "./Slider/slider";
-import Handle from "./Handle/handle";
-import Fill from "./Fill/fill";
+import Slider from "./Slider/Slider";
+import Handle from "./Handle/Handle";
+import Fill from "./Fill/Fill";
 
 class View extends EventEmitter {
   private root: HTMLElement;

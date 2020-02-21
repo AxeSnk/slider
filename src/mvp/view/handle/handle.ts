@@ -7,13 +7,14 @@ class Handle extends EventEmitter {
   private handle: HTMLElement;
   private tooltip: Tooltip;
   private parent: HTMLElement;
-  private position: number = 0;
+  private position: number;
   private id: number;
 
   constructor(parent: HTMLElement, id: number) {
     super();
 
     this.parent = parent;
+    this.position = 0;
 
     this.handle = createElement("div", { class: "slider__handle" });
     this.parent.appendChild(this.handle);
@@ -32,7 +33,7 @@ class Handle extends EventEmitter {
     let mouseY: number = event.clientY;
     let id: number = this.id;
 
-    event.preventDefault(); // предотвратить запуск выделения (действие браузера)
+    event.preventDefault(); 
 
     let moveHandle = (moveEvent: MouseEvent): void => {
       let leftX: number =

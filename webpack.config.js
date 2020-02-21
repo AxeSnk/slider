@@ -55,7 +55,16 @@ const plugins = () => {
 const jsLoaders = () => {
   const loaders = [
     {
-      loader: "awesome-typescript-loader"
+      loader: "babel-loader",
+      options: {
+        presets: [
+          "@babel/preset-env", 
+          "@babel/preset-typescript"
+        ],
+        plugins: [
+          "@babel/plugin-proposal-class-properties"
+        ]
+      }
     }
   ];
 
@@ -84,8 +93,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        exclude: /(node_modules)/,
+        test: /\.tsx?$|.js$/,
+        exclude: /node_modules/,
         use: jsLoaders()
       },
       {
