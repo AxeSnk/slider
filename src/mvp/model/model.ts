@@ -7,20 +7,10 @@ class Model extends EventEmitter {
   constructor(options: IOptions) {
     super();
 
-    if (defaultOptions.range) {
-      options
-        ? this.setState({ ...defaultOptions, ...options })
-        : this.setState(defaultOptions);
-      this.state.val = defaultOptions.valStart;
-    } else
-      options
-        ? this.setState({ ...defaultOptions, ...options })
-        : this.setState(defaultOptions);
+    this.state = options ? { ...defaultOptions, ...options } : defaultOptions;
 
     if (this.state.range) {
       this.state.val = this.state.valStart;
-    } else {
-      this.state.val = this.state.val;
     }
 
     this.setState = this.setState.bind(this);

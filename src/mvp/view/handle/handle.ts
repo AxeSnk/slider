@@ -97,6 +97,7 @@ class Handle extends EventEmitter {
     sliderLenght: number
   ): void {
     if (vertical) {
+      this.handle.style.left = "";
       let height: number = sliderLenght - this.handle.offsetHeight;
       let newLeft: number = ((val - minVal) * height) / (maxVal - minVal);
 
@@ -108,6 +109,7 @@ class Handle extends EventEmitter {
         this.handle.style.top = newLeft + "px";
       }
     } else {
+      this.handle.style.top = "";
       let width: number = sliderLenght - this.handle.offsetWidth;
       let newLeft: number = ((val - minVal) * width) / (maxVal - minVal);
 

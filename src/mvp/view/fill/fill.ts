@@ -18,13 +18,16 @@ class Fill extends EventEmitter {
   public renderFill(state: IOptions, shift: number, lenght: number): void {
     if (state.vertical) {
       this.fill.classList.add("fill--vertical");
+      this.fill.style.left = "";
+      this.fill.style.width = "";
       this.fill.style.height = lenght + "px";
       this.fill.style.top = 0 + "px";
     } else {
       this.fill.classList.remove(".fill--vertical");
-      this.fill.removeAttribute("top");
+      this.fill.style.top = "";
+      this.fill.style.height = "";
       this.fill.style.width = lenght + "px";
-      this.fill.style.left = shift + "px";
+      this.fill.style.left = 0 + "px";
     }
   }
 
@@ -40,6 +43,8 @@ class Fill extends EventEmitter {
         false;
       } else {
         this.fill.classList.add("fill--vertical");
+        this.fill.style.left = "";
+        this.fill.style.width = "";
         this.fill.style.height = lenght + "px";
         this.fill.style.top = shift + "px";
       }
@@ -48,7 +53,8 @@ class Fill extends EventEmitter {
         false;
       } else {
         this.fill.classList.remove(".fill--vertical");
-        this.fill.removeAttribute("top");
+        this.fill.style.top = "";
+        this.fill.style.height = "";
         this.fill.style.width = lenght + "px";
         this.fill.style.left = shift + "px";
       }

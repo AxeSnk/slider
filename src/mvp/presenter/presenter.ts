@@ -31,7 +31,7 @@ class Presenter extends EventEmitter {
 
   updateRender(state: IOptions): void {
     this.view.renderSlider(state);
-    // this.view.renderHandle(state, this.view.getLenhgtSlider(state));
+    this.view.renderHandle(state, this.view.getLenhgtSlider(state));
     this.view.renderFill(state);
     this.view.renderTooltip(state, this.view.getHandleHeight());
   }

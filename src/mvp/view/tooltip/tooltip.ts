@@ -30,9 +30,12 @@ class Tooltip extends EventEmitter {
     }
 
     if (vertical) {
-      this.tooltip.style.left = -handleHeight * 1.4 + "px";
       this.tooltip.classList.add("tooltip--vertical");
+      this.tooltip.style.top = "";
+      this.tooltip.style.left = -handleHeight * 1.4 + "px";
     } else {
+      this.tooltip.classList.remove("tooltip--vertical");
+      this.tooltip.style.left = "";
       this.tooltip.style.top = -handleHeight * 1.4 + "px";
     }
   }
