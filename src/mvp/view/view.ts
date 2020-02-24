@@ -82,9 +82,6 @@ class View extends EventEmitter {
     } else {
       this.fill.renderFill(
         state,
-        this.handles[0].getPosition(state) -
-          this.slider.getPosition(state) +
-          this.handles[0].getWidth() / 2,
         this.handles[0].getPosition(state) - this.slider.getPosition(state)
       );
     }
@@ -109,8 +106,9 @@ class View extends EventEmitter {
     }
   }
 
-  public renderTooltip(state, handleHeight: number): void {
+  public renderTooltip(state: IOptions, handleHeight: number): void {
     this.handles[0].renderTooltip(
+      state.tooltip,
       state.val,
       state.minVal,
       state.maxVal,
@@ -119,6 +117,7 @@ class View extends EventEmitter {
     );
     if (state.range) {
       this.handles[1].renderTooltip(
+        state.tooltip,
         state.valEnd,
         state.minVal,
         state.maxVal,

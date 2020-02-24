@@ -15,7 +15,7 @@ class Fill extends EventEmitter {
     this.parent.appendChild(this.fill);
   }
 
-  public renderFill(state: IOptions, shift: number, lenght: number): void {
+  public renderFill(state: IOptions, lenght: number): void {
     if (state.vertical) {
       this.fill.classList.add("fill--vertical");
       this.fill.style.left = "";

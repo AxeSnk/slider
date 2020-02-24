@@ -15,12 +15,19 @@ class Tooltip extends EventEmitter {
   }
 
   public renderTooltip(
+    tooltipMask: boolean,
     val: number,
     minVal: number,
     maxVal: number,
     vertical: boolean,
     handleHeight: number
   ): void {
+    if (tooltipMask) {
+      this.tooltip.setAttribute("style", "display: block");
+    } else {
+      this.tooltip.setAttribute("style", "display: none");
+    }
+
     if (val < minVal) {
       this.tooltip.innerHTML = `${minVal}`;
     } else if (val > maxVal) {

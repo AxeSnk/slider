@@ -1,4 +1,4 @@
-import Model from "../Model/model";
+import Model from "../Model/Model";
 import View from "../View/View";
 import IOptions from "../defaultOptions";
 import EventEmitter from "../eventEmitter";

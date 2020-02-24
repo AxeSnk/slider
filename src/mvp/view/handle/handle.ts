@@ -1,6 +1,6 @@
 import createElement from "../../utility";
 import EventEmitter from "../../eventEmitter";
-import Tooltip from "../Tooltip/tooltip";
+import Tooltip from "../Tooltip/Tooltip";
 import IOptions from "../../defaultOptions";
 
 class Handle extends EventEmitter {
@@ -81,13 +81,14 @@ class Handle extends EventEmitter {
   }
 
   public renderTooltip(
+    tooltipMask: boolean,
     val: number,
     minVal: number,
     maxVal: number,
     vertical: boolean,
     handleHeight: number
   ): void {
-    this.tooltip.renderTooltip(val, minVal, maxVal, vertical, handleHeight);
+    this.tooltip.renderTooltip(tooltipMask, val, minVal, maxVal, vertical, handleHeight);
   }
 
   public renderHandle(
