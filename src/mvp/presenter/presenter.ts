@@ -87,46 +87,46 @@ class Presenter extends EventEmitter {
     id: number;
   }): void {
     if (this.model.getRangeMask()) {
-      this.view.setPositionHandle(
-        0,
-        this.model.getVerticalMask(),
-        this.model.getVal(),
-        this.model.getMinVal(),
-        this.view.getLenhgtSlider(this.model.getState()),
-        this.model.getDifference(),
-        this.model.getStep()
-      );
-      this.view.setPositionHandle(
-        1,
-        this.model.getVerticalMask(),
-        this.model.getValEnd(),
-        this.model.getMinVal(),
-        this.view.getLenhgtSlider(this.model.getState()),
-        this.model.getDifference(),
-        this.model.getStep()
-      );
-      this.view.updateHandles(
-        this.model.getState(),
-        this.view.getLenhgtSlider(this.model.getState()),
-        this.view.getPositionHandle(Math.abs(id - 1)),
-        id
-      );
+      // this.view.setPositionHandle(
+      //   0,
+      //   this.model.getVerticalMask(),
+      //   this.model.getVal(),
+      //   this.model.getMinVal(),
+      //   this.view.getLenhgtSlider(this.model.getState()),
+      //   this.model.getDifference(),
+      //   this.model.getStep()
+      // );
+      // this.view.setPositionHandle(
+      //   1,
+      //   this.model.getVerticalMask(),
+      //   this.model.getValEnd(),
+      //   this.model.getMinVal(),
+      //   this.view.getLenhgtSlider(this.model.getState()),
+      //   this.model.getDifference(),
+      //   this.model.getStep()
+      // );
+      // this.view.updateHandles(
+      //   this.model.getState(),
+      //   this.view.getLenhgtSlider(this.model.getState()),
+      //   this.view.getPositionHandle(Math.abs(id - 1)),
+      //   id
+      // );
     } else {
-      this.view.setPositionHandle(
-        0,
-        this.model.getVerticalMask(),
-        this.model.getVal(),
-        this.model.getMinVal(),
-        this.view.getLenhgtSlider(this.model.getState()),
-        this.model.getDifference(),
-        this.model.getStep()
-      );
-      this.view.updateHandles(
-        this.model.getState(),
-        this.view.getLenhgtSlider(this.model.getState()),
-        null,
-        id
-      );
+      // this.view.setPositionHandle(
+      //   0,
+      //   this.model.getVerticalMask(),
+      //   this.model.getVal(),
+      //   this.model.getMinVal(),
+      //   this.view.getLenhgtSlider(this.model.getState()),
+      //   this.model.getDifference(),
+      //   this.model.getStep()
+      // );
+      // this.view.updateHandles(
+      //   this.model.getState(),
+      //   this.view.getLenhgtSlider(this.model.getState()),
+      //   null,
+      //   id
+      // );
     }
     if (this.model.getVerticalMask()) {
       this.model.setVal(

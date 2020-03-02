@@ -13,6 +13,7 @@
     "dev": "webpack-dev-server --mode development --open",
     "build": "webpack -d",
     "prod": "webpack -p",
+    "deploy": "gh-pages -d dist",
     "stats": "webpack --json > stats.json && webpack-bundle-analyzer stats.json"
   },
   "browserslist": "> 0.25%, not dead",
@@ -33,6 +34,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.2.0",
     "eslint-loader": "^3.0.3",
+    "gh-pages": "^2.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^25.1.0",

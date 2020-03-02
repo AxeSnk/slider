@@ -63,7 +63,7 @@ class Model extends EventEmitter {
   }
 
   public getDifference(): number {
-    let difference = this.state.maxVal - this.state.minVal;
+    const difference = this.state.maxVal - this.state.minVal;
     return difference;
   }
 

@@ -77,6 +77,7 @@ class Handle extends EventEmitter {
       let pos: number = Math.round(newLeft / stepSize) * stepSize;
 
       this.position = pos;
+
     }
   }
 
