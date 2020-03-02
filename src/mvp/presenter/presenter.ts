@@ -21,8 +21,13 @@ class Presenter extends EventEmitter {
     this.model.on("updateState", this.updateRender.bind(this));
     this.on("updateSlider", this.model.setState.bind(this));
 
+    this.subscribeToInitModel = this.subscribeToInitModel.bind(this);
     this.subscribeToUpdates = this.subscribeToUpdates.bind(this);
     this.setState = this.setState.bind(this);
+  }
+
+  subscribeToInitModel(callback: Function) {
+    this.model.on("initState", callback(this.model.getState()));
   }
 
   subscribeToUpdates(callback: Function) {

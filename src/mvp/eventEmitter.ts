@@ -12,7 +12,7 @@ class EventEmitter {
     this.events[type].push(callback);
   }
 
-  public emit(type: string, arg: any): void {
+  public emit(type: string, arg?: any): void {
     if (this.events[type]) {
       this.events[type].forEach(callback => callback(arg));
     }

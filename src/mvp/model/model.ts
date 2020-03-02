@@ -13,6 +13,8 @@ class Model extends EventEmitter {
       this.state.val = this.state.valStart;
     }
 
+    this.emit("initState", this.state);
+
     this.setState = this.setState.bind(this);
   }
 

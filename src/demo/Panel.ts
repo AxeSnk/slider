@@ -2,7 +2,7 @@ import IOptions from "../mvp/defaultOptions";
 
 class Panel {
   root: HTMLElement;
-  $slider: JQuery<Element>;
+  $slider: any;
   form: HTMLFormElement;
   input: HTMLInputElement;
 
@@ -17,13 +17,13 @@ class Panel {
   }
 
   init(): void {
-    this.$slider.slider("subscribeToUpdates", this.update);
-
-    let form = this.root.querySelector("form");
-    let input = form.querySelector("input");
-
+    const form = this.root.querySelector("form");
+    const input = form.querySelector("input");
     this.form = form;
     this.input = input;
+    
+    this.$slider.slider("subscribeToInitModel", this.update);
+    this.$slider.slider("subscribeToUpdates", this.update);
 
     this.form.addEventListener("change", this.handleChange);
   }
