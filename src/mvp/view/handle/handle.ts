@@ -33,7 +33,7 @@ class Handle extends EventEmitter {
     let mouseY: number = event.clientY;
     let id: number = this.id;
 
-    event.preventDefault(); 
+    event.preventDefault();
 
     let moveHandle = (moveEvent: MouseEvent): void => {
       let leftX: number =
@@ -53,34 +53,6 @@ class Handle extends EventEmitter {
     window.addEventListener("mouseup", handleMouseUp);
   }
 
-  public setPosition(
-    vertical: boolean,
-    value: number,
-    shift: number,
-    sliderLenght: number,
-    difference: number,
-    step: number
-  ): void {
-    if (vertical) {
-      let height: number = sliderLenght - this.handle.offsetHeight;
-      let stepCount: number = difference / step;
-      let stepSize: number = height / stepCount;
-      let newLeft: number = ((value - shift) * height) / difference;
-      let pos: number = Math.round(newLeft / stepSize) * stepSize;
-
-      this.position = pos;
-    } else {
-      let width: number = sliderLenght - this.handle.offsetWidth;
-      let stepCount: number = difference / step;
-      let stepSize: number = width / stepCount;
-      let newLeft: number = ((value - shift) * width) / difference;
-      let pos: number = Math.round(newLeft / stepSize) * stepSize;
-
-      this.position = pos;
-
-    }
-  }
-
   public renderTooltip(
     tooltipMask: boolean,
     val: number,
@@ -89,7 +61,14 @@ class Handle extends EventEmitter {
     vertical: boolean,
     handleHeight: number
   ): void {
-    this.tooltip.renderTooltip(tooltipMask, val, minVal, maxVal, vertical, handleHeight);
+    this.tooltip.renderTooltip(
+      tooltipMask,
+      val,
+      minVal,
+      maxVal,
+      vertical,
+      handleHeight
+    );
   }
 
   public renderHandle(
@@ -122,62 +101,6 @@ class Handle extends EventEmitter {
         this.handle.style.left = width + "px";
       } else {
         this.handle.style.left = newLeft + "px";
-      }
-    }
-  }
-
-  public updateHandle(
-    vertical: boolean,
-    sliderLenght: number,
-    posOther: number
-  ): void {
-    let pos = this.position;
-    let height: number = sliderLenght - this.handle.offsetHeight;
-    let width: number = sliderLenght - this.handle.offsetWidth;
-
-    if (vertical) {
-      if (this.id === 0) {
-        if (posOther ? pos >= posOther : false) {
-          false;
-        } else if (0 > pos) {
-          this.handle.style.top = 0 + "px";
-        } else if (pos > height) {
-          this.handle.style.top = height + "px";
-        } else {
-          this.handle.style.top = pos + "px";
-        }
-      } else {
-        if (pos <= posOther) {
-          false;
-        } else if (0 > pos) {
-          this.handle.style.top = 0 + "px";
-        } else if (pos > height) {
-          this.handle.style.top = height + "px";
-        } else {
-          this.handle.style.top = pos + "px";
-        }
-      }
-    } else {
-      if (this.id === 0) {
-        if (posOther ? pos >= posOther : false) {
-          false;
-        } else if (0 > pos) {
-          this.handle.style.left = 0 + "px";
-        } else if (pos > width) {
-          this.handle.style.left = width + "px";
-        } else {
-          this.handle.style.left = pos + "px";
-        }
-      } else {
-        if (pos <= posOther) {
-          false;
-        } else if (0 > pos) {
-          this.handle.style.left = 0 + "px";
-        } else if (pos > width) {
-          this.handle.style.left = width + "px";
-        } else {
-          this.handle.style.left = pos + "px";
-        }
       }
     }
   }

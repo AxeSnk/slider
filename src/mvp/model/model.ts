@@ -49,15 +49,11 @@ class Model extends EventEmitter {
   public setVal(left: number, sliderLenght: number, id: number): void {
     if (id === 0) {
       let val =
-        Math.round(
-          (left * (this.state.maxVal - this.state.minVal)) / sliderLenght
-        ) + this.state.minVal;
+      Math.round(Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght)/this.state.step) * this.state.step + this.state.minVal;
       this.state.val = val;
     } else {
       let valEnd =
-        Math.round(
-          (left * (this.state.maxVal - this.state.minVal)) / sliderLenght
-        ) + this.state.minVal;
+        Math.round(Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght)/this.state.step) * this.state.step + this.state.minVal;
       this.state.valEnd = valEnd;
     }
   }

@@ -19,25 +19,6 @@ class View extends EventEmitter {
     this.fill = this.addFill();
   }
 
-  public setPositionHandle(
-    id: number,
-    vertical: boolean,
-    value: number,
-    shift: number,
-    sliderLenght: number,
-    difference: number,
-    step: number
-  ): void {
-    this.handles[id].setPosition(
-      vertical,
-      value,
-      shift,
-      sliderLenght,
-      difference,
-      step
-    );
-  }
-
   private addSlider(): Slider {
     return new Slider(this.root);
   }
@@ -57,10 +38,12 @@ class View extends EventEmitter {
 
   public addHandles(state): void {
     this.handles = [];
-    this.handles.push(new Handle(this.slider.getElement(), 0));
 
     if (state.range) {
+      this.handles.push(new Handle(this.slider.getElement(), 0));
       this.handles.push(new Handle(this.slider.getElement(), 1));
+    } else {
+      this.handles.push(new Handle(this.slider.getElement(), 0));
     }
   }
 
@@ -129,23 +112,6 @@ class View extends EventEmitter {
 
   public renderSlider(state: IOptions): void {
     this.slider.render(state);
-  }
-
-  public updateHandles(
-    state: IOptions,
-    sliderLenght: number,
-    posOther: number | null,
-    id: number
-  ): void {
-    if (state.range) {
-      if (id == 0) {
-        this.handles[0].updateHandle(state.vertical, sliderLenght, posOther);
-      } else {
-        this.handles[1].updateHandle(state.vertical, sliderLenght, posOther);
-      }
-    } else {
-      this.handles[0].updateHandle(state.vertical, sliderLenght, posOther);
-    }
   }
 
   getLenhgtSlider(state): number {
