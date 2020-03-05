@@ -71,14 +71,17 @@ class View extends EventEmitter {
   }
 
   public renderHandle(state, sliderLenght: number): void {
-    this.handles[0].renderHandle(
-      state.val,
-      state.minVal,
-      state.maxVal,
-      state.vertical,
-      sliderLenght
-    );
+
     if (state.range) {
+      this.handles[1].getHandle().setAttribute("style", "display: flex");
+
+      this.handles[0].renderHandle(
+        state.val,
+        state.minVal,
+        state.maxVal,
+        state.vertical,
+        sliderLenght
+      );  
       this.handles[1].renderHandle(
         state.valEnd,
         state.minVal,
@@ -86,6 +89,19 @@ class View extends EventEmitter {
         state.vertical,
         sliderLenght
       );
+    } else { 
+      if(this.handles[1]) {
+        this.handles[1].getHandle().setAttribute("style", "display: none");
+      }
+
+      this.handles[0].renderHandle(
+        state.val,
+        state.minVal,
+        state.maxVal,
+        state.vertical,
+        sliderLenght
+      );
+  
     }
   }
 
