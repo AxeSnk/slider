@@ -10,13 +10,13 @@ export default interface IOptions {
   vertical: boolean; // вертикальный слайдер
 }
 
-var defaultOptions: IOptions = {
-  val: 3,
-  valStart: -1,
-  valEnd: 3,
-  minVal: -3,
+const defaultOptions: IOptions = {
+  val: 4,
+  valStart: 4,
+  valEnd: 8,
+  minVal: 0,
   maxVal: 10,
-  step: 2,
+  step: 1,
   range: true,
   tooltip: true,
   vertical: false

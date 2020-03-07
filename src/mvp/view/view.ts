@@ -28,23 +28,15 @@ class View extends EventEmitter {
   }
 
   public addOnHandles(state): void {
-    if (state.range) {
       this.handles[0].on("drag_0", this.emitDrag.bind(this));
       this.handles[1].on("drag_1", this.emitDrag.bind(this));
-    } else {
-      this.handles[0].on("drag_0", this.emitDrag.bind(this));
-    }
   }
 
   public addHandles(state): void {
     this.handles = [];
 
-    if (state.range) {
       this.handles.push(new Handle(this.slider.getElement(), 0));
       this.handles.push(new Handle(this.slider.getElement(), 1));
-    } else {
-      this.handles.push(new Handle(this.slider.getElement(), 0));
-    }
   }
 
   private emitDrag(left: object): void {
@@ -55,17 +47,17 @@ class View extends EventEmitter {
     if (state.range) {
       this.fill.renderRangeFill(
         state,
-        this.handles[0].getPositionHandle(),
-        this.handles[1].getPositionHandle(),
-        this.handles[0].getPosition(state) - this.slider.getPosition(state),
-        this.handles[1].getPosition(state) -
-          this.handles[0].getPosition(state) +
+        this.handles[0].getPositionHandle(state),
+        this.handles[1].getPositionHandle(state),
+        this.handles[0].getPositionHandle(state) - this.slider.getPosition(state),
+        this.handles[1].getPositionHandle(state) -
+          this.handles[0].getPositionHandle(state) +
           this.handles[0].getWidth() / 2
       );
     } else {
       this.fill.renderFill(
         state,
-        this.handles[0].getPosition(state) - this.slider.getPosition(state)
+        this.handles[0].getPositionHandle(state) - this.slider.getPosition(state)
       );
     }
   }
@@ -142,8 +134,8 @@ class View extends EventEmitter {
     return this.handles[0].getHeight();
   }
 
-  public getPositionHandle(id: number): number {
-    return this.handles[id].getPositionHandle();
+  public getPositionHandle(state: IOptions, id: number): number {
+    return this.handles[id].getPositionHandle(state);
   }
 }
 

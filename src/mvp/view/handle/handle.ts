@@ -105,7 +105,7 @@ class Handle extends EventEmitter {
     }
   }
 
-  public getPosition(state: IOptions): number {
+  public getPositionHandle(state: IOptions): number {
     if (state.vertical) {
       return this.handle.getBoundingClientRect().top;
     } else {
@@ -125,9 +125,6 @@ class Handle extends EventEmitter {
     return this.handle;
   }
 
-  public getPositionHandle(): number {
-    return this.position;
-  }
 }
 
 export default Handle;

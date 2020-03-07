@@ -13,9 +13,11 @@ class Fill extends EventEmitter {
 
     this.fill = createElement("div", { class: "slider__fill" });
     this.parent.appendChild(this.fill);
+
+    this.renderFill = this.renderFill.bind(this)
   }
 
-  public renderFill(state: IOptions, lenght: number): void {
+  renderFill(state: IOptions, lenght: number): void {
     if (state.vertical) {
       this.fill.classList.add("fill--vertical");
       this.fill.style.left = "";
@@ -31,7 +33,7 @@ class Fill extends EventEmitter {
     }
   }
 
-  public renderRangeFill(
+  renderRangeFill(
     state: IOptions,
     posHandle_0: number,
     posHandle_1: number,
@@ -61,7 +63,7 @@ class Fill extends EventEmitter {
     }
   }
 
-  public getFill(): HTMLElement {
+  getFill(): HTMLElement {
     return this.fill;
   }
 }
