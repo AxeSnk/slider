@@ -47,7 +47,7 @@ class Tooltip extends EventEmitter {
     }
   }
 
-  public getTooltip(): HTMLElement {
+  getTooltip(): HTMLElement {
     return this.tooltip;
   }
 }
