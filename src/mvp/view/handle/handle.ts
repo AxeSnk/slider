@@ -7,14 +7,12 @@ class Handle extends EventEmitter {
   private handle: HTMLElement;
   private tooltip: Tooltip;
   private parent: HTMLElement;
-  private position: number;
   private id: number;
 
   constructor(parent: HTMLElement, id: number) {
     super();
 
     this.parent = parent;
-    this.position = 0;
 
     this.handle = createElement("div", { class: "slider__handle" });
     this.parent.appendChild(this.handle);
@@ -53,7 +51,7 @@ class Handle extends EventEmitter {
     window.addEventListener("mouseup", handleMouseUp);
   }
 
-  public renderTooltip(
+  renderTooltip(
     tooltipMask: boolean,
     val: number,
     minVal: number,
@@ -71,16 +69,16 @@ class Handle extends EventEmitter {
     );
   }
 
-  public renderHandle(
+  renderHandle(
     val: number,
     minVal: number,
     maxVal: number,
     vertical: boolean,
-    sliderLenght: number
+    sliderLength: number
   ): void {
     if (vertical) {
       this.handle.style.left = "";
-      let height: number = sliderLenght - this.handle.offsetHeight;
+      let height: number = sliderLength - this.handle.offsetHeight;
       let newLeft: number = ((val - minVal) * height) / (maxVal - minVal);
 
       if (newLeft < 0) {
@@ -92,7 +90,7 @@ class Handle extends EventEmitter {
       }
     } else {
       this.handle.style.top = "";
-      let width: number = sliderLenght - this.handle.offsetWidth;
+      let width: number = sliderLength - this.handle.offsetWidth;
       let newLeft: number = ((val - minVal) * width) / (maxVal - minVal);
 
       if (newLeft < 0) {
@@ -105,7 +103,7 @@ class Handle extends EventEmitter {
     }
   }
 
-  public getPositionHandle(state: IOptions): number {
+  getPositionHandle(state: IOptions): number {
     if (state.vertical) {
       return this.handle.getBoundingClientRect().top;
     } else {
@@ -113,15 +111,15 @@ class Handle extends EventEmitter {
     }
   }
 
-  public getWidth(): number {
+  getWidth(): number {
     return this.handle.offsetWidth;
   }
 
-  public getHeight(): number {
+  getHeight(): number {
     return this.handle.offsetHeight;
   }
 
-  public getHandle(): HTMLElement {
+  getHandle(): HTMLElement {
     return this.handle;
   }
 
