@@ -18,12 +18,12 @@ class Model extends EventEmitter {
     this.setState = this.setState.bind(this);
   }
 
-  public setState(options: Partial<IOptions>) {
+  setState(options: Partial<IOptions>) {
     let isValue = (key: string) =>
       ["val", "minVal", "maxVal", "valStart", "valEnd", "step"].indexOf(key) !==
       -1;
 
-    function convOptions(obj): void {
+    function convOptions(obj: Object): void {
       for (let key in obj) {
         if (isValue(key)) {
           obj[key] = Number(obj[key]);
@@ -42,11 +42,7 @@ class Model extends EventEmitter {
     this.emit("updateState", newOptions);
   }
 
-  public getState(): IOptions {
-    return this.state;
-  }
-
-  public setVal(left: number, sliderLenght: number, id: number): void {
+  setVal(left: number, sliderLenght: number, id: number): void {
     if (id === 0) {
       let val =
       Math.round(Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght)/this.state.step) * this.state.step + this.state.minVal;
@@ -58,44 +54,48 @@ class Model extends EventEmitter {
     }
   }
 
-  public getDifference(): number {
+  getState(): IOptions {
+    return this.state;
+  }
+
+  getDifference(): number {
     const difference = this.state.maxVal - this.state.minVal;
     return difference;
   }
 
-  public getVal(): number {
+  getVal(): number {
     return this.state.val;
   }
 
-  public getValStart(): number {
+  getValStart(): number {
     return this.state.valStart;
   }
 
-  public getValEnd(): number {
+  getValEnd(): number {
     return this.state.valEnd;
   }
 
-  public getMinVal(): any {
+  getMinVal(): any {
     return this.state.minVal;
   }
 
-  public getMaxVal(): any {
+  getMaxVal(): any {
     return this.state.maxVal;
   }
 
-  public getStep(): number {
+  getStep(): number {
     return this.state.step;
   }
 
-  public getRangeMask(): boolean {
+  getRangeMask(): boolean {
     return this.state.range;
   }
 
-  public getTooltipMask(): boolean {
+  getTooltipMask(): boolean {
     return this.state.tooltip;
   }
 
-  public getVerticalMask(): boolean {
+  getVerticalMask(): boolean {
     return this.state.vertical;
   }
 }

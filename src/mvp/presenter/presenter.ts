@@ -41,14 +41,14 @@ class Presenter extends EventEmitter {
     this.view.renderTooltip(state, this.view.getHandleHeight());
   }
 
-  public setState(options: Partial<IOptions>): void {
+  setState(options: Partial<IOptions>): void {
     this.model.setState(options);
   }
-  public getState(): {} {
+  getState(): {} {
     return this.model.getState();
   }
 
-  public getValue(): number {
+  getValue(): number {
     return this.model.getVal();
   }
 

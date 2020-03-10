@@ -19,31 +19,31 @@ class View extends EventEmitter {
     this.fill = this.addFill();
   }
 
-  private addSlider(): Slider {
+  addSlider(): Slider {
     return new Slider(this.root);
   }
 
-  private addFill(): Fill {
+  addFill(): Fill {
     return new Fill(this.slider.getElement());
   }
 
-  public addOnHandles(state): void {
+  addOnHandles(state: IOptions): void {
       this.handles[0].on("drag_0", this.emitDrag.bind(this));
       this.handles[1].on("drag_1", this.emitDrag.bind(this));
   }
 
-  public addHandles(state): void {
+  addHandles(state: IOptions): void {
     this.handles = [];
 
       this.handles.push(new Handle(this.slider.getElement(), 0));
       this.handles.push(new Handle(this.slider.getElement(), 1));
   }
 
-  private emitDrag(left: object): void {
+  emitDrag(left: object): void {
     this.emit("dragHandle", left);
   }
 
-  public renderFill(state: IOptions): void {
+  renderFill(state: IOptions): void {
     if (state.range) {
       this.fill.renderRangeFill(
         state,
@@ -62,7 +62,7 @@ class View extends EventEmitter {
     }
   }
 
-  public renderHandle(state, sliderLenght: number): void {
+  renderHandle(state: IOptions, sliderLenght: number): void {
 
     if (state.range) {
       this.handles[1].getHandle().setAttribute("style", "display: flex");
@@ -97,7 +97,7 @@ class View extends EventEmitter {
     }
   }
 
-  public renderTooltip(state: IOptions, handleHeight: number): void {
+  renderTooltip(state: IOptions, handleHeight: number): void {
     this.handles[0].renderTooltip(
       state.tooltip,
       state.val,
@@ -118,25 +118,26 @@ class View extends EventEmitter {
     }
   }
 
-  public renderSlider(state: IOptions): void {
+  renderSlider(state: IOptions): void {
     this.slider.render(state);
   }
 
-  getLenhgtSlider(state): number {
+  getLenhgtSlider(state: IOptions): number {
     return this.slider.getLength(state);
   }
 
-  public getHandleWidth(): number {
+  getHandleWidth(): number {
     return this.handles[0].getWidth();
   }
 
-  public getHandleHeight(): number {
+  getHandleHeight(): number {
     return this.handles[0].getHeight();
   }
 
-  public getPositionHandle(state: IOptions, id: number): number {
+  getPositionHandle(state: IOptions, id: number): number {
     return this.handles[id].getPositionHandle(state);
   }
+
 }
 
 export default View;

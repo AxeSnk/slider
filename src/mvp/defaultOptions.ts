@@ -1,23 +1,23 @@
 export default interface IOptions {
-  val: number; // первоначальное положение одиночного ползунка
-  valStart: number; // положение начального ползунка (range = true)
-  valEnd: number; // положение конечного ползунка (range = true)
-  minVal: number; // минимальное значение диапазона, при слайдере с диапазоном
-  maxVal: number; // максимальное значение диапазона, при слайдере с диапазоном
+  val: number; // положение одиночного ползунка
+  valStart: number; // положение начального ползунка, при слайдере с диапазоном
+  valEnd: number; // положение конечного ползунка, при слайдере с диапазоном
+  minVal: number; // минимальное значение слайдера
+  maxVal: number; // максимальное значение слайдера
   step: number; // шаг ползунка
-  range: boolean; // диапазон слайдера
-  tooltip: boolean; // подсказка над ползунком
-  vertical: boolean; // вертикальный слайдер
+  range: boolean; // вкл/выкл диапазон слайдера
+  tooltip: boolean; // вкл/выкл подсказку над ползунком
+  vertical: boolean; // вкл/выкл вертикальный слайдер
 }
 
 const defaultOptions: IOptions = {
-  val: 4,
-  valStart: 4,
-  valEnd: 8,
+  val: 0,
+  valStart: 0,
+  valEnd: 100,
   minVal: 0,
-  maxVal: 10,
+  maxVal: 100,
   step: 1,
-  range: true,
+  range: false,
   tooltip: true,
   vertical: false
 };
