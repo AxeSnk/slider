@@ -23,33 +23,6 @@ class Handle extends EventEmitter {
     this.tooltip = new Tooltip(this.handle);
   }
 
-  private dragHandle(event: MouseEvent): void {
-    let handle: HTMLElement = event.target as HTMLElement;
-    let handleX: number = handle.offsetLeft;
-    let handleY: number = handle.offsetTop;
-    let mouseX: number = event.clientX;
-    let mouseY: number = event.clientY;
-    let id: number = this.id;
-
-    event.preventDefault();
-
-    let moveHandle = (moveEvent: MouseEvent): void => {
-      let leftX: number =
-        handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
-      let leftY: number =
-        handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
-      this.emit(`drag_${id}`, { leftX, leftY, id });
-    };
-
-    window.addEventListener("mousemove", moveHandle);
-
-    let handleMouseUp = (): void => {
-      window.removeEventListener("mousemove", moveHandle);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-
-    window.addEventListener("mouseup", handleMouseUp);
-  }
 
   renderTooltip(
     tooltipMask: boolean,
@@ -121,6 +94,34 @@ class Handle extends EventEmitter {
 
   getHandle(): HTMLElement {
     return this.handle;
+  }
+
+  private dragHandle(event: MouseEvent): void {
+    let handle: HTMLElement = event.target as HTMLElement;
+    let handleX: number = handle.offsetLeft;
+    let handleY: number = handle.offsetTop;
+    let mouseX: number = event.clientX;
+    let mouseY: number = event.clientY;
+    let id: number = this.id;
+
+    event.preventDefault();
+
+    let moveHandle = (moveEvent: MouseEvent): void => {
+      let leftX: number =
+        handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
+      let leftY: number =
+        handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
+      this.emit(`drag_${id}`, { leftX, leftY, id });
+    };
+
+    window.addEventListener("mousemove", moveHandle);
+
+    let handleMouseUp = (): void => {
+      window.removeEventListener("mousemove", moveHandle);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    window.addEventListener("mouseup", handleMouseUp);
   }
 
 }
