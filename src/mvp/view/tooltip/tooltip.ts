@@ -1,5 +1,5 @@
 import createElement from "../../utility";
-import EventEmitter from "../../eventEmitter";
+import EventEmitter from "../../EventEmitter";
 
 class Tooltip extends EventEmitter {
   private tooltip: HTMLElement;
@@ -14,7 +14,7 @@ class Tooltip extends EventEmitter {
     this.parent.appendChild(this.tooltip);
   }
 
-  public renderTooltip(
+  renderTooltip(
     tooltipMask: boolean,
     val: number,
     minVal: number,

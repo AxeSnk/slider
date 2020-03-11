@@ -1,5 +1,5 @@
 import createElement from "../../utility";
-import EventEmitter from "../../eventEmitter";
+import EventEmitter from "../../EventEmitter";
 import Tooltip from "../Tooltip/Tooltip";
 import IOptions from "../../defaultOptions";
 

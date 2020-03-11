@@ -1,5 +1,5 @@
 import IOptions, { defaultOptions } from "../defaultOptions";
-import EventEmitter from "../eventEmitter";
+import EventEmitter from "../EventEmitter";
 
 class Model extends EventEmitter {
   private state: IOptions;
@@ -56,47 +56,6 @@ class Model extends EventEmitter {
 
   getState(): IOptions {
     return this.state;
-  }
-
-  getDifference(): number {
-    const difference = this.state.maxVal - this.state.minVal;
-    return difference;
-  }
-
-  getVal(): number {
-    return this.state.val;
-  }
-
-  getValStart(): number {
-    return this.state.valStart;
-  }
-
-  getValEnd(): number {
-    return this.state.valEnd;
-  }
-
-  getMinVal(): any {
-    return this.state.minVal;
-  }
-
-  getMaxVal(): any {
-    return this.state.maxVal;
-  }
-
-  getStep(): number {
-    return this.state.step;
-  }
-
-  getRangeMask(): boolean {
-    return this.state.range;
-  }
-
-  getTooltipMask(): boolean {
-    return this.state.tooltip;
-  }
-
-  getVerticalMask(): boolean {
-    return this.state.vertical;
   }
 }
 

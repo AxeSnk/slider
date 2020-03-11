@@ -1,5 +1,5 @@
 class EventEmitter {
-  public events: { [key: string]: Array<Function> };
+  private events: { [key: string]: Array<Function> };
 
   constructor() {
     this.events = {};

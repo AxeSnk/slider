@@ -1,14 +1,11 @@
 import createElement from "../../utility";
-import EventEmitter from "../../eventEmitter";
 import IOptions from "../../defaultOptions";
 
-class Fill extends EventEmitter {
+class Fill {
   private fill: HTMLElement;
   private parent: HTMLElement;
 
   constructor(parent: HTMLElement) {
-    super();
-
     this.parent = parent;
 
     this.fill = createElement("div", { class: "slider__fill" });

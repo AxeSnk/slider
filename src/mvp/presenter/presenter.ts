@@ -1,7 +1,7 @@
 import Model from "../Model/Model";
 import View from "../View/View";
 import IOptions from "../defaultOptions";
-import EventEmitter from "../eventEmitter";
+import EventEmitter from "../EventEmitter";
 
 class Presenter extends EventEmitter {
   private model: Model;
@@ -41,18 +41,7 @@ class Presenter extends EventEmitter {
     this.view.renderTooltip(state, this.view.getHandleHeight());
   }
 
-  setState(options: Partial<IOptions>): void {
-    this.model.setState(options);
-  }
-  getState(): {} {
-    return this.model.getState();
-  }
-
-  getValue(): number {
-    return this.model.getVal();
-  }
-
-  private update({
+  update({
     leftX,
     leftY,
     id
@@ -61,7 +50,7 @@ class Presenter extends EventEmitter {
     leftY: number;
     id: number;
   }): void {
-    if (this.model.getVerticalMask()) {
+    if (this.model.getState()["vertical"]) {
       this.model.setVal(
         leftY,
         this.view.getLenhgtSlider(this.model.getState()),
@@ -76,6 +65,16 @@ class Presenter extends EventEmitter {
     }
     this.emit("updateSlider", this.model.getState());
   }
+  
+  setState(options: Partial<IOptions>): void {
+    this.model.setState(options);
+  }
+
+
+  getState(): {} {
+    return this.model.getState();
+  }
+
 }
 
 export default Presenter;

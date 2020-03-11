@@ -1,4 +1,4 @@
-import EventEmitter from "../eventEmitter";
+import EventEmitter from "../EventEmitter";
 import IOptions from "../defaultOptions";
 
 import Slider from "./Slider/Slider";
