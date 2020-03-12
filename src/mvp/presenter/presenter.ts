@@ -13,8 +13,6 @@ class Presenter extends EventEmitter {
     this.model = model;
     this.view = view;
 
-    this.view.addHandles(this.model.getState());
-    this.view.addOnHandles(this.model.getState());
     this.render(this.model.getState());
 
     this.view.on("dragHandle", this.update.bind(this));
@@ -41,40 +39,22 @@ class Presenter extends EventEmitter {
     this.view.renderTooltip(state, this.view.getHandleHeight());
   }
 
-  update({
-    leftX,
-    leftY,
-    id
-  }: {
-    leftX: number;
-    leftY: number;
-    id: number;
-  }): void {
+  update({ leftX, leftY, id }: { leftX: number; leftY: number; id: number }): void {
     if (this.model.getState()["vertical"]) {
-      this.model.setVal(
-        leftY,
-        this.view.getLenhgtSlider(this.model.getState()),
-        id
-      );
+      this.model.setVal(leftY, this.view.getLenhgtSlider(this.model.getState()), id);
     } else {
-      this.model.setVal(
-        leftX,
-        this.view.getLenhgtSlider(this.model.getState()),
-        id
-      );
+      this.model.setVal(leftX, this.view.getLenhgtSlider(this.model.getState()), id);
     }
     this.emit("updateSlider", this.model.getState());
   }
-  
+
   setState(options: Partial<IOptions>): void {
     this.model.setState(options);
   }
 
-
   getState(): {} {
     return this.model.getState();
   }
-
 }
 
 export default Presenter;

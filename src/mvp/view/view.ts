@@ -9,7 +9,7 @@ class View extends EventEmitter {
   private root: HTMLElement;
   private slider: Slider;
   private fill: Fill;
-  private handles: Handle[];
+  private handles: [] | any;
 
   constructor(root: HTMLElement) {
     super();
@@ -17,6 +17,9 @@ class View extends EventEmitter {
     this.root = root;
     this.slider = this.addSlider();
     this.fill = this.addFill();
+    this.handles = [];
+    this.addHandles();
+    this.addOnHandles();
   }
 
   addSlider(): Slider {
@@ -27,16 +30,14 @@ class View extends EventEmitter {
     return new Fill(this.slider.getElement());
   }
 
-  addOnHandles(state: IOptions): void {
-      this.handles[0].on("drag_0", this.emitDrag.bind(this));
-      this.handles[1].on("drag_1", this.emitDrag.bind(this));
+  addHandles(): any {
+    this.handles.push(new Handle(this.slider.getElement(), 0));
+    this.handles.push(new Handle(this.slider.getElement(), 1));
   }
 
-  addHandles(state: IOptions): void {
-    this.handles = [];
-
-      this.handles.push(new Handle(this.slider.getElement(), 0));
-      this.handles.push(new Handle(this.slider.getElement(), 1));
+  addOnHandles(): void {
+    this.handles[0].on("drag_0", this.emitDrag.bind(this));
+    this.handles[1].on("drag_1", this.emitDrag.bind(this));
   }
 
   emitDrag(left: object): void {
@@ -44,26 +45,15 @@ class View extends EventEmitter {
   }
 
   renderFill(state: IOptions): void {
-    if (state.range) {
-      this.fill.renderRangeFill(
-        state,
-        this.handles[0].getPositionHandle(state),
-        this.handles[1].getPositionHandle(state),
-        this.handles[0].getPositionHandle(state) - this.slider.getPosition(state),
-        this.handles[1].getPositionHandle(state) -
-          this.handles[0].getPositionHandle(state) +
-          this.handles[0].getWidth() / 2
-      );
-    } else {
-      this.fill.renderFill(
-        state,
-        this.handles[0].getPositionHandle(state) - this.slider.getPosition(state)
-      );
-    }
+    this.fill.renderFill(
+      state,
+      this.handles[0].getPositionHandle(state),
+      this.handles[1].getPositionHandle(state),
+      this.slider.getPosition(state)
+    );
   }
 
   renderHandle(state: IOptions, sliderLenght: number): void {
-
     if (state.range) {
       this.handles[1].getHandle().setAttribute("style", "display: flex");
 
@@ -73,7 +63,7 @@ class View extends EventEmitter {
         state.maxVal,
         state.vertical,
         sliderLenght
-      );  
+      );
       this.handles[1].renderHandle(
         state.valEnd,
         state.minVal,
@@ -81,8 +71,8 @@ class View extends EventEmitter {
         state.vertical,
         sliderLenght
       );
-    } else { 
-      if(this.handles[1]) {
+    } else {
+      if (this.handles[1]) {
         this.handles[1].getHandle().setAttribute("style", "display: none");
       }
 
@@ -93,7 +83,6 @@ class View extends EventEmitter {
         state.vertical,
         sliderLenght
       );
-  
     }
   }
 
@@ -137,7 +126,6 @@ class View extends EventEmitter {
   getPositionHandle(state: IOptions, id: number): number {
     return this.handles[id].getPositionHandle(state);
   }
-
 }
 
 export default View;

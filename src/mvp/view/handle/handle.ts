@@ -23,7 +23,6 @@ class Handle extends EventEmitter {
     this.tooltip = new Tooltip(this.handle);
   }
 
-
   renderTooltip(
     tooltipMask: boolean,
     val: number,
@@ -32,14 +31,7 @@ class Handle extends EventEmitter {
     vertical: boolean,
     handleHeight: number
   ): void {
-    this.tooltip.renderTooltip(
-      tooltipMask,
-      val,
-      minVal,
-      maxVal,
-      vertical,
-      handleHeight
-    );
+    this.tooltip.renderTooltip(tooltipMask, val, minVal, maxVal, vertical, handleHeight);
   }
 
   renderHandle(
@@ -107,10 +99,8 @@ class Handle extends EventEmitter {
     event.preventDefault();
 
     let moveHandle = (moveEvent: MouseEvent): void => {
-      let leftX: number =
-        handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
-      let leftY: number =
-        handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
+      let leftX: number = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
+      let leftY: number = handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
       this.emit(`drag_${id}`, { leftX, leftY, id });
     };
 
@@ -123,7 +113,6 @@ class Handle extends EventEmitter {
 
     window.addEventListener("mouseup", handleMouseUp);
   }
-
 }
 
 export default Handle;

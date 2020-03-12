@@ -20,8 +20,7 @@ class Model extends EventEmitter {
 
   setState(options: Partial<IOptions>) {
     let isValue = (key: string) =>
-      ["val", "minVal", "maxVal", "valStart", "valEnd", "step"].indexOf(key) !==
-      -1;
+      ["val", "minVal", "maxVal", "valStart", "valEnd", "step"].indexOf(key) !== -1;
 
     function convOptions(obj: Object): void {
       for (let key in obj) {
@@ -45,12 +44,26 @@ class Model extends EventEmitter {
   setVal(left: number, sliderLenght: number, id: number): void {
     if (id === 0) {
       let val =
-      Math.round(Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght)/this.state.step) * this.state.step + this.state.minVal;
-      this.state.val = val;
+        Math.round(
+          Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght) /
+            this.state.step
+        ) *
+          this.state.step +
+        this.state.minVal;
+      if (val < this.state.valEnd) {
+        this.state.val = val;
+      }
     } else {
       let valEnd =
-        Math.round(Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght)/this.state.step) * this.state.step + this.state.minVal;
-      this.state.valEnd = valEnd;
+        Math.round(
+          Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLenght) /
+            this.state.step
+        ) *
+          this.state.step +
+        this.state.minVal;
+      if (valEnd > this.state.val) {
+        this.state.valEnd = valEnd;
+      }
     }
   }
 

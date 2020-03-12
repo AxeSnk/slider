@@ -17,8 +17,7 @@ declare global {
     const init = () =>
       this.map(function() {
         const data = $(this).data();
-        const settings =
-          typeof options === "object" ? { ...data, ...options } : data;
+        const settings = typeof options === "object" ? { ...data, ...options } : data;
 
         const model = new Model(settings);
         const view = new View(this);

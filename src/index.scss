@@ -6,12 +6,21 @@
   .js-demo__slider {
     display: flex;
     justify-content: center;
+    width: 40%;
 
     .slider__wrapper {
-      padding: 50px;
+      padding: 10%;
+      width: 100%;
+
+      .js-slider {
+        display: flex;
+        justify-content: center;
+
+        
+      }
 
       .slider {
-        width: 400px;
+        width: 100%;
         position: relative;
         display: grid;
         align-items: center;
@@ -96,7 +105,7 @@
 
       .slider--vertical {
         width: 5px;
-        height: 400px;
+        height: 25rem;
         justify-items: center;
 
         .scale--vertical {

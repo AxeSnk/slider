@@ -21,7 +21,7 @@ class Panel {
     const input = form.querySelector("input");
     this.form = form;
     this.input = input;
-    
+
     this.$slider.slider("subscribeToInitModel", this.update);
     this.$slider.slider("subscribeToUpdates", this.update);
 
