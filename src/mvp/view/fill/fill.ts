@@ -20,14 +20,14 @@ class Fill {
     handleSecondPos: number,
     sliderPos: number
   ): void {
-    const lenght: number = state.range ? handleSecondPos - handleFirstPos : handleFirstPos - sliderPos;
+    const length: number = state.range ? handleSecondPos - handleFirstPos : handleFirstPos - sliderPos;
     const shift: number = handleFirstPos - sliderPos;
 
     if (state.vertical) {
       this.fill.classList.add("fill--vertical");
       this.fill.style.left = "";
       this.fill.style.width = "";
-      this.fill.style.height = lenght + "px";
+      this.fill.style.height = length + "px";
       this.fill.style.top = 0 + "px";
       if (state.range) {
         this.fill.style.top = shift + "px";
@@ -36,7 +36,7 @@ class Fill {
       this.fill.classList.remove(".fill--vertical");
       this.fill.style.top = "";
       this.fill.style.height = "";
-      this.fill.style.width = lenght + "px";
+      this.fill.style.width = length + "px";
       this.fill.style.left = 0 + "px";
       if (state.range) {
         this.fill.style.left = shift + "px";

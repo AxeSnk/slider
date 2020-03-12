@@ -19,8 +19,7 @@ class Tooltip extends EventEmitter {
     val: number,
     minVal: number,
     maxVal: number,
-    vertical: boolean,
-    handleHeight: number
+    vertical: boolean
   ): void {
     if (tooltipMask) {
       this.tooltip.setAttribute("style", "display: block");
@@ -39,11 +38,11 @@ class Tooltip extends EventEmitter {
     if (vertical) {
       this.tooltip.classList.add("tooltip--vertical");
       this.tooltip.style.top = "";
-      this.tooltip.style.left = -handleHeight * 1.4 + "px";
+      this.tooltip.style.left = -1.6 + "rem";
     } else {
       this.tooltip.classList.remove("tooltip--vertical");
       this.tooltip.style.left = "";
-      this.tooltip.style.top = -handleHeight * 1.4 + "px";
+      this.tooltip.style.top = -1.6 + "rem";
     }
   }
 

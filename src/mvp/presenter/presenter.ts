@@ -34,16 +34,16 @@ class Presenter extends EventEmitter {
 
   render(state: IOptions): void {
     this.view.renderSlider(state);
-    this.view.renderHandle(state, this.view.getLenhgtSlider(state));
+    this.view.renderHandle(state, this.view.getLengthSlider(state));
     this.view.renderFill(state);
-    this.view.renderTooltip(state, this.view.getHandleHeight());
+    this.view.renderTooltip(state);
   }
 
   update({ leftX, leftY, id }: { leftX: number; leftY: number; id: number }): void {
     if (this.model.getState()["vertical"]) {
-      this.model.setVal(leftY, this.view.getLenhgtSlider(this.model.getState()), id);
+      this.model.setVal(leftY, this.view.getLengthSlider(this.model.getState()), id);
     } else {
-      this.model.setVal(leftX, this.view.getLenhgtSlider(this.model.getState()), id);
+      this.model.setVal(leftX, this.view.getLengthSlider(this.model.getState()), id);
     }
     this.emit("updateSlider", this.model.getState());
   }

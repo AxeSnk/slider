@@ -53,7 +53,7 @@ class View extends EventEmitter {
     );
   }
 
-  renderHandle(state: IOptions, sliderLenght: number): void {
+  renderHandle(state: IOptions, sliderLength: number): void {
     if (state.range) {
       this.handles[1].getHandle().setAttribute("style", "display: flex");
 
@@ -62,14 +62,14 @@ class View extends EventEmitter {
         state.minVal,
         state.maxVal,
         state.vertical,
-        sliderLenght
+        sliderLength
       );
       this.handles[1].renderHandle(
         state.valEnd,
         state.minVal,
         state.maxVal,
         state.vertical,
-        sliderLenght
+        sliderLength
       );
     } else {
       if (this.handles[1]) {
@@ -81,19 +81,18 @@ class View extends EventEmitter {
         state.minVal,
         state.maxVal,
         state.vertical,
-        sliderLenght
+        sliderLength
       );
     }
   }
 
-  renderTooltip(state: IOptions, handleHeight: number): void {
+  renderTooltip(state: IOptions): void {
     this.handles[0].renderTooltip(
       state.tooltip,
       state.val,
       state.minVal,
       state.maxVal,
-      state.vertical,
-      handleHeight
+      state.vertical
     );
     if (state.range) {
       this.handles[1].renderTooltip(
@@ -101,8 +100,7 @@ class View extends EventEmitter {
         state.valEnd,
         state.minVal,
         state.maxVal,
-        state.vertical,
-        handleHeight
+        state.vertical
       );
     }
   }
@@ -111,16 +109,8 @@ class View extends EventEmitter {
     this.slider.render(state);
   }
 
-  getLenhgtSlider(state: IOptions): number {
+  getLengthSlider(state: IOptions): number {
     return this.slider.getLength(state);
-  }
-
-  getHandleWidth(): number {
-    return this.handles[0].getWidth();
-  }
-
-  getHandleHeight(): number {
-    return this.handles[0].getHeight();
   }
 
   getPositionHandle(state: IOptions, id: number): number {

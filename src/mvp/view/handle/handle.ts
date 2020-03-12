@@ -28,10 +28,9 @@ class Handle extends EventEmitter {
     val: number,
     minVal: number,
     maxVal: number,
-    vertical: boolean,
-    handleHeight: number
+    vertical: boolean
   ): void {
-    this.tooltip.renderTooltip(tooltipMask, val, minVal, maxVal, vertical, handleHeight);
+    this.tooltip.renderTooltip(tooltipMask, val, minVal, maxVal, vertical);
   }
 
   renderHandle(
