@@ -42,29 +42,26 @@ class Model extends EventEmitter {
   }
 
   setVal(left: number, sliderLength: number, id: number): void {
-    if (id === 0) {
-      let val =
-        Math.round(
-          Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) /
-            this.state.step
-        ) *
-          this.state.step +
-        this.state.minVal;
-      if (this.state.minVal <= val && val < this.state.valEnd) {
-        this.state.val = val;
+    let val = Math.round(Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) / this.state.step) * this.state.step + this.state.minVal;
+    let valEnd = Math.round(Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) / this.state.step) * this.state.step + this.state.minVal;
+
+    if(this.state.range) {
+      if (id === 0) {
+        if (this.state.minVal <= val && val < this.state.valEnd) {
+          this.state.val = val;
+        }
+      } else {
+        if (this.state.maxVal > valEnd && valEnd > this.state.val) {
+          this.state.valEnd = valEnd;
+        } else if (this.state.maxVal <= valEnd) {
+          this.state.valEnd = this.state.maxVal
+        }
       }
     } else {
-      let valEnd =
-        Math.round(
-          Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) /
-            this.state.step
-        ) *
-          this.state.step +
-        this.state.minVal;
-      if (this.state.maxVal > valEnd && valEnd > this.state.val) {
-        this.state.valEnd = valEnd;
-      } else if (this.state.maxVal <= valEnd) {
-        this.state.valEnd = this.state.maxVal
+      if (this.state.minVal <= val && val < this.state.maxVal) {
+        this.state.val = val;
+      } else if (val >= this.state.maxVal) {
+        this.state.val = this.state.maxVal
       }
     }
   }
