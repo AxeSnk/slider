@@ -1,4 +1,4 @@
-import Handle from "../src/mvp/View/Handle/Handle";
+import Handle from "../src/MVP/View/Handle/Handle";
 
 describe("Handle tests:", () => {
   let handle: Handle;

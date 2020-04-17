@@ -1,4 +1,4 @@
-import IOptions from "../mvp/defaultOptions";
+import IOptions from "../MVP/defaultOptions";
 
 class Panel {
   root: HTMLElement;

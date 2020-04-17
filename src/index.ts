@@ -1,6 +1,6 @@
 import "./index.scss";
-import "./mvp/sliderFacade";
-import Demo from "./demo/Demo";
+import "./MVP/sliderFacade";
+import Demo from "./Demo/Demo";
 
 window.onload = function windowHasLoaded() {
   document.querySelectorAll(".demo").forEach(demo => new Demo(demo));

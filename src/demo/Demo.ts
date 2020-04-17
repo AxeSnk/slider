@@ -1,6 +1,6 @@
 import Panel from "./Panel";
-import "../mvp/sliderFacade";
-import IOptions from "../mvp/defaultOptions";
+import "../MVP/sliderFacade";
+import IOptions from "../MVP/defaultOptions";
 
 class Demo {
   $slider: JQuery<Element>;

@@ -1,9 +1,11 @@
-import Fill from "../src/mvp/View/Fill/Fill";
-import IOptions, { defaultOptions } from "../src/mvp/defaultOptions";
+import Fill from "../src/MVP/View/Fill/Fill";
+import IOptions, { defaultOptions } from "../src/MVP/defaultOptions";
 
 describe("Fill tests:", () => {
   let fill: Fill;
-  const length: number = 200;
+  const handleFirstPos = 100;
+  const handleSecondPos = 300;
+  const sliderPos = 0;
   let state: IOptions;
 
   beforeEach(() => {
@@ -15,10 +17,12 @@ describe("Fill tests:", () => {
   });
 
   describe("renderFill", () => {
+    const length: number = 100;
 
     test("renderFill vertical", () => {
+
       state = {...defaultOptions, ...{ range: false, vertical: true }};
-      fill.renderFill(state, length);
+      fill.renderFill(state, handleFirstPos, handleSecondPos, sliderPos);
 
       let element = fill.getFill();
 
@@ -31,7 +35,7 @@ describe("Fill tests:", () => {
 
     test("renderFill horizontal", () => {
       state = {...defaultOptions, ...{ range: false, vertical: false }}
-      fill.renderFill(state, length);
+      fill.renderFill(state, handleFirstPos, handleSecondPos, sliderPos);
 
       let element = fill.getFill();
 
@@ -45,13 +49,12 @@ describe("Fill tests:", () => {
   });
 
   describe("renderRangeFill", () => {
-    const posHandle_0: number = 1;
-    const posHandle_1: number = 2;
+    const length: number = 200;
     const shift: number = 100;
 
     test("renderRangeFill vertical", () => {
-      state = {...defaultOptions, ...{ vertical: true }}
-      fill.renderRangeFill(state, posHandle_0, posHandle_1, shift, length);
+      state = {...defaultOptions, ...{ range:true, vertical: true }}
+      fill.renderFill(state, handleFirstPos, handleSecondPos, sliderPos);
 
       let element = fill.getFill();
 
@@ -64,8 +67,8 @@ describe("Fill tests:", () => {
 
 
     test("renderRangeFill horizontal", () => {
-      state = {...defaultOptions, ...{ vertical: false }}
-      fill.renderRangeFill(state, posHandle_0, posHandle_1, shift, length);
+      state = {...defaultOptions, ...{ range:true, vertical: false }}
+      fill.renderFill(state, handleFirstPos, handleSecondPos, sliderPos);
 
       let element = fill.getFill();
 
