@@ -56,7 +56,11 @@ class Model extends EventEmitter {
     }
   }
 
-  convertOptions(isValue: Function, obj: Object): void {
+  getState(): IOptions {
+    return this.state;
+  }
+  
+  private convertOptions(isValue: Function, obj: Object): void {
     for (let key in obj) {
       if (isValue(key)) {
         obj[key] = Number(obj[key]);
@@ -66,9 +70,6 @@ class Model extends EventEmitter {
     }
   }
 
-  getState(): IOptions {
-    return this.state;
-  }
 }
 
 export default Model;
