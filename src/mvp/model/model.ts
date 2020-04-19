@@ -22,17 +22,7 @@ class Model extends EventEmitter {
     let isValue = (key: string) =>
       ["val", "minVal", "maxVal", "valStart", "valEnd", "step"].indexOf(key) !== -1;
 
-    function convOptions(obj: Object): void {
-      for (let key in obj) {
-        if (isValue(key)) {
-          obj[key] = Number(obj[key]);
-        } else {
-          obj[key] = Boolean(obj[key]);
-        }
-      }
-    }
-
-    convOptions(options);
+    this.convertOptions(isValue, options);
 
     let state = this.state;
     let newOptions = { ...state, ...options };
@@ -62,6 +52,16 @@ class Model extends EventEmitter {
         this.state.val = val;
       } else if (val >= this.state.maxVal) {
         this.state.val = this.state.maxVal
+      }
+    }
+  }
+
+  convertOptions(isValue: Function, obj: Object): void {
+    for (let key in obj) {
+      if (isValue(key)) {
+        obj[key] = Number(obj[key]);
+      } else {
+        obj[key] = Boolean(obj[key]);
       }
     }
   }

@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 .demo {
   display: flex;
   justify-content: center;
@@ -36,32 +40,6 @@
         height: 5px;
         background-color: rgb(229, 229, 229);
         border-radius: 6px;
-
-        .slider__scale {
-          position: absolute;
-          display: flex;
-          justify-content: space-between;
-          justify-self: center;
-          width: 95%;
-
-          &-division {
-            display: flex;
-            justify-content: center;
-            width: 1px;
-            height: 10px;
-            background-color: rgb(229, 229, 229);
-            z-index: 98;
-
-            .division__text {
-              position: absolute;
-              top: 1.07rem;
-              width: fit-content;
-              color: rgb(229, 229, 229);
-              z-index: 99;
-              pointer-events: none;
-            }
-          }
-        }
 
         .slider__fill {
           position: absolute;
@@ -116,24 +94,6 @@
         height: 25rem;
         justify-items: center;
 
-        .scale--vertical {
-          flex-direction: column;
-          height: 95%;
-
-          .slider__scale-division {
-            width: 10px;
-            height: 1px;
-            align-items: center;
-
-            .division__text {
-              top: auto;
-              left: 1.07rem;
-              display: flex;
-              justify-content: center;
-            }
-          }
-        }
-
         .slider__handle {
           .tooltip--vertical {
             &::after {
@@ -147,6 +107,7 @@
           align-self: flex-start;
           width: 5px;
           border-radius: 6px;
+          left: 0;
         }
       }
     }
@@ -193,7 +154,6 @@
               flex-direction: column;
             }
   
-
             input {
               padding: 0 5px;
               margin-left: 5px;

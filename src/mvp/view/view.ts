@@ -1,6 +1,5 @@
 import EventEmitter from "../EventEmitter";
 import IOptions from "../defaultOptions";
-
 import Slider from "./Slider/Slider";
 import Handle from "./Handle/Handle";
 import Fill from "./Fill/Fill";
