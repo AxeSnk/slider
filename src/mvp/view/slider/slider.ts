@@ -7,6 +7,10 @@ class Slider {
 
   constructor(parent: HTMLElement) {
     this.parent = parent;
+    this.init();
+  }
+
+  init() {
     this.slider = createElement("div", { class: "slider" });
     this.parent.appendChild(this.slider);
   }

@@ -7,11 +7,13 @@ class Fill {
 
   constructor(parent: HTMLElement) {
     this.parent = parent;
+    this.init();
+    this.renderFill = this.renderFill.bind(this);
+  }
 
+  init() {
     this.fill = createElement("div", { class: "slider__fill" });
     this.parent.appendChild(this.fill);
-
-    this.renderFill = this.renderFill.bind(this);
   }
 
   renderFill(

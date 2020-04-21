@@ -13,14 +13,19 @@ class Handle extends EventEmitter {
     super();
 
     this.parent = parent;
+    this.init();
+    this.addListener();
+    this.id = id;
+    this.tooltip = new Tooltip(this.handle);
+  }
 
+  init() {
     this.handle = createElement("div", { class: "slider__handle" });
     this.parent.appendChild(this.handle);
+  }
 
+  addListener() {
     this.handle.addEventListener("mousedown", this.dragHandle.bind(this));
-    this.id = id;
-
-    this.tooltip = new Tooltip(this.handle);
   }
 
   renderTooltip(

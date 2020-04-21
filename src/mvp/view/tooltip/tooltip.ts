@@ -9,7 +9,10 @@ class Tooltip extends EventEmitter {
     super();
 
     this.parent = parent;
+    this.init();
+  }
 
+  init() {
     this.tooltip = createElement("div", { class: "slider__tooltip" });
     this.parent.appendChild(this.tooltip);
   }
