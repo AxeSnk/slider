@@ -19,6 +19,7 @@ class View extends EventEmitter {
     this.handles = [];
     this.addHandles();
     this.addOnHandles();
+    this.addOnSlider();
   }
 
   addSlider(): Slider {
@@ -39,8 +40,41 @@ class View extends EventEmitter {
     this.handles[1].on("drag_1", this.emitDrag.bind(this));
   }
 
+  addOnSlider(): void {
+    this.slider.on("clickSlider", this.emitDrag.bind(this));
+  }
+
   emitDrag(left: object): void {
     this.emit("dragHandle", left);
+  }
+
+  emitClick(left: object): void {
+    this.emit("clickInSlider", left);
+  }
+
+  findNearHandle(leftX: number, leftY: number, state: IOptions): number {
+    let id: number;
+    let sliderPos: number = this.slider.getPosition(state);
+    let handleFirstPos: number = this.handles[0].getPositionHandle(state);
+    let handleSecondPos: number = this.handles[1].getPositionHandle(state);
+    let handleFirstLeft: number = handleFirstPos - sliderPos;
+    let handleSecondLeft: number = handleSecondPos - sliderPos;
+
+    let currentFirstDelta: number = state.vertical
+      ? Math.abs(handleFirstLeft - leftY)
+      : Math.abs(handleFirstLeft - leftX);
+
+    let currentSecondDelta: number = state.vertical
+      ? Math.abs(handleSecondLeft - leftY)
+      : Math.abs(handleSecondLeft - leftX);
+
+    console.log('sliderPos', sliderPos)
+    console.log('handleFirstPos', handleFirstPos)
+    console.log('handleSecondPos', handleSecondPos)
+    console.log('leftY', leftY)
+
+
+    return currentFirstDelta < currentSecondDelta ? (id = 0) : (id = 1);
   }
 
   renderFill(state: IOptions): void {
