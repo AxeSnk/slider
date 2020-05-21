@@ -35,7 +35,7 @@ class Fill {
         this.fill.style.top = shift + "px";
       }
     } else {
-      this.fill.classList.remove(".fill--vertical");
+      this.fill.classList.remove("fill--vertical");
       this.fill.style.top = "";
       this.fill.style.height = "";
       this.fill.style.width = length + "px";

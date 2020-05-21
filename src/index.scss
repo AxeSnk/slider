@@ -42,14 +42,14 @@ body {
         border-radius: 6px;
         cursor: pointer;
 
-        .slider__fill {
+        &__fill {
           position: absolute;
           height: 5px;
           background-color: rgb(231, 87, 53);
           border-radius: 6px;
         }
 
-        .slider__handle {
+        &__handle {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -88,6 +88,21 @@ body {
             }
           }
         }
+
+        &__scale {
+          position: absolute;
+          top: 30px;
+
+          .scale__values {
+            position: relative;
+            display: flex;
+
+            .value__item {
+              position: absolute;
+              transform: translateX(-50%);
+            }
+          }
+        }
       }
 
       .slider--vertical {
@@ -109,6 +124,19 @@ body {
           width: 5px;
           border-radius: 6px;
           left: 0;
+        }
+
+        .scale--vertical {
+          width: 0px;
+          height: 100%;
+          top: 0;
+          left: 30px;
+
+          .scale__values {
+            display: flex;
+            flex-direction: column;
+          }
+
         }
       }
     }

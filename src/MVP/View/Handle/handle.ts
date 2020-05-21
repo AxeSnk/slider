@@ -104,9 +104,6 @@ class Handle extends EventEmitter {
     event.preventDefault();
 
     let moveHandle = (moveEvent: MouseEvent): void => {
-      console.log('mouseX', mouseX)
-      console.log('moveEvent.clientX', moveEvent.clientX)
-
       let leftX: number = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
       let leftY: number = handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
       this.emit(`drag_${id}`, { leftX, leftY, id });

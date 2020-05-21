@@ -3,12 +3,14 @@ import IOptions from "../defaultOptions";
 import Slider from "./Slider/Slider";
 import Handle from "./Handle/Handle";
 import Fill from "./Fill/Fill";
+import Scale from "./Scale/Scale";
 
 class View extends EventEmitter {
   private root: HTMLElement;
   private slider: Slider;
   private fill: Fill;
-  private handles: [] | any;
+  private handles: Array<Handle>;
+  private scale: Scale;
 
   constructor(root: HTMLElement) {
     super();
@@ -17,6 +19,7 @@ class View extends EventEmitter {
     this.slider = this.addSlider();
     this.fill = this.addFill();
     this.handles = [];
+    this.scale = this.addScale();
     this.addHandles();
     this.addOnHandles();
     this.addOnSlider();
@@ -35,13 +38,17 @@ class View extends EventEmitter {
     this.handles.push(new Handle(this.slider.getElement(), 1));
   }
 
+  addScale(): any {
+    return new Scale(this.slider.getElement());
+  }
+
   addOnHandles(): void {
     this.handles[0].on("drag_0", this.emitDrag.bind(this));
     this.handles[1].on("drag_1", this.emitDrag.bind(this));
   }
 
   addOnSlider(): void {
-    this.slider.on("clickSlider", this.emitDrag.bind(this));
+    this.slider.on("clickSlider", this.emitClick.bind(this));
   }
 
   emitDrag(left: object): void {
@@ -49,7 +56,7 @@ class View extends EventEmitter {
   }
 
   emitClick(left: object): void {
-    this.emit("clickInSlider", left);
+    this.emit("clickSlider", left);
   }
 
   renderFill(state: IOptions): void {
@@ -115,6 +122,10 @@ class View extends EventEmitter {
 
   renderSlider(state: IOptions): void {
     this.slider.render(state);
+  }
+
+  renderScale(state: IOptions, sliderLength: number): void {
+    this.scale.render(state, sliderLength);
   }
 
   getLengthSlider(state: IOptions): number {
