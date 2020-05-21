@@ -41,16 +41,30 @@ class Presenter extends EventEmitter {
   }
 
   update({ leftX, leftY, id }: { leftX: number; leftY: number; id: number }): void {
-    let idHandle: number = id
+    let idHandle: number = id;
 
-    if(id == undefined) {
-      idHandle = this.view.findNearHandle(leftX, leftY, this.model.getState())
+    if (id == undefined) {
+      idHandle = this.model.findNearHandle(
+        leftX,
+        leftY,
+        this.view.getPositionSlider(this.model.getState()),
+        this.view.getPositionHandle(this.model.getState(), 0),
+        this.view.getPositionHandle(this.model.getState(), 1)
+      );
     }
 
     if (this.model.getState()["vertical"]) {
-      this.model.setVal(leftY, this.view.getLengthSlider(this.model.getState()), idHandle);
+      this.model.setVal(
+        leftY,
+        this.view.getLengthSlider(this.model.getState()),
+        idHandle
+      );
     } else {
-      this.model.setVal(leftX, this.view.getLengthSlider(this.model.getState()), idHandle);
+      this.model.setVal(
+        leftX,
+        this.view.getLengthSlider(this.model.getState()),
+        idHandle
+      );
     }
 
     this.emit("updateSlider", this.model.getState());

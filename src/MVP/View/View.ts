@@ -52,31 +52,6 @@ class View extends EventEmitter {
     this.emit("clickInSlider", left);
   }
 
-  findNearHandle(leftX: number, leftY: number, state: IOptions): number {
-    let id: number;
-    let sliderPos: number = this.slider.getPosition(state);
-    let handleFirstPos: number = this.handles[0].getPositionHandle(state);
-    let handleSecondPos: number = this.handles[1].getPositionHandle(state);
-    let handleFirstLeft: number = handleFirstPos - sliderPos;
-    let handleSecondLeft: number = handleSecondPos - sliderPos;
-
-    let currentFirstDelta: number = state.vertical
-      ? Math.abs(handleFirstLeft - leftY)
-      : Math.abs(handleFirstLeft - leftX);
-
-    let currentSecondDelta: number = state.vertical
-      ? Math.abs(handleSecondLeft - leftY)
-      : Math.abs(handleSecondLeft - leftX);
-
-    console.log('sliderPos', sliderPos)
-    console.log('handleFirstPos', handleFirstPos)
-    console.log('handleSecondPos', handleSecondPos)
-    console.log('leftY', leftY)
-
-
-    return currentFirstDelta < currentSecondDelta ? (id = 0) : (id = 1);
-  }
-
   renderFill(state: IOptions): void {
     this.fill.renderFill(
       state,
@@ -144,6 +119,10 @@ class View extends EventEmitter {
 
   getLengthSlider(state: IOptions): number {
     return this.slider.getLength(state);
+  }
+
+  getPositionSlider(state: IOptions): number {
+    return this.slider.getPosition(state);
   }
 
   getPositionHandle(state: IOptions, id: number): number {
