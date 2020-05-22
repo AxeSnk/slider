@@ -44,20 +44,23 @@ class Scale extends EventEmitter {
       });
     }
 
-    let left = state.vertical ? 0 : 10;
-    let leftStep = (sliderLength - 20) / (maxVal - minVal);
+    let left = state.vertical ? 0 : 2;
+    const maxWidthVal = Math.max(`${maxVal}`.length, `${minVal}`.length);
+
+    const leftStep = 96 / (maxVal - minVal);
 
     for (let i = minVal; i <= maxVal; i++) {
-      let value = createElement("div", { class: "value__item" });
+      const value = createElement("div", { class: "value__item" });
 
       state.vertical
-        ? value.setAttribute("style", `top: ${left}px`)
-        : value.setAttribute("style", `left: ${left}px`);
+        ? value.setAttribute("style", `top: ${left}%`)
+        : value.setAttribute("style", `left: ${left}%`);
       left += leftStep;
       value.innerHTML = `${i}`;
       this.values.appendChild(value);
     }
   }
+
 }
 
 export default Scale;

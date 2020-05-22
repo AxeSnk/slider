@@ -47,27 +47,27 @@ class Handle extends EventEmitter {
   ): void {
     if (vertical) {
       this.handle.style.left = "";
-      let height: number = sliderLength - this.handle.offsetHeight;
+      let height: number = 96;
       let newLeft: number = ((val - minVal) * height) / (maxVal - minVal);
 
       if (newLeft < 0) {
-        this.handle.style.top = 0 + "px";
+        this.handle.style.top = 0 + "%";
       } else if (newLeft > height) {
-        this.handle.style.top = height + "px";
+        this.handle.style.top = height + "%";
       } else {
-        this.handle.style.top = newLeft + "px";
+        this.handle.style.top = newLeft + "%";
       }
     } else {
       this.handle.style.top = "";
-      let width: number = sliderLength - this.handle.offsetWidth;
+      let width: number = 96;
       let newLeft: number = ((val - minVal) * width) / (maxVal - minVal);
 
       if (newLeft < 0) {
-        this.handle.style.left = 0 + "px";
+        this.handle.style.left = 0 + "%";
       } else if (newLeft > width) {
-        this.handle.style.left = width + "px";
+        this.handle.style.left = width + "%";
       } else {
-        this.handle.style.left = newLeft + "px";
+        this.handle.style.left = newLeft + "%";
       }
     }
   }
