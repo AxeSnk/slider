@@ -64,7 +64,8 @@ class View extends EventEmitter {
       state,
       this.handles[0].getPositionHandle(state),
       this.handles[1].getPositionHandle(state),
-      this.slider.getPosition(state)
+      this.slider.getPosition(state),
+      this.slider.getLength(state)
     );
   }
 

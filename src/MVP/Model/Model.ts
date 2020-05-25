@@ -9,9 +9,6 @@ class Model extends EventEmitter {
 
     this.state = options ? { ...defaultOptions, ...options } : defaultOptions;
 
-    if (this.state.range) {
-      this.state.val = this.state.valStart;
-    }
 
     this.emit("initState", this.state);
 
@@ -20,7 +17,7 @@ class Model extends EventEmitter {
 
   setState(options: Partial<IOptions>) {
     let isValue = (key: string) =>
-      ["val", "minVal", "maxVal", "valStart", "valEnd", "step"].indexOf(key) !== -1;
+      ["val", "minVal", "maxVal", "valEnd", "step"].indexOf(key) !== -1;
 
     this.convertOptions(isValue, options);
 
