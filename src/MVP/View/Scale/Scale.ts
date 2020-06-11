@@ -12,6 +12,7 @@ class Scale extends EventEmitter {
 
     this.parent = parent;
     this.init();
+    this.addListener();
   }
 
   init() {
@@ -21,20 +22,22 @@ class Scale extends EventEmitter {
     this.parent.appendChild(this.scale);
   }
 
-  render(state: IOptions, sliderLength: number): void {
+  render(state: IOptions): void {
     if (state.scale) {
       this.scale.setAttribute("style", "display: block");
+
+      state.vertical
+        ? this.scale.classList.add("scale--vertical")
+        : this.scale.classList.remove("scale--vertical");
+
+      this.renderValues(state);
+      this.range = state.range;
     } else {
       this.scale.setAttribute("style", "display: none");
     }
-    state.vertical
-      ? this.scale.classList.add("scale--vertical")
-      : this.scale.classList.remove("scale--vertical");
-
-    this.renderValues(state, sliderLength);
   }
 
-  renderValues(state: IOptions, sliderLength: number): void {
+  renderValues(state: IOptions): void {
     const { minVal, maxVal } = state;
     const elems: NodeListOf<ChildNode> = this.values.childNodes;
 
@@ -45,38 +48,46 @@ class Scale extends EventEmitter {
     }
 
     let left: number = state.vertical ? 0 : 2;
-    const maxWidthVal: number = Math.max(`${maxVal}`.length, `${minVal}`.length);
-    const symbolWidth: number = this.getSymbolWidth(maxWidthVal);
-    const maxQuantitySymbol: number = Math.floor(sliderLength / (symbolWidth * 1.5));
-    const scaleStep: number = Math.floor((maxVal - minVal) / maxQuantitySymbol);
 
-    const leftStep: number = 96 / maxQuantitySymbol;
+    let val: HTMLElement = createElement("div", {
+      class: "value__item-start value__item",
+    });
 
-    for (let i = minVal; i < maxVal; i = i + scaleStep) {
-      const value = createElement("div", { class: "value__item" });
+    state.vertical
+      ? val.setAttribute("style", `top: ${left}%`)
+      : val.setAttribute("style", `left: ${left}%`);
+    val.innerHTML = `${minVal}`;
+    this.values.appendChild(val);
 
-      state.vertical
-        ? value.setAttribute("style", `top: ${left}%`)
-        : value.setAttribute("style", `left: ${left}%`);
-      left += leftStep;
-      value.innerHTML = `${i}`;
-      this.values.appendChild(value);
-    }
+    left += 96;
 
+    let valEnd: HTMLElement = createElement("div", {
+      class: "value__item-end value__item",
+    });
+
+    state.vertical
+      ? valEnd.setAttribute("style", `top: ${left}%`)
+      : valEnd.setAttribute("style", `left: ${left}%`);
+
+    valEnd.innerHTML = `${maxVal}`;
+    this.values.appendChild(valEnd);
   }
 
-  getSymbolWidth(maxWidthVal: number): number {
-    const elem: HTMLElement = createElement("div", { class: "value__item" });
-    let symbols: string = '';
-    for (let i = 0; i < maxWidthVal; i++) {
-      symbols += "0";
-    }
-    elem.innerHTML = `${symbols}`;
-    this.values.append(elem);
-    const symboldWidth: number = Number(elem.getBoundingClientRect().width);
-    this.values.removeChild(elem);
+  addListener() {
+    this.scale.addEventListener("mousedown", this.clickScale.bind(this));
+  }
 
-    return symboldWidth;
+  clickScale(event: MouseEvent): void {
+    let target = event.target as HTMLElement;
+
+    let isValEnd = target.className.indexOf("value__item-end") === 0;
+    if (isValEnd) {
+      this.range
+        ? this.emit("clickScaleValEnd", { valEnd: `${target.innerHTML}` })
+        : this.emit("clickScaleValEnd", { val: `${target.innerHTML}` });
+    } else {
+      this.emit("clickScaleVal", { val: `${target.innerHTML}` });
+    }
   }
 }
 

@@ -23,6 +23,7 @@ class View extends EventEmitter {
     this.addHandles();
     this.addOnHandles();
     this.addOnSlider();
+    this.addOnScale();
   }
 
   addSlider(): Slider {
@@ -51,12 +52,25 @@ class View extends EventEmitter {
     this.slider.on("clickSlider", this.emitClick.bind(this));
   }
 
+  addOnScale(): void {
+    this.scale.on("clickScaleVal", this.emitScaleVal.bind(this));
+    this.scale.on("clickScaleValEnd", this.emitScaleValEnd.bind(this));
+  }
+
   emitDrag(left: object): void {
     this.emit("dragHandle", left);
   }
 
   emitClick(left: object): void {
     this.emit("clickSlider", left);
+  }
+
+  emitScaleVal(val: object): void {
+    this.emit('clickScaleVal', val);
+  }
+
+  emitScaleValEnd(valEnd: object): void {
+    this.emit('clickScaleValEnd', valEnd);
   }
 
   renderFill(state: IOptions): void {
@@ -125,8 +139,8 @@ class View extends EventEmitter {
     this.slider.render(state);
   }
 
-  renderScale(state: IOptions, sliderLength: number): void {
-    this.scale.render(state, sliderLength);
+  renderScale(state: IOptions): void {
+    this.scale.render(state);
   }
 
   getLengthSlider(state: IOptions): number {

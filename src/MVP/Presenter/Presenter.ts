@@ -17,6 +17,8 @@ class Presenter extends EventEmitter {
 
     this.view.on("dragHandle", this.update.bind(this));
     this.view.on("clickSlider", this.update.bind(this));
+    this.view.on("clickScaleVal", this.model.setState.bind(this));
+    this.view.on("clickScaleValEnd", this.model.setState.bind(this));
     this.model.on("updateState", this.render.bind(this));
     this.on("updateSlider", this.model.setState.bind(this));
 
@@ -38,7 +40,7 @@ class Presenter extends EventEmitter {
     this.view.renderHandle(state, this.view.getLengthSlider(state));
     this.view.renderFill(state);
     this.view.renderTooltip(state);
-    this.view.renderScale(state, this.view.getLengthSlider(state));
+    this.view.renderScale(state);
   }
 
   update({ leftX, leftY, id }: { leftX: number; leftY: number; id: number }): void {

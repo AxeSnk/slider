@@ -26,7 +26,7 @@ class Slider extends EventEmitter {
   }
 
   addListener(): void {
-    this.slider.addEventListener("mousedown", this.clickSlider.bind(this));
+    this.slider.addEventListener("click", this.clickSlider.bind(this));
   }
 
   clickSlider(event: MouseEvent): void {
