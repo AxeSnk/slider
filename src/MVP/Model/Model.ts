@@ -9,20 +9,21 @@ class Model extends EventEmitter {
 
     this.state = options ? { ...defaultOptions, ...options } : defaultOptions;
 
-
     this.emit("initState", this.state);
 
     this.setState = this.setState.bind(this);
   }
 
   setState(options: Partial<IOptions>) {
+    let validOptions: Partial<IOptions> = this.validation(options);
+
     let isValue = (key: string) =>
       ["val", "minVal", "maxVal", "valEnd", "step"].indexOf(key) !== -1;
 
-    this.convertOptions(isValue, options);
+    this.convertOptions(isValue, validOptions);
 
     let state = this.state;
-    let newOptions = { ...state, ...options };
+    let newOptions = { ...state, ...validOptions };
     this.state = newOptions;
 
     this.emit("updateState", newOptions);
@@ -31,15 +32,17 @@ class Model extends EventEmitter {
   setVal(left: number, sliderLength: number, id: number): void {
     let val =
       Math.round(
-        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) /
-          this.state.step
+        Math.round(
+          (left * (this.state.maxVal - this.state.minVal)) / sliderLength
+        ) / this.state.step
       ) *
         this.state.step +
       this.state.minVal;
     let valEnd =
       Math.round(
-        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) /
-          this.state.step
+        Math.round(
+          (left * (this.state.maxVal - this.state.minVal)) / sliderLength
+        ) / this.state.step
       ) *
         this.state.step +
       this.state.minVal;
@@ -99,6 +102,53 @@ class Model extends EventEmitter {
         obj[key] = Boolean(obj[key]);
       }
     }
+  }
+
+  private validation(options: Partial<IOptions>): Partial<IOptions> {
+    let { val, valEnd, minVal, maxVal, step, range, tooltip, vertical, scale } = options;
+
+    if (this.state.range) {
+      if (
+        val >= this.state.valEnd ||
+        val < this.state.minVal ||
+        val > this.state.maxVal
+      ) {
+        val = this.state.val;
+      }  
+
+      if (valEnd > this.state.maxVal) {
+        valEnd = this.state.valEnd;
+      }
+  
+      if (maxVal < this.state.valEnd) {
+        maxVal = this.state.maxVal
+      }  
+    } else {
+      if (
+        val < this.state.minVal ||
+        val > this.state.maxVal
+      ) {
+        val = this.state.val;
+      }  
+
+      if (maxVal < this.state.val) {
+        maxVal = this.state.maxVal
+      }
+    }
+
+    if (minVal > this.state.val) {
+      minVal = this.state.minVal;
+    }
+
+    if (
+      step < 1 ||
+      step > this.state.maxVal
+      ) {
+      step = this.state.step
+    }
+
+    let validOptions: Partial<IOptions> = { val, valEnd, minVal, maxVal, step, range, tooltip, vertical, scale };
+    return validOptions;
   }
 }
 
