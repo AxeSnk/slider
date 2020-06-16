@@ -83,10 +83,10 @@ class Scale extends EventEmitter {
     let isValEnd = target.className.indexOf("value__item-end") === 0;
     if (isValEnd) {
       this.range
-        ? this.emit("clickScaleValEnd", { valEnd: `${target.innerHTML}` })
-        : this.emit("clickScaleValEnd", { val: `${target.innerHTML}` });
+        ? this.emit("clickScaleValEnd", { valEnd: target.innerHTML })
+        : this.emit("clickScaleVal", { val: target.innerHTML });
     } else {
-      this.emit("clickScaleVal", { val: `${target.innerHTML}` });
+      this.emit("clickScaleVal", { val: target.innerHTML });
     }
   }
 }

@@ -34,7 +34,7 @@ class Panel {
     const options: { [key: string]: any } = {};
     const target = event.currentTarget as HTMLFormElement;
 
-    [...target.elements].forEach(input => {
+    [...target.elements].forEach((input) => {
       const { name, type, value, checked } = input as HTMLInputElement;
       const hasChecked = type === "radio" || type === "checkbox";
       if (type === "submit") return;
@@ -46,7 +46,7 @@ class Panel {
   }
 
   update(state: IOptions): void {
-    [...this.form.elements].forEach(element => {
+    [...this.form.elements].forEach((element) => {
       const input = element as HTMLInputElement;
       const { name, type } = input;
       const defaultValue = state[name];

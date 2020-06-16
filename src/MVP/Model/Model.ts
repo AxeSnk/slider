@@ -17,13 +17,12 @@ class Model extends EventEmitter {
   setState(options: Partial<IOptions>) {
     let validOptions: Partial<IOptions> = this.validation(options);
 
-    let isValue = (key: string) =>
+    const isValue = (key: string) =>
       ["val", "minVal", "maxVal", "valEnd", "step"].indexOf(key) !== -1;
 
     this.convertOptions(isValue, validOptions);
 
-    let state = this.state;
-    let newOptions = { ...state, ...validOptions };
+    const newOptions = { ...this.state, ...validOptions };
     this.state = newOptions;
 
     this.emit("updateState", newOptions);
@@ -105,49 +104,86 @@ class Model extends EventEmitter {
   }
 
   private validation(options: Partial<IOptions>): Partial<IOptions> {
-    let { val, valEnd, minVal, maxVal, step, range, tooltip, vertical, scale } = options;
+    let {
+      val,
+      valEnd,
+      minVal,
+      maxVal,
+      step,
+      range,
+      tooltip,
+      vertical,
+      scale,
+    } = options;
 
     if (this.state.range) {
       if (
         val >= this.state.valEnd ||
         val < this.state.minVal ||
-        val > this.state.maxVal
+        val > this.state.maxVal ||
+        val == undefined
       ) {
         val = this.state.val;
-      }  
+      }
 
-      if (valEnd > this.state.maxVal) {
+      if (valEnd > this.state.maxVal || valEnd == undefined) {
         valEnd = this.state.valEnd;
       }
-  
-      if (maxVal < this.state.valEnd) {
-        maxVal = this.state.maxVal
-      }  
+
+      if (maxVal < this.state.valEnd || maxVal == undefined) {
+        maxVal = this.state.maxVal;
+      }
     } else {
       if (
         val < this.state.minVal ||
-        val > this.state.maxVal
+        val > this.state.maxVal ||
+        val == undefined
       ) {
         val = this.state.val;
-      }  
+      }
 
-      if (maxVal < this.state.val) {
-        maxVal = this.state.maxVal
+      if (maxVal < this.state.val || maxVal == undefined) {
+        maxVal = this.state.maxVal;
       }
     }
 
-    if (minVal > this.state.val) {
+    if (minVal > this.state.val || minVal == undefined) {
       minVal = this.state.minVal;
     }
 
-    if (
-      step < 1 ||
-      step > this.state.maxVal
-      ) {
-      step = this.state.step
+    if (step < 1 || step > this.state.maxVal || step == undefined) {
+      step = this.state.step;
     }
 
-    let validOptions: Partial<IOptions> = { val, valEnd, minVal, maxVal, step, range, tooltip, vertical, scale };
+    if (range == undefined) {
+      range = this.state.range;
+    }
+
+    if (tooltip == undefined) {
+      tooltip = this.state.tooltip;
+    }
+
+    if (vertical == undefined) {
+      vertical = this.state.vertical;
+    }
+
+    if (scale == undefined) {
+      scale = this.state.scale;
+    }
+
+    const validOptions: Partial<IOptions> = {
+      val,
+      valEnd,
+      minVal,
+      maxVal,
+      step,
+      range,
+      tooltip,
+      vertical,
+      scale,
+    };
+
+    console.log(validOptions)
     return validOptions;
   }
 }
