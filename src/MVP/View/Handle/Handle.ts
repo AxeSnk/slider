@@ -42,8 +42,7 @@ class Handle extends EventEmitter {
     val: number,
     minVal: number,
     maxVal: number,
-    vertical: boolean,
-    sliderLength: number
+    vertical: boolean
   ): void {
     if (vertical) {
       this.handle.style.left = "";
@@ -94,12 +93,11 @@ class Handle extends EventEmitter {
 
   private dragHandle(event: MouseEvent): void {
     let handle: HTMLElement = event.target as HTMLElement;
-    let handleX: number = handle.offsetLeft;
-    let handleY: number = handle.offsetTop;
+    let handleX: number = handle.className === 'slider__handle' ? handle.offsetLeft : handle.parentElement!.offsetLeft;
+    let handleY: number = handle.className === 'slider__handle' ? handle.offsetTop : handle.parentElement!.offsetTop;
     let mouseX: number = event.clientX;
     let mouseY: number = event.clientY;
     let id: number = this.id;
-
 
     event.preventDefault();
 

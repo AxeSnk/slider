@@ -183,7 +183,6 @@ class Model extends EventEmitter {
       scale,
     };
 
-    console.log(validOptions)
     return validOptions;
   }
 }

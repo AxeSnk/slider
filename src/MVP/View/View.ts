@@ -83,7 +83,7 @@ class View extends EventEmitter {
     );
   }
 
-  renderHandle(state: IOptions, sliderLength: number): void {
+  renderHandle(state: IOptions): void {
     if (state.range) {
       this.handles[1].getHandle().setAttribute("style", "display: flex");
 
@@ -91,27 +91,30 @@ class View extends EventEmitter {
         state.val,
         state.minVal,
         state.maxVal,
-        state.vertical,
-        sliderLength
+        state.vertical
       );
       this.handles[1].renderHandle(
         state.valEnd,
         state.minVal,
         state.maxVal,
-        state.vertical,
-        sliderLength
+        state.vertical
       );
     } else {
       if (this.handles[1]) {
         this.handles[1].getHandle().setAttribute("style", "display: none");
+        this.handles[1].renderHandle(
+          state.valEnd,
+          state.minVal,
+          state.maxVal,
+          state.vertical
+        );
       }
 
       this.handles[0].renderHandle(
         state.val,
         state.minVal,
         state.maxVal,
-        state.vertical,
-        sliderLength
+        state.vertical
       );
     }
   }

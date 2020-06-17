@@ -73,7 +73,7 @@ body {
             background-color: rgb(231, 87, 53);
             color: #fff;
             z-index: 99;
-            pointer-events: none;
+            cursor: pointer;
 
             &::after {
               content: "";
