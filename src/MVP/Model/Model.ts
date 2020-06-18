@@ -20,7 +20,13 @@ class Model extends EventEmitter {
     const isValue = (key: string) =>
       ["val", "minVal", "maxVal", "valEnd", "step"].indexOf(key) !== -1;
 
-    this.convertOptions(isValue, validOptions);
+    for (let key in validOptions) {
+      if (isValue(key)) {
+        validOptions[key] = Number(validOptions[key]);
+      } else {
+        validOptions[key] = Boolean(validOptions[key]);
+      }
+    }
 
     const newOptions = { ...this.state, ...validOptions };
     this.state = newOptions;
@@ -91,16 +97,6 @@ class Model extends EventEmitter {
 
   public getState(): IOptions {
     return this.state;
-  }
-
-  private convertOptions(isValue: Function, obj: Object): void {
-    for (let key in obj) {
-      if (isValue(key)) {
-        obj[key] = Number(obj[key]);
-      } else {
-        obj[key] = Boolean(obj[key]);
-      }
-    }
   }
 
   private validation(options: Partial<IOptions>): Partial<IOptions> {
