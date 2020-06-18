@@ -52,22 +52,32 @@ class Model extends EventEmitter {
         this.state.step +
       this.state.minVal;
 
+    const isFirstHandle: boolean = id === 0;
+    const isLimitValRange: boolean =
+      this.state.minVal <= val && val < this.state.valEnd;
+    const isLimitValEnd: boolean =
+      this.state.maxVal > valEnd && valEnd > this.state.val;
+    const isExceededValEnd: boolean = this.state.maxVal <= valEnd;
+    const isLimitVal: boolean =
+      this.state.minVal <= val && val < this.state.maxVal;
+    const iExceededVal: boolean = val >= this.state.maxVal;
+
     if (this.state.range) {
-      if (id === 0) {
-        if (this.state.minVal <= val && val < this.state.valEnd) {
+      if (isFirstHandle) {
+        if (isLimitValRange) {
           this.state.val = val;
         }
       } else {
-        if (this.state.maxVal > valEnd && valEnd > this.state.val) {
+        if (isLimitValEnd) {
           this.state.valEnd = valEnd;
-        } else if (this.state.maxVal <= valEnd) {
+        } else if (isExceededValEnd) {
           this.state.valEnd = this.state.maxVal;
         }
       }
     } else {
-      if (this.state.minVal <= val && val < this.state.maxVal) {
+      if (isLimitVal) {
         this.state.val = val;
-      } else if (val >= this.state.maxVal) {
+      } else if (iExceededVal) {
         this.state.val = this.state.maxVal;
       }
     }
@@ -112,58 +122,68 @@ class Model extends EventEmitter {
       scale,
     } = options;
 
+    const isNotValidRangeVal: boolean =
+      val >= this.state.valEnd ||
+      val < this.state.minVal ||
+      val > this.state.maxVal ||
+      val == undefined;
+    const isNotValidRangeValEnd: boolean =
+      valEnd > this.state.maxVal || valEnd == undefined;
+    const isNotValidRangeMaxVal: boolean =
+      maxVal < this.state.valEnd || maxVal == undefined;
+    const isValidVal: boolean =
+      val < this.state.minVal || val > this.state.maxVal || val == undefined;
+    const isNotValidMaxVal: boolean = maxVal < this.state.val || maxVal == undefined;
+    const isNotValidMinVal: boolean = minVal > this.state.val || minVal == undefined;
+    const isNotValidStep: boolean = step < 1 || step > this.state.maxVal || step == undefined;
+    const isNotValidRange: boolean = range == undefined;
+    const isNotValidTooltip: boolean = tooltip == undefined;
+    const isNotValidVertical: boolean = vertical == undefined;
+    const isNotValidScale: boolean = scale == undefined;
+
     if (this.state.range) {
-      if (
-        val >= this.state.valEnd ||
-        val < this.state.minVal ||
-        val > this.state.maxVal ||
-        val == undefined
-      ) {
+      if (isNotValidRangeVal) {
         val = this.state.val;
       }
 
-      if (valEnd > this.state.maxVal || valEnd == undefined) {
+      if (isNotValidRangeValEnd) {
         valEnd = this.state.valEnd;
       }
 
-      if (maxVal < this.state.valEnd || maxVal == undefined) {
+      if (isNotValidRangeMaxVal) {
         maxVal = this.state.maxVal;
       }
     } else {
-      if (
-        val < this.state.minVal ||
-        val > this.state.maxVal ||
-        val == undefined
-      ) {
+      if (isValidVal) {
         val = this.state.val;
       }
 
-      if (maxVal < this.state.val || maxVal == undefined) {
+      if (isNotValidMaxVal) {
         maxVal = this.state.maxVal;
       }
     }
 
-    if (minVal > this.state.val || minVal == undefined) {
+    if (isNotValidMinVal) {
       minVal = this.state.minVal;
     }
 
-    if (step < 1 || step > this.state.maxVal || step == undefined) {
+    if (isNotValidStep) {
       step = this.state.step;
     }
 
-    if (range == undefined) {
+    if (isNotValidRange) {
       range = this.state.range;
     }
 
-    if (tooltip == undefined) {
+    if (isNotValidTooltip) {
       tooltip = this.state.tooltip;
     }
 
-    if (vertical == undefined) {
+    if (isNotValidVertical) {
       vertical = this.state.vertical;
     }
 
-    if (scale == undefined) {
+    if (isNotValidScale) {
       scale = this.state.scale;
     }
 
