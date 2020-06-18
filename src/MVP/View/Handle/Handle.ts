@@ -19,16 +19,7 @@ class Handle extends EventEmitter {
     this.tooltip = new Tooltip(this.handle);
   }
 
-  init() {
-    this.handle = createElement("div", { class: "slider__handle" });
-    this.parent.appendChild(this.handle);
-  }
-
-  addListener() {
-    this.handle.addEventListener("mousedown", this.dragHandle.bind(this));
-  }
-
-  renderTooltip(
+  public renderTooltip(
     tooltipMask: boolean,
     val: number,
     minVal: number,
@@ -38,7 +29,7 @@ class Handle extends EventEmitter {
     this.tooltip.renderTooltip(tooltipMask, val, minVal, maxVal, vertical);
   }
 
-  renderHandle(
+  public renderHandle(
     val: number,
     minVal: number,
     maxVal: number,
@@ -71,7 +62,7 @@ class Handle extends EventEmitter {
     }
   }
 
-  getPositionHandle(state: IOptions): number {
+  public getPositionHandle(state: IOptions): number {
     if (state.vertical) {
       return this.handle.getBoundingClientRect().top;
     } else {
@@ -79,16 +70,17 @@ class Handle extends EventEmitter {
     }
   }
 
-  getWidth(): number {
-    return this.handle.offsetWidth;
-  }
-
-  getHeight(): number {
-    return this.handle.offsetHeight;
-  }
-
-  getHandle(): HTMLElement {
+  public getHandle(): HTMLElement {
     return this.handle;
+  }
+
+  private init() {
+    this.handle = createElement("div", { class: "slider__handle" });
+    this.parent.appendChild(this.handle);
+  }
+
+  private addListener() {
+    this.handle.addEventListener("mousedown", this.dragHandle.bind(this));
   }
 
   private dragHandle(event: MouseEvent): void {

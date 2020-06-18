@@ -11,12 +11,7 @@ class Fill {
     this.renderFill = this.renderFill.bind(this);
   }
 
-  init() {
-    this.fill = createElement("div", { class: "slider__fill" });
-    this.parent.appendChild(this.fill);
-  }
-
-  renderFill(
+  public renderFill(
     state: IOptions,
     handleFirstPos: number,
     handleSecondPos: number,
@@ -52,9 +47,11 @@ class Fill {
     }
   }
 
-  getFill(): HTMLElement {
-    return this.fill;
+  private init() {
+    this.fill = createElement("div", { class: "slider__fill" });
+    this.parent.appendChild(this.fill);
   }
+
 }
 
 export default Fill;

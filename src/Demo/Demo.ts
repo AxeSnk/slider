@@ -10,7 +10,7 @@ class Demo {
     this.init(options);
   }
 
-  init(options: Partial<IOptions>) {
+  private init(options: Partial<IOptions>) {
     const slider = this.root.querySelector(".js-demo__slider .slider__wrapper .js-slider");
     const panel = this.root.querySelector(".js-demo__panel .panel__wrapper");
 

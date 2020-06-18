@@ -14,7 +14,7 @@ class Model extends EventEmitter {
     this.setState = this.setState.bind(this);
   }
 
-  setState(options: Partial<IOptions>) {
+  public setState(options: Partial<IOptions>) {
     let validOptions: Partial<IOptions> = this.validation(options);
 
     const isValue = (key: string) =>
@@ -28,7 +28,7 @@ class Model extends EventEmitter {
     this.emit("updateState", newOptions);
   }
 
-  setVal(left: number, sliderLength: number, id: number): void {
+  public setVal(left: number, sliderLength: number, id: number): void {
     let val =
       Math.round(
         Math.round(
@@ -67,7 +67,7 @@ class Model extends EventEmitter {
     }
   }
 
-  findNearHandle(
+  public findNearHandle(
     leftX: number,
     leftY: number,
     sliderPos: number,
@@ -89,7 +89,7 @@ class Model extends EventEmitter {
     return currentFirstDelta < currentSecondDelta ? (id = 0) : (id = 1);
   }
 
-  getState(): IOptions {
+  public getState(): IOptions {
     return this.state;
   }
 

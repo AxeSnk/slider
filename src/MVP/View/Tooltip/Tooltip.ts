@@ -12,12 +12,7 @@ class Tooltip extends EventEmitter {
     this.init();
   }
 
-  init() {
-    this.tooltip = createElement("div", { class: "slider__tooltip" });
-    this.parent.appendChild(this.tooltip);
-  }
-
-  renderTooltip(
+  public renderTooltip(
     tooltipMask: boolean,
     val: number,
     minVal: number,
@@ -49,9 +44,11 @@ class Tooltip extends EventEmitter {
     }
   }
 
-  getTooltip(): HTMLElement {
-    return this.tooltip;
+  private init() {
+    this.tooltip = createElement("div", { class: "slider__tooltip" });
+    this.parent.appendChild(this.tooltip);
   }
+
 }
 
 export default Tooltip;

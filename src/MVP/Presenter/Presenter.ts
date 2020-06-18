@@ -27,15 +27,23 @@ class Presenter extends EventEmitter {
     this.setState = this.setState.bind(this);
   }
 
-  subscribeToInitModel(callback: Function) {
+  public subscribeToInitModel(callback: Function) {
     this.model.on("initState", callback(this.model.getState()));
   }
 
-  subscribeToUpdates(callback: Function) {
+  public subscribeToUpdates(callback: Function) {
     this.model.on("updateState", () => callback(this.model.getState()));
   }
 
-  render(state: IOptions): void {
+  public setState(options: Partial<IOptions>): void {
+    this.model.setState(options);
+  }
+
+  public getState(): {} {
+    return this.model.getState();
+  }
+
+  private render(state: IOptions): void {
     this.view.renderSlider(state);
     this.view.renderHandle(state);
     this.view.renderFill(state);
@@ -43,7 +51,7 @@ class Presenter extends EventEmitter {
     this.view.renderScale(state);
   }
 
-  update({ leftX, leftY, id }: { leftX: number; leftY: number; id: number }): void {
+  private update({ leftX, leftY, id }: { leftX: number; leftY: number; id: number }): void {
     let idHandle: number = id;
 
     if (id == undefined) {
@@ -71,14 +79,6 @@ class Presenter extends EventEmitter {
     }
 
     this.emit("updateSlider", this.model.getState());
-  }
-
-  setState(options: Partial<IOptions>): void {
-    this.model.setState(options);
-  }
-
-  getState(): {} {
-    return this.model.getState();
   }
 }
 

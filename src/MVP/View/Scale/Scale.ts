@@ -15,14 +15,8 @@ class Scale extends EventEmitter {
     this.addListener();
   }
 
-  init() {
-    this.scale = createElement("div", { class: "slider__scale" });
-    this.values = createElement("div", { class: "scale__values" });
-    this.scale.appendChild(this.values);
-    this.parent.appendChild(this.scale);
-  }
-
-  render(state: IOptions): void {
+  public render(state: IOptions): void {
+    this.state = state;
     if (state.scale) {
       this.scale.setAttribute("style", "display: block");
 
@@ -31,13 +25,19 @@ class Scale extends EventEmitter {
         : this.scale.classList.remove("scale--vertical");
 
       this.renderValues(state);
-      this.range = state.range;
     } else {
       this.scale.setAttribute("style", "display: none");
     }
   }
 
-  renderValues(state: IOptions): void {
+  private init() {
+    this.scale = createElement("div", { class: "slider__scale" });
+    this.values = createElement("div", { class: "scale__values" });
+    this.scale.appendChild(this.values);
+    this.parent.appendChild(this.scale);
+  }
+
+  private renderValues(state: IOptions): void {
     const { minVal, maxVal } = state;
     const elems: NodeListOf<ChildNode> = this.values.childNodes;
 
@@ -73,20 +73,28 @@ class Scale extends EventEmitter {
     this.values.appendChild(valEnd);
   }
 
-  addListener() {
+  private addListener() {
     this.scale.addEventListener("mousedown", this.clickScale.bind(this));
   }
 
-  clickScale(event: MouseEvent): void {
+  private clickScale(event: MouseEvent): void {
     let target = event.target as HTMLElement;
 
     let isValEnd = target.className.indexOf("value__item-end") === 0;
+    
     if (isValEnd) {
-      this.range
-        ? this.emit("clickScaleValEnd", { valEnd: target.innerHTML })
-        : this.emit("clickScaleVal", { val: target.innerHTML });
-    } else {
-      this.emit("clickScaleVal", { val: target.innerHTML });
+      this.state.range
+        ? this.emit("clickScaleValEnd", { valEnd: this.state.maxVal })
+        : this.emit("clickScaleVal", { val: this.state.maxVal });
+    } 
+    
+    if (!isValEnd) {
+      if(this.state.range) {
+        this.emit("clickScaleVal", { val: this.state.minVal })
+      } else {
+        this.emit("clickScaleVal", { val: this.state.minVal });
+        this.emit("clickScaleValEnd", { valEnd: this.state.maxVal })
+      }
     }
   }
 }

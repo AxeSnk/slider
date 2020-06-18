@@ -16,7 +16,7 @@ class Panel {
     this.init();
   }
 
-  init(): void {
+  private init(): void {
     const form = this.root.querySelector("form");
     const input = form.querySelector("input");
     this.form = form;
@@ -28,7 +28,7 @@ class Panel {
     this.form.addEventListener("change", this.handleChange);
   }
 
-  handleChange(event: Event): void {
+  private handleChange(event: Event): void {
     event.preventDefault();
 
     const options: { [key: string]: any } = {};
@@ -45,7 +45,7 @@ class Panel {
     this.$slider.slider("setState", options);
   }
 
-  update(state: IOptions): void {
+  private update(state: IOptions): void {
     [...this.form.elements].forEach((element) => {
       const input = element as HTMLInputElement;
       const { name, type } = input;
