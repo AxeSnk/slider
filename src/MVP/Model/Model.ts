@@ -37,30 +37,25 @@ class Model extends EventEmitter {
   public setVal(left: number, sliderLength: number, id: number): void {
     let val =
       Math.round(
-        Math.round(
-          (left * (this.state.maxVal - this.state.minVal)) / sliderLength
-        ) / this.state.step
+        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) /
+          this.state.step
       ) *
         this.state.step +
       this.state.minVal;
     let valEnd =
       Math.round(
-        Math.round(
-          (left * (this.state.maxVal - this.state.minVal)) / sliderLength
-        ) / this.state.step
+        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) /
+          this.state.step
       ) *
         this.state.step +
       this.state.minVal;
 
-    const isFirstHandle: boolean = id === 0;
-    const isLimitValRange: boolean =
-      this.state.minVal <= val && val < this.state.valEnd;
-    const isLimitValEnd: boolean =
-      this.state.maxVal > valEnd && valEnd > this.state.val;
-    const isExceededValEnd: boolean = this.state.maxVal <= valEnd;
-    const isLimitVal: boolean =
-      this.state.minVal <= val && val < this.state.maxVal;
-    const iExceededVal: boolean = val >= this.state.maxVal;
+    const isFirstHandle = id === 0;
+    const isLimitValRange = this.state.minVal <= val && val < this.state.valEnd;
+    const isLimitValEnd = this.state.maxVal > valEnd && valEnd > this.state.val;
+    const isExceededValEnd = this.state.maxVal <= valEnd;
+    const isLimitVal = this.state.minVal <= val && val < this.state.maxVal;
+    const iExceededVal = val >= this.state.maxVal;
 
     if (this.state.range) {
       if (isFirstHandle) {
@@ -110,36 +105,24 @@ class Model extends EventEmitter {
   }
 
   private validation(options: Partial<IOptions>): Partial<IOptions> {
-    let {
-      val,
-      valEnd,
-      minVal,
-      maxVal,
-      step,
-      range,
-      tooltip,
-      vertical,
-      scale,
-    } = options;
+    let { val, valEnd, minVal, maxVal, step, range, tooltip, vertical, scale } = options;
 
-    const isNotValidRangeVal: boolean =
+    const isNotValidRangeVal =
       val >= this.state.valEnd ||
       val < this.state.minVal ||
       val > this.state.maxVal ||
       val == undefined;
-    const isNotValidRangeValEnd: boolean =
-      valEnd > this.state.maxVal || valEnd == undefined;
-    const isNotValidRangeMaxVal: boolean =
-      maxVal < this.state.valEnd || maxVal == undefined;
-    const isValidVal: boolean =
+    const isNotValidRangeValEnd = valEnd > this.state.maxVal || valEnd == undefined;
+    const isNotValidRangeMaxVal = maxVal < this.state.valEnd || maxVal == undefined;
+    const isValidVal =
       val < this.state.minVal || val > this.state.maxVal || val == undefined;
-    const isNotValidMaxVal: boolean = maxVal < this.state.val || maxVal == undefined;
-    const isNotValidMinVal: boolean = minVal > this.state.val || minVal == undefined;
-    const isNotValidStep: boolean = step < 1 || step > this.state.maxVal || step == undefined;
-    const isNotValidRange: boolean = range == undefined;
-    const isNotValidTooltip: boolean = tooltip == undefined;
-    const isNotValidVertical: boolean = vertical == undefined;
-    const isNotValidScale: boolean = scale == undefined;
+    const isNotValidMaxVal = maxVal < this.state.val || maxVal == undefined;
+    const isNotValidMinVal = minVal > this.state.val || minVal == undefined;
+    const isNotValidStep = step < 1 || step > this.state.maxVal || step == undefined;
+    const isNotValidRange = range == undefined;
+    const isNotValidTooltip = tooltip == undefined;
+    const isNotValidVertical = vertical == undefined;
+    const isNotValidScale = scale == undefined;
 
     if (this.state.range) {
       if (isNotValidRangeVal) {
