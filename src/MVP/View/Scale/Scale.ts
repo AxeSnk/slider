@@ -38,7 +38,7 @@ class Scale extends EventEmitter {
   }
 
   private renderValues(state: IOptions): void {
-    const { minVal, maxVal } = state;
+    const { minVal, maxVal, vertical } = state;
     const elems: NodeListOf<ChildNode> = this.values.childNodes;
 
     while (elems.length) {
@@ -47,7 +47,7 @@ class Scale extends EventEmitter {
       });
     }
 
-    let left: number = state.vertical ? 0 : 2;
+    let left: number = vertical ? 0 : 2;
 
     let val: HTMLElement = createElement("div", {
       class: "value__item-start value__item",
@@ -79,21 +79,22 @@ class Scale extends EventEmitter {
 
   private clickScale(event: MouseEvent): void {
     let target = event.target as HTMLElement;
+    const { maxVal, minVal, range } = this.state;
 
     let isValEnd = target.className.indexOf("value__item-end") === 0;
-    
+
     if (isValEnd) {
-      this.state.range
-        ? this.emit("clickScaleValEnd", { valEnd: this.state.maxVal })
-        : this.emit("clickScaleVal", { val: this.state.maxVal });
-    } 
-    
+      range
+        ? this.emit("clickScaleValEnd", { valEnd: maxVal })
+        : this.emit("clickScaleVal", { val: maxVal });
+    }
+
     if (!isValEnd) {
-      if(this.state.range) {
-        this.emit("clickScaleVal", { val: this.state.minVal })
+      if (range) {
+        this.emit("clickScaleVal", { val: minVal });
       } else {
-        this.emit("clickScaleVal", { val: this.state.minVal });
-        this.emit("clickScaleValEnd", { valEnd: this.state.maxVal })
+        this.emit("clickScaleVal", { val: minVal });
+        this.emit("clickScaleValEnd", { valEnd: maxVal });
       }
     }
   }

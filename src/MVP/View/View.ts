@@ -37,56 +37,25 @@ class View extends EventEmitter {
   }
 
   public renderHandle(state: IOptions): void {
-    if (state.range) {
+    const { val, valEnd, minVal, maxVal, vertical, range } = state;
+    if (range) {
       this.handles[1].getHandle().setAttribute("style", "display: flex");
 
-      this.handles[0].renderHandle(
-        state.val,
-        state.minVal,
-        state.maxVal,
-        state.vertical
-      );
-      this.handles[1].renderHandle(
-        state.valEnd,
-        state.minVal,
-        state.maxVal,
-        state.vertical
-      );
+      this.handles[0].renderHandle(val, minVal, maxVal, vertical);
+      this.handles[1].renderHandle(valEnd, minVal, maxVal, vertical);
     } else {
-        this.handles[1].getHandle().setAttribute("style", "display: none");
-        this.handles[1].renderHandle(
-          state.valEnd,
-          state.minVal,
-          state.maxVal,
-          state.vertical
-        )
-      }
+      this.handles[1].getHandle().setAttribute("style", "display: none");
+      this.handles[1].renderHandle(valEnd, minVal, maxVal, vertical);
+    }
 
-      this.handles[0].renderHandle(
-        state.val,
-        state.minVal,
-        state.maxVal,
-        state.vertical
-      );
-    
+    this.handles[0].renderHandle(val, minVal, maxVal, vertical);
   }
 
   public renderTooltip(state: IOptions): void {
-    this.handles[0].renderTooltip(
-      state.tooltip,
-      state.val,
-      state.minVal,
-      state.maxVal,
-      state.vertical
-    );
-    if (state.range) {
-      this.handles[1].renderTooltip(
-        state.tooltip,
-        state.valEnd,
-        state.minVal,
-        state.maxVal,
-        state.vertical
-      );
+    const { val, valEnd, minVal, maxVal, vertical, range, tooltip } = state;
+    this.handles[0].renderTooltip(tooltip, val, minVal, maxVal, vertical);
+    if (range) {
+      this.handles[1].renderTooltip(tooltip, valEnd, minVal, maxVal, vertical);
     }
   }
 
@@ -150,13 +119,12 @@ class View extends EventEmitter {
   }
 
   private emitScaleVal(val: object): void {
-    this.emit('clickScaleVal', val);
+    this.emit("clickScaleVal", val);
   }
 
   private emitScaleValEnd(valEnd: object): void {
-    this.emit('clickScaleValEnd', valEnd);
+    this.emit("clickScaleValEnd", valEnd);
   }
-
 }
 
 export default View;

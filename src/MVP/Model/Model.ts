@@ -35,45 +35,38 @@ class Model extends EventEmitter {
   }
 
   public setVal(left: number, sliderLength: number, id: number): void {
-    let val =
-      Math.round(
-        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) /
-          this.state.step
-      ) *
-        this.state.step +
-      this.state.minVal;
-    let valEnd =
-      Math.round(
-        Math.round((left * (this.state.maxVal - this.state.minVal)) / sliderLength) /
-          this.state.step
-      ) *
-        this.state.step +
-      this.state.minVal;
+    const { val, valEnd, maxVal, minVal, step, range } = this.state;
+    let newVal =
+      Math.round(Math.round((left * (maxVal - minVal)) / sliderLength) / step) * step +
+      minVal;
+    let newValEnd =
+      Math.round(Math.round((left * (maxVal - minVal)) / sliderLength) / step) * step +
+      minVal;
 
     const isFirstHandle = id === 0;
-    const isLimitValRange = this.state.minVal <= val && val < this.state.valEnd;
-    const isLimitValEnd = this.state.maxVal > valEnd && valEnd > this.state.val;
-    const isExceededValEnd = this.state.maxVal <= valEnd;
-    const isLimitVal = this.state.minVal <= val && val < this.state.maxVal;
-    const iExceededVal = val >= this.state.maxVal;
+    const isLimitValRange = minVal <= newVal && newVal < valEnd;
+    const isLimitValEnd = maxVal > newValEnd && newValEnd > val;
+    const isExceededValEnd = maxVal <= newValEnd;
+    const isLimitVal = minVal <= newVal && newVal < maxVal;
+    const iExceededVal = newVal >= maxVal;
 
-    if (this.state.range) {
+    if (range) {
       if (isFirstHandle) {
         if (isLimitValRange) {
-          this.state.val = val;
+          this.state.val = newVal;
         }
       } else {
         if (isLimitValEnd) {
-          this.state.valEnd = valEnd;
+          this.state.valEnd = newValEnd;
         } else if (isExceededValEnd) {
-          this.state.valEnd = this.state.maxVal;
+          this.state.valEnd = maxVal;
         }
       }
     } else {
       if (isLimitVal) {
-        this.state.val = val;
+        this.state.val = newVal;
       } else if (iExceededVal) {
-        this.state.val = this.state.maxVal;
+        this.state.val = maxVal;
       }
     }
   }
