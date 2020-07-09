@@ -15,6 +15,7 @@ class Model extends EventEmitter {
   }
 
   public setState(options: Partial<IOptions>) {
+
     let validOptions: Partial<IOptions> = this.validation(options);
 
     const isValue = (key: string) =>
@@ -65,6 +66,7 @@ class Model extends EventEmitter {
     } else {
       if (isLimitVal) {
         this.state.val = newVal;
+        this.state.valEnd = maxVal
       } else if (iExceededVal) {
         this.state.val = maxVal;
       }
@@ -107,7 +109,7 @@ class Model extends EventEmitter {
       val == undefined;
     const isNotValidRangeValEnd = valEnd > this.state.maxVal || valEnd == undefined;
     const isNotValidRangeMaxVal = maxVal < this.state.valEnd || maxVal == undefined;
-    const isValidVal =
+    const isNotValidVal =
       val < this.state.minVal || val > this.state.maxVal || val == undefined;
     const isNotValidMaxVal = maxVal < this.state.val || maxVal == undefined;
     const isNotValidMinVal = minVal > this.state.val || minVal == undefined;
@@ -116,6 +118,10 @@ class Model extends EventEmitter {
     const isNotValidTooltip = tooltip == undefined;
     const isNotValidVertical = vertical == undefined;
     const isNotValidScale = scale == undefined;
+
+    if (this.state.val == this.state.valEnd) {
+      val = minVal
+    }
 
     if (this.state.range) {
       if (isNotValidRangeVal) {
@@ -130,7 +136,7 @@ class Model extends EventEmitter {
         maxVal = this.state.maxVal;
       }
     } else {
-      if (isValidVal) {
+      if (isNotValidVal) {
         val = this.state.val;
       }
 

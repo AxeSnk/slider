@@ -6,6 +6,7 @@ class Scale extends EventEmitter {
   private scale: HTMLElement;
   private parent: HTMLElement;
   private values: HTMLElement;
+  private state: IOptions;
 
   constructor(parent: HTMLElement) {
     super();
@@ -41,15 +42,11 @@ class Scale extends EventEmitter {
     const { minVal, maxVal, vertical } = state;
     const elems: NodeListOf<ChildNode> = this.values.childNodes;
 
-    while (elems.length) {
-      elems.forEach((item) => {
-        item.remove();
-      });
-    }
+    this.clear(elems);
 
     let left: number = vertical ? 0 : 2;
 
-    let val: HTMLElement = createElement("div", {
+    const val: HTMLElement = createElement("div", {
       class: "value__item-start value__item",
     });
 
@@ -61,7 +58,7 @@ class Scale extends EventEmitter {
 
     left += 96;
 
-    let valEnd: HTMLElement = createElement("div", {
+    const valEnd: HTMLElement = createElement("div", {
       class: "value__item-end value__item",
     });
 
@@ -73,28 +70,38 @@ class Scale extends EventEmitter {
     this.values.appendChild(valEnd);
   }
 
+  private clear(elems: NodeListOf<ChildNode>): void {
+    while (elems.length) {
+      elems.forEach((item) => {
+        item.remove();
+      });
+    }
+  }
+
   private addListener() {
     this.scale.addEventListener("mousedown", this.clickScale.bind(this));
   }
 
   private clickScale(event: MouseEvent): void {
-    let target = event.target as HTMLElement;
-    const { maxVal, minVal, range } = this.state;
-
-    let isValEnd = target.className.indexOf("value__item-end") === 0;
+    const target = event.target as HTMLElement;
+    const { range, maxVal } = this.state;
+    const isValEnd = target.className.indexOf("value__item-end") === 0;
 
     if (isValEnd) {
-      range
-        ? this.emit("clickScaleValEnd", { valEnd: maxVal })
-        : this.emit("clickScaleVal", { val: maxVal });
+      if(range) {
+        this.emit("clickScaleValEnd", { valEnd: target.innerHTML })
+      } else {
+        this.emit("clickScaleVal", { val: target.innerHTML });
+        this.emit("clickScaleValEnd", { valEnd: target.innerHTML })
+      }
     }
 
     if (!isValEnd) {
       if (range) {
-        this.emit("clickScaleVal", { val: minVal });
+        this.emit("clickScaleVal", { val: target.innerHTML });
       } else {
-        this.emit("clickScaleVal", { val: minVal });
-        this.emit("clickScaleValEnd", { valEnd: maxVal });
+        this.emit("clickScaleVal", { val: target.innerHTML });
+        this.emit("clickScaleValEnd", { valEnd: maxVal })
       }
     }
   }
