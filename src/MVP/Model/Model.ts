@@ -119,7 +119,13 @@ class Model extends EventEmitter {
     const isNotValidVertical = vertical == undefined;
     const isNotValidScale = scale == undefined;
 
-    if (range) {
+    if(range) {
+      if (val == valEnd) {
+        val = this.state.minVal
+      }
+    }
+
+    if (this.state.range) {
         if (isNotValidRangeVal) {
         val = this.state.val;
       }
@@ -131,11 +137,6 @@ class Model extends EventEmitter {
       if (isNotValidRangeMaxVal) {
         maxVal = this.state.maxVal;
       }
-
-      if (this.state.val == this.state.valEnd) {
-        val = minVal
-      }
-
     } else {
       if (isNotValidVal) {
         val = this.state.val;
