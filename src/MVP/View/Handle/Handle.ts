@@ -81,6 +81,7 @@ class Handle extends EventEmitter {
 
   private addListener() {
     this.handle.addEventListener("mousedown", this.dragHandle.bind(this));
+    this.handle.addEventListener("touchstart", this.touchHandle.bind(this));
   }
 
   private dragHandle(event: MouseEvent): void {
@@ -108,6 +109,33 @@ class Handle extends EventEmitter {
 
     window.addEventListener("mouseup", handleMouseUp);
   }
+
+  private touchHandle(event: TouchEvent): void {
+    let handle: HTMLElement = event.target as HTMLElement;
+    let handleX: number = handle.className === 'slider__handle' ? handle.offsetLeft : handle.parentElement!.offsetLeft;
+    let handleY: number = handle.className === 'slider__handle' ? handle.offsetTop : handle.parentElement!.offsetTop;
+    let mouseX: number = event.touches[0].clientX
+    let mouseY: number = event.touches[0].clientY;
+    let id: number = this.id;
+
+    event.preventDefault();
+
+    let moveHandle = (moveEvent: TouchEvent): void => {
+      let leftX: number = handleX + moveEvent.touches[0].clientX - mouseX + handle.offsetWidth / 2;
+      let leftY: number = handleY + moveEvent.touches[0].clientY - mouseY + handle.offsetHeight / 2;
+      this.emit(`drag_${id}`, { leftX, leftY, id });
+    };
+
+    window.addEventListener("touchmove", moveHandle);
+
+    let handleMouseUp = (): void => {
+      window.removeEventListener("touchmove", moveHandle);
+      window.removeEventListener("touchend", handleMouseUp);
+    };
+
+    window.addEventListener("touchend", handleMouseUp);
+  }
+
 }
 
 export default Handle;
