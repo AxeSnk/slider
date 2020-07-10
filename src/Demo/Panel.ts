@@ -50,7 +50,7 @@ class Panel {
       const input = element as HTMLInputElement;
       const { name, type } = input;
       const defaultValue = state[name];
-      const hasChecked = type === "radio" || type === "checkbox";
+      const hasChecked = type === "checkbox";
 
       if (defaultValue === undefined) return;
 
