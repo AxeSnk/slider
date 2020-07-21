@@ -9,6 +9,7 @@ class Tooltip extends EventEmitter {
     super();
 
     this.parent = parent;
+    this.tooltip = createElement("div", { class: "slider__tooltip" });
     this.init();
   }
 
@@ -45,8 +46,11 @@ class Tooltip extends EventEmitter {
   }
 
   private init() {
-    this.tooltip = createElement("div", { class: "slider__tooltip" });
     this.parent.appendChild(this.tooltip);
+  }
+
+  public getTooltip(): HTMLElement {
+    return this.tooltip;
   }
 
 }

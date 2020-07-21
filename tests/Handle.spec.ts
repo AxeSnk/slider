@@ -15,24 +15,23 @@ describe("Handle tests:", () => {
     const val: number = 2;
     const minVal: number = -3;
     const maxVal: number = 7;
-    const sliderLength: number = 380;
 
     test("renderHandle horizontal", () => { 
       const vertical: boolean = false;
-      handle.renderHandle(val, minVal, maxVal, vertical, sliderLength);
+      handle.renderHandle(val, minVal, maxVal, vertical);
       let element: HTMLElement = handle.getHandle();
       
       expect(element.style.top).toBe("");
-      expect(Object.is(element.style.left, "190px")).toBe(true)
+      expect(element.style.left).toBe("48%")
     });
 
     test("renderHandle vertical", () => {  
       const vertical: boolean = true;
-      handle.renderHandle(val, minVal, maxVal, vertical, sliderLength);
+      handle.renderHandle(val, minVal, maxVal, vertical);
       let element: HTMLElement = handle.getHandle();
 
       expect(element.style.left).toBe("");
-      expect(Object.is(element.style.top, "190px")).toBe(true)
+      expect(element.style.top).toBe("48%")
     });
 
   

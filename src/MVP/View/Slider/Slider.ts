@@ -10,6 +10,7 @@ class Slider extends EventEmitter {
     super();
 
     this.parent = parent;
+    this.slider = createElement("div", { class: "slider" });
     this.init();
     this.addListener();
   }
@@ -34,8 +35,7 @@ class Slider extends EventEmitter {
     return this.slider;
   }
 
-  private init() {
-    this.slider = createElement("div", { class: "slider" });
+  private init(): void {
     this.parent.appendChild(this.slider);
   }
 

@@ -13,6 +13,7 @@ class Handle extends EventEmitter {
     super();
 
     this.parent = parent;
+    this.handle = createElement("div", { class: "slider__handle" });
     this.init();
     this.addListener();
     this.id = id;
@@ -75,7 +76,6 @@ class Handle extends EventEmitter {
   }
 
   private init() {
-    this.handle = createElement("div", { class: "slider__handle" });
     this.parent.appendChild(this.handle);
   }
 
