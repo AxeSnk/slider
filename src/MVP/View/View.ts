@@ -108,6 +108,7 @@ class View extends EventEmitter {
   private addOnScale(): void {
     this.scale.on("clickScaleVal", this.emitScaleVal.bind(this));
     this.scale.on("clickScaleValEnd", this.emitScaleValEnd.bind(this));
+    this.scale.on("clickScaleValItem", this.emitScaleValItem.bind(this));
   }
 
   private emitDrag(left: object): void {
@@ -124,6 +125,10 @@ class View extends EventEmitter {
 
   private emitScaleValEnd(valEnd: object): void {
     this.emit("clickScaleValEnd", valEnd);
+  }
+
+  private emitScaleValItem(left: object): void {
+    this.emit("clickScaleValItem", left);
   }
 }
 

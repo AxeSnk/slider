@@ -39,24 +39,45 @@ class Scale extends EventEmitter {
   }
 
   private renderValues(state: IOptions): void {
-    const { minVal, maxVal, vertical } = state;
+    const { minVal, maxVal, vertical, step } = state;
     const elems: NodeListOf<ChildNode> = this.values.childNodes;
 
     this.clear(elems);
 
     let left: number = vertical ? 0 : 2;
 
-    const val: HTMLElement = createElement("div", {
+    const valStart: HTMLElement = createElement("div", {
       class: "value__item-start value__item",
     });
 
-    state.vertical
-      ? val.setAttribute("style", `top: ${left}%`)
-      : val.setAttribute("style", `left: ${left}%`);
-    val.innerHTML = `${minVal}`;
-    this.values.appendChild(val);
+    vertical
+      ? valStart.setAttribute("style", `top: ${left}%`)
+      : valStart.setAttribute("style", `left: ${left}%`);      
+      valStart.innerHTML = `${minVal}`;
+    this.values.appendChild(valStart);
 
-    left += 96;
+    let i: number;
+    let width: number = vertical ? 98 : 100
+    let value: number;
+    value = Math.round((Math.round((maxVal - minVal) / step) * step /3) / step ) * step;
+
+    for(i = 0; i < 2; i++) {
+      let newLeft: number = value/(maxVal - minVal) * width;
+      left = newLeft;
+      const valItem: HTMLElement = createElement("div", {
+        class: "value__item",
+      });
+  
+      state.vertical
+        ? valItem.setAttribute("style", `top: ${left}%`)
+        : valItem.setAttribute("style", `left: ${left}%`);
+        valItem.innerHTML = `${value}`;
+      this.values.appendChild(valItem);
+
+      value += value;
+    }
+
+    left = vertical ? 96 : 98;
 
     const valEnd: HTMLElement = createElement("div", {
       class: "value__item-end value__item",
@@ -65,7 +86,6 @@ class Scale extends EventEmitter {
     state.vertical
       ? valEnd.setAttribute("style", `top: ${left}%`)
       : valEnd.setAttribute("style", `left: ${left}%`);
-
     valEnd.innerHTML = `${maxVal}`;
     this.values.appendChild(valEnd);
   }
@@ -85,25 +105,43 @@ class Scale extends EventEmitter {
   private clickScale(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     const { range, maxVal } = this.state;
+    const isValStart = target.className.indexOf("value__item-start") === 0;
     const isValEnd = target.className.indexOf("value__item-end") === 0;
 
-    if (isValEnd) {
-      if(range) {
+    let scaleX: number = this.scale.getBoundingClientRect().left;
+    let scaleY: number =this.scale.getBoundingClientRect().top;
+    let mouseX: number = event.clientX;
+    let mouseY: number = event.clientY;
+    let leftX: number = mouseX - scaleX;
+    let leftY: number = mouseY - scaleY;
+
+    if(range) {
+
+      if(isValStart) {
+        this.emit("clickScaleVal", { val: target.innerHTML });
+      } else if(isValEnd) {
         this.emit("clickScaleValEnd", { valEnd: target.innerHTML })
       } else {
-        this.emit("clickScaleVal", { val: target.innerHTML });
-        this.emit("clickScaleValEnd", { valEnd: target.innerHTML })
+        this.emit("clickScaleValItem", { leftX, leftY });
       }
-    }
 
-    if (!isValEnd) {
-      if (range) {
+    }
+    
+    if(!range) {
+
+      if(isValStart) {
         this.emit("clickScaleVal", { val: target.innerHTML });
+        this.emit("clickScaleValEnd", { valEnd: maxVal })
+      } else if(isValEnd) {
+        this.emit("clickScaleVal", { val: target.innerHTML });
+        this.emit("clickScaleValEnd", { valEnd: maxVal })
       } else {
         this.emit("clickScaleVal", { val: target.innerHTML });
         this.emit("clickScaleValEnd", { valEnd: maxVal })
       }
+
     }
+
   }
 }
 
