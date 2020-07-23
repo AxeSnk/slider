@@ -38,8 +38,8 @@ class Handle extends EventEmitter {
   ): void {
     if (vertical) {
       this.handle.style.left = "";
-      let height: number = 96;
-      let newLeft: number = ((val - minVal) * height) / (maxVal - minVal);
+      let height = 96;
+      let newLeft = ((val - minVal) * height) / (maxVal - minVal);
 
       if (newLeft < 0) {
         this.handle.style.top = 0 + "%";
@@ -50,8 +50,8 @@ class Handle extends EventEmitter {
       }
     } else {
       this.handle.style.top = "";
-      let width: number = 96;
-      let newLeft: number = ((val - minVal) * width) / (maxVal - minVal);
+      let width = 96;
+      let newLeft = ((val - minVal) * width) / (maxVal - minVal);
 
       if (newLeft < 0) {
         this.handle.style.left = 0 + "%";
@@ -85,18 +85,18 @@ class Handle extends EventEmitter {
   }
 
   private dragHandle(event: MouseEvent): void {
-    let handle: HTMLElement = event.target as HTMLElement;
-    let handleX: number = handle.className === 'slider__handle' ? handle.offsetLeft : handle.parentElement!.offsetLeft;
-    let handleY: number = handle.className === 'slider__handle' ? handle.offsetTop : handle.parentElement!.offsetTop;
-    let mouseX: number = event.clientX;
-    let mouseY: number = event.clientY;
-    let id: number = this.id;
+    let handle = event.target as HTMLElement;
+    let handleX = handle.className === 'slider__handle' ? handle.offsetLeft : handle.parentElement!.offsetLeft;
+    let handleY = handle.className === 'slider__handle' ? handle.offsetTop : handle.parentElement!.offsetTop;
+    let mouseX = event.clientX;
+    let mouseY = event.clientY;
+    let id = this.id;
 
     event.preventDefault();
 
     let moveHandle = (moveEvent: MouseEvent): void => {
-      let leftX: number = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
-      let leftY: number = handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
+      let leftX = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
+      let leftY = handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
       this.emit(`drag_${id}`, { leftX, leftY, id });
     };
 
@@ -111,18 +111,18 @@ class Handle extends EventEmitter {
   }
 
   private touchHandle(event: TouchEvent): void {
-    let handle: HTMLElement = event.target as HTMLElement;
-    let handleX: number = handle.className === 'slider__handle' ? handle.offsetLeft : handle.parentElement!.offsetLeft;
-    let handleY: number = handle.className === 'slider__handle' ? handle.offsetTop : handle.parentElement!.offsetTop;
-    let mouseX: number = event.touches[0].clientX
-    let mouseY: number = event.touches[0].clientY;
-    let id: number = this.id;
+    let handle = event.target as HTMLElement;
+    let handleX = handle.className === 'slider__handle' ? handle.offsetLeft : handle.parentElement!.offsetLeft;
+    let handleY = handle.className === 'slider__handle' ? handle.offsetTop : handle.parentElement!.offsetTop;
+    let mouseX = event.touches[0].clientX
+    let mouseY = event.touches[0].clientY;
+    let id = this.id;
 
     event.preventDefault();
 
     let moveHandle = (moveEvent: TouchEvent): void => {
-      let leftX: number = handleX + moveEvent.touches[0].clientX - mouseX + handle.offsetWidth / 2;
-      let leftY: number = handleY + moveEvent.touches[0].clientY - mouseY + handle.offsetHeight / 2;
+      let leftX = handleX + moveEvent.touches[0].clientX - mouseX + handle.offsetWidth / 2;
+      let leftY = handleY + moveEvent.touches[0].clientY - mouseY + handle.offsetHeight / 2;
       this.emit(`drag_${id}`, { leftX, leftY, id });
     };
 

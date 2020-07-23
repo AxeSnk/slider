@@ -44,7 +44,7 @@ class Scale extends EventEmitter {
 
     this.clear(elems);
 
-    let left: number = vertical ? 0 : 2;
+    let left = vertical ? 0 : 2;
 
     const valStart: HTMLElement = createElement("div", {
       class: "value__item-start value__item",
@@ -57,14 +57,14 @@ class Scale extends EventEmitter {
     this.values.appendChild(valStart);
 
     let i: number;
-    let width: number = vertical ? 98 : 100
+    let width = vertical ? 98 : 100
     let value: number;
     value = Math.round((Math.round((maxVal - minVal) / step) * step /3) / step ) * step;
 
     for(i = 0; i < 2; i++) {
-      let newLeft: number = value/(maxVal - minVal) * width;
+      let newLeft = value/(maxVal - minVal) * width;
       left = newLeft;
-      const valItem: HTMLElement = createElement("div", {
+      const valItem = createElement("div", {
         class: "value__item",
       });
   
@@ -79,7 +79,7 @@ class Scale extends EventEmitter {
 
     left = vertical ? 96 : 98;
 
-    const valEnd: HTMLElement = createElement("div", {
+    const valEnd = createElement("div", {
       class: "value__item-end value__item",
     });
 
@@ -108,12 +108,12 @@ class Scale extends EventEmitter {
     const isValStart = target.className.indexOf("value__item-start") === 0;
     const isValEnd = target.className.indexOf("value__item-end") === 0;
 
-    let scaleX: number = this.scale.getBoundingClientRect().left;
-    let scaleY: number =this.scale.getBoundingClientRect().top;
-    let mouseX: number = event.clientX;
-    let mouseY: number = event.clientY;
-    let leftX: number = mouseX - scaleX;
-    let leftY: number = mouseY - scaleY;
+    let scaleX = this.scale.getBoundingClientRect().left;
+    let scaleY =this.scale.getBoundingClientRect().top;
+    let mouseX = event.clientX;
+    let mouseY = event.clientY;
+    let leftX = mouseX - scaleX;
+    let leftY = mouseY - scaleY;
 
     if(range) {
 

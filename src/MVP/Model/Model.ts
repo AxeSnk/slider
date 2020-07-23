@@ -81,14 +81,14 @@ class Model extends EventEmitter {
     handleSecondPos: number
   ): number {
     let id: number;
-    let handleFirstLeft: number = handleFirstPos - sliderPos;
-    let handleSecondLeft: number = handleSecondPos - sliderPos;
+    let handleFirstLeft = handleFirstPos - sliderPos;
+    let handleSecondLeft = handleSecondPos - sliderPos;
 
-    let currentFirstDelta: number = this.state.vertical
+    let currentFirstDelta = this.state.vertical
       ? Math.abs(handleFirstLeft - leftY)
       : Math.abs(handleFirstLeft - leftX);
 
-    let currentSecondDelta: number = this.state.vertical
+    let currentSecondDelta = this.state.vertical
       ? Math.abs(handleSecondLeft - leftY)
       : Math.abs(handleSecondLeft - leftX);
 

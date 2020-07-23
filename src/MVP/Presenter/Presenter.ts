@@ -53,7 +53,7 @@ class Presenter extends EventEmitter {
   }
 
   private update({ leftX, leftY, id }: { leftX: number; leftY: number; id: number }): void {
-    let idHandle: number = id;
+    let idHandle = id;
 
     if (id == undefined) {
       idHandle = this.model.findNearHandle(

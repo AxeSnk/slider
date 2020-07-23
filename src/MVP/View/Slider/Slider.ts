@@ -44,14 +44,14 @@ class Slider extends EventEmitter {
   }
 
   private clickSlider(event: MouseEvent): void {
-    let slider: HTMLElement = event.currentTarget as HTMLElement;
-    let sliderX: number = slider.getBoundingClientRect().left;
-    let sliderY: number = slider.getBoundingClientRect().top;
-    let mouseX: number = event.clientX;
-    let mouseY: number = event.clientY;
+    let slider = event.currentTarget as HTMLElement;
+    let sliderX = slider.getBoundingClientRect().left;
+    let sliderY = slider.getBoundingClientRect().top;
+    let mouseX = event.clientX;
+    let mouseY = event.clientY;
 
-    let leftX: number = mouseX - sliderX;
-    let leftY: number = mouseY - sliderY;
+    let leftX = mouseX - sliderX;
+    let leftY = mouseY - sliderY;
 
     this.emit("clickSlider", { leftX, leftY });
   }
