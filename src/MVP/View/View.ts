@@ -27,13 +27,17 @@ class View extends EventEmitter {
   }
 
   public renderFill(state: IOptions): void {
-    this.fill.renderFill(
-      state,
-      this.handles[0].getPositionHandle(state),
-      this.handles[1].getPositionHandle(state),
-      this.slider.getPosition(state),
-      this.slider.getLength(state)
-    );
+    const handleFirstPos = this.handles[0].getPositionHandle(state);
+    const handleSecondPos = this.handles[1].getPositionHandle(state);
+    const sliderPos = this.slider.getPosition(state);
+    const sliderLength = this.slider.getLength(state);
+
+    this.fill.renderFill(state, {
+      handleFirstPos,
+      handleSecondPos,
+      sliderPos,
+      sliderLength,
+    });
   }
 
   public renderHandle(state: IOptions): void {
@@ -52,10 +56,11 @@ class View extends EventEmitter {
   }
 
   public renderTooltip(state: IOptions): void {
-    const { val, valEnd, minVal, maxVal, vertical, range, tooltip } = state;
-    this.handles[0].renderTooltip(tooltip, val, minVal, maxVal, vertical);
+    let { val, valEnd, minVal, maxVal, vertical, range, tooltip } = state;
+    this.handles[0].renderTooltip({tooltip, val, minVal, maxVal, vertical});
     if (range) {
-      this.handles[1].renderTooltip(tooltip, valEnd, minVal, maxVal, vertical);
+      val = valEnd
+      this.handles[1].renderTooltip({tooltip, val, minVal, maxVal, vertical});
     }
   }
 

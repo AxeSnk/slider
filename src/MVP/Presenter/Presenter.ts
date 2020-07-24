@@ -3,6 +3,12 @@ import View from "../View/View";
 import IOptions from "../defaultOptions";
 import EventEmitter from "../EventEmitter";
 
+interface IUpdate {
+  leftX: number;
+  leftY: number;
+  id: number;
+}
+
 class Presenter extends EventEmitter {
   private model: Model;
   private view: View;
@@ -52,32 +58,32 @@ class Presenter extends EventEmitter {
     this.view.renderScale(state);
   }
 
-  private update({ leftX, leftY, id }: { leftX: number; leftY: number; id: number }): void {
+  private update(arg: IUpdate): void {
+    const { leftX, leftY, id } = arg;
     let idHandle = id;
+    const isVertical = this.model.getState()["vertical"];
+    const left = isVertical ? leftY : leftX;
+    const sliderPos = this.view.getPositionSlider(this.model.getState());
+    const handleFirstPos = this.view.getPositionHandle(
+      this.model.getState(),
+      0
+    );
+    const handleSecondPos = this.view.getPositionHandle(
+      this.model.getState(),
+      1
+    );
+    const sliderLength = this.view.getLengthSlider(this.model.getState());
 
     if (id == undefined) {
-      idHandle = this.model.findNearHandle(
-        leftX,
-        leftY,
-        this.view.getPositionSlider(this.model.getState()),
-        this.view.getPositionHandle(this.model.getState(), 0),
-        this.view.getPositionHandle(this.model.getState(), 1)
-      );
+      idHandle = this.model.findNearHandle({
+        left,
+        sliderPos,
+        handleFirstPos,
+        handleSecondPos,
+      });
     }
 
-    if (this.model.getState()["vertical"]) {
-      this.model.setVal(
-        leftY,
-        this.view.getLengthSlider(this.model.getState()),
-        idHandle
-      );
-    } else {
-      this.model.setVal(
-        leftX,
-        this.view.getLengthSlider(this.model.getState()),
-        idHandle
-      );
-    }
+    this.model.setVal({ left, sliderLength, idHandle });
 
     this.emit("updateSlider", this.model.getState());
   }

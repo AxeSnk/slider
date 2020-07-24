@@ -20,14 +20,8 @@ class Handle extends EventEmitter {
     this.tooltip = new Tooltip(this.handle);
   }
 
-  public renderTooltip(
-    tooltipMask: boolean,
-    val: number,
-    minVal: number,
-    maxVal: number,
-    vertical: boolean
-  ): void {
-    this.tooltip.renderTooltip(tooltipMask, val, minVal, maxVal, vertical);
+  public renderTooltip(arg: Partial<IOptions>): void {
+    this.tooltip.renderTooltip(arg);
   }
 
   public renderHandle(
@@ -86,8 +80,14 @@ class Handle extends EventEmitter {
 
   private dragHandle(event: MouseEvent): void {
     let handle = event.target as HTMLElement;
-    let handleX = handle.className === 'slider__handle' ? handle.offsetLeft : handle.parentElement!.offsetLeft;
-    let handleY = handle.className === 'slider__handle' ? handle.offsetTop : handle.parentElement!.offsetTop;
+    let handleX =
+      handle.className === "slider__handle"
+        ? handle.offsetLeft
+        : handle.parentElement!.offsetLeft;
+    let handleY =
+      handle.className === "slider__handle"
+        ? handle.offsetTop
+        : handle.parentElement!.offsetTop;
     let mouseX = event.clientX;
     let mouseY = event.clientY;
     let id = this.id;
@@ -96,7 +96,8 @@ class Handle extends EventEmitter {
 
     let moveHandle = (moveEvent: MouseEvent): void => {
       let leftX = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
-      let leftY = handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
+      let leftY =
+        handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
       this.emit(`drag_${id}`, { leftX, leftY, id });
     };
 
@@ -112,17 +113,31 @@ class Handle extends EventEmitter {
 
   private touchHandle(event: TouchEvent): void {
     let handle = event.target as HTMLElement;
-    let handleX = handle.className === 'slider__handle' ? handle.offsetLeft : handle.parentElement!.offsetLeft;
-    let handleY = handle.className === 'slider__handle' ? handle.offsetTop : handle.parentElement!.offsetTop;
-    let mouseX = event.touches[0].clientX
+    let handleX =
+      handle.className === "slider__handle"
+        ? handle.offsetLeft
+        : handle.parentElement!.offsetLeft;
+    let handleY =
+      handle.className === "slider__handle"
+        ? handle.offsetTop
+        : handle.parentElement!.offsetTop;
+    let mouseX = event.touches[0].clientX;
     let mouseY = event.touches[0].clientY;
     let id = this.id;
 
     event.preventDefault();
 
     let moveHandle = (moveEvent: TouchEvent): void => {
-      let leftX = handleX + moveEvent.touches[0].clientX - mouseX + handle.offsetWidth / 2;
-      let leftY = handleY + moveEvent.touches[0].clientY - mouseY + handle.offsetHeight / 2;
+      let leftX =
+        handleX +
+        moveEvent.touches[0].clientX -
+        mouseX +
+        handle.offsetWidth / 2;
+      let leftY =
+        handleY +
+        moveEvent.touches[0].clientY -
+        mouseY +
+        handle.offsetHeight / 2;
       this.emit(`drag_${id}`, { leftX, leftY, id });
     };
 
@@ -135,7 +150,6 @@ class Handle extends EventEmitter {
 
     window.addEventListener("touchend", handleMouseUp);
   }
-
 }
 
 export default Handle;
