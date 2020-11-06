@@ -23,8 +23,10 @@ class Model extends EventEmitter {
 
     for (let key in validOptions) {
       if (isValue(key)) {
+        // @ts-ignore
         validOptions[key] = Number(validOptions[key]);
       } else {
+        // @ts-ignore
         validOptions[key] = Boolean(validOptions[key]);
       }
     }
@@ -39,11 +41,11 @@ class Model extends EventEmitter {
     const { left, sliderLength, idHandle } = arg;
     const { val, valEnd, maxVal, minVal, step, range } = this.state;
     const newVal =
-      Math.round(Math.round((left * (maxVal - minVal)) / sliderLength) / step) *
+      Math.round(Math.round((left! * (maxVal - minVal)) / sliderLength!) / step) *
         step +
       minVal;
     const newValEnd =
-      Math.round(Math.round((left * (maxVal - minVal)) / sliderLength) / step) *
+      Math.round(Math.round((left! * (maxVal - minVal)) / sliderLength!) / step) *
         step +
       minVal;
 
@@ -77,15 +79,14 @@ class Model extends EventEmitter {
   }
 
   public findNearHandle(arg: Partial<IData>): number {
-    let id: number;
     const { left, sliderPos, handleFirstPos, handleSecondPos } = arg;
-    const handleFirstLeft = handleFirstPos - sliderPos;
-    const handleSecondLeft = handleSecondPos - sliderPos;
+    const handleFirstLeft = handleFirstPos! - sliderPos!;
+    const handleSecondLeft = handleSecondPos! - sliderPos!;
 
-    const currentFirstDelta = Math.abs(handleFirstLeft - left);
-    const currentSecondDelta = Math.abs(handleSecondLeft - left);
+    const currentFirstDelta = Math.abs(handleFirstLeft - left!);
+    const currentSecondDelta = Math.abs(handleSecondLeft - left!);
 
-    return currentFirstDelta < currentSecondDelta ? (id = 0) : (id = 1);
+    return currentFirstDelta < currentSecondDelta ? 0 : 1;
   }
 
   public getState(): IOptions {
@@ -106,20 +107,20 @@ class Model extends EventEmitter {
     } = options;
 
     const isNotValidRangeVal =
-      val >= this.state.valEnd ||
-      val < this.state.minVal ||
-      val > this.state.maxVal ||
+      val! >= this.state.valEnd ||
+      val! < this.state.minVal ||
+      val! > this.state.maxVal ||
       val == undefined;
     const isNotValidRangeValEnd =
-      valEnd > this.state.maxVal || valEnd == undefined;
+      valEnd! > this.state.maxVal || valEnd == undefined;
     const isNotValidRangeMaxVal =
-      maxVal < this.state.valEnd || maxVal == undefined;
+      maxVal! < this.state.valEnd || maxVal == undefined;
     const isNotValidVal =
-      val < this.state.minVal || val > this.state.maxVal || val == undefined;
-    const isNotValidMaxVal = maxVal < this.state.val || maxVal == undefined;
-    const isNotValidMinVal = minVal > this.state.val || minVal == undefined;
+      val! < this.state.minVal || val! > this.state.maxVal || val == undefined;
+    const isNotValidMaxVal = maxVal! < this.state.val || maxVal == undefined;
+    const isNotValidMinVal = minVal! > this.state.val || minVal == undefined;
     const isNotValidStep =
-      step < 1 || step > this.state.maxVal || step == undefined;
+      step! < 1 || step! > this.state.maxVal || step == undefined;
     const isNotValidRange = range == undefined;
     const isNotValidTooltip = tooltip == undefined;
     const isNotValidVertical = vertical == undefined;

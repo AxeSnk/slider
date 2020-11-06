@@ -19,7 +19,7 @@ const defaultOptions: IOptions = {
   range: false,
   tooltip: true,
   vertical: false,
-  scale: true
+  scale: true,
 };
 
 export { defaultOptions };

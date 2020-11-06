@@ -3,8 +3,8 @@ import IOptions from "../MVP/defaultOptions";
 class Panel {
   root: HTMLElement;
   $slider: any;
-  form: HTMLFormElement;
-  input: HTMLInputElement;
+  form!: HTMLFormElement;
+  input!: HTMLInputElement;
 
   constructor(root: HTMLElement, $slider: JQuery<Element>) {
     this.root = root;
@@ -17,10 +17,8 @@ class Panel {
   }
 
   private init(): void {
-    const form = this.root.querySelector("form");
-    const input = form.querySelector("input");
-    this.form = form;
-    this.input = input;
+    this.form = this.root.querySelector("form")!;
+    this.input = this.form.querySelector("input")!;
 
     this.$slider.slider("subscribeToInitModel", this.update);
     this.$slider.slider("subscribeToUpdates", this.update);
@@ -49,6 +47,7 @@ class Panel {
     [...this.form.elements].forEach((element) => {
       const input = element as HTMLInputElement;
       const { name, type } = input;
+      // @ts-ignore
       const defaultValue = state[name];
       const hasChecked = type === "checkbox";
 

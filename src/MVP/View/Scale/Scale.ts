@@ -3,10 +3,10 @@ import EventEmitter from "../../EventEmitter";
 import IOptions from "../../defaultOptions";
 
 class Scale extends EventEmitter {
-  private scale: HTMLElement;
+  private scale!: HTMLElement;
   private parent: HTMLElement;
-  private values: HTMLElement;
-  private state: IOptions;
+  private values!: HTMLElement;
+  private state!: IOptions;
 
   constructor(parent: HTMLElement) {
     super();

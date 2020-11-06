@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.ts",
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    }
-  },
   "scripts": {
     "test": "jest",
     "dev": "webpack-dev-server --mode development --open",

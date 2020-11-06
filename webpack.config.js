@@ -86,7 +86,7 @@ module.exports = {
     path: PATHS.docs
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"]
+    extensions: [".ts", ".js"]
   },
   devServer: {
     port: 4200,
@@ -96,9 +96,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$|.js$/,
+        test: /\.ts$|.js$/,
         exclude: /node_modules/,
-        use: jsLoaders()
+        use: jsLoaders(),
+        exclude: "/node_modules/"
       },
       {
         test: /\.scss$/,

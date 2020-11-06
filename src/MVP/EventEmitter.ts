@@ -1,5 +1,7 @@
+type Observer = (...args: any[]) => void;
+
 class EventEmitter {
-  private events: { [key: string]: Array<Function> };
+  private events: { [key: string]: any[] };
 
   constructor() {
     this.events = {};
@@ -7,14 +9,14 @@ class EventEmitter {
     this.emit = this.emit.bind(this);
   }
 
-  public on(type: string, callback: Function): void {
+  public on(type: string, callback: Observer): void {
     this.events[type] = this.events[type] || [];
     this.events[type].push(callback);
   }
 
   public emit(type: string, arg?: any): void {
     if (this.events[type]) {
-      this.events[type].forEach(callback => callback(arg));
+      this.events[type].forEach((callback) => callback(arg));
     }
   }
 }
