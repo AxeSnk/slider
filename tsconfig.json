@@ -1,15 +1,25 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "sourceMap": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "module": "commonjs",
     "allowJs": true,
-    "moduleResolution": "node",
-    "target": "es6",
+    "alwaysStrict": true,
+    "baseUrl": "./src",
     "esModuleInterop": true,
-    "lib": ["es2015", "es2017", "dom"]
+    "downlevelIteration": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "lib": ["dom", "es2017"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es6",
   },
-  "include": ["./tests/*"]
+  "exclude": ["node_modules"],
+  "include": ["./src/**/*.ts"]
 }

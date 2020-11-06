@@ -14,7 +14,7 @@
     "build": "webpack -d",
     "prod": "webpack -p",
     "deploy": "gh-pages -d dist",
-    "stats": "webpack --json > stats.json && webpack-bundle-analyzer stats.json"
+    "lint": "eslint --ext .ts src/"
   },
   "browserslist": "> 0.25%, not dead",
   "author": "Alexander Axenov",
@@ -24,6 +24,8 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
     "arkit": "^1.6.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
@@ -31,7 +33,10 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.2.0",
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-loader": "^3.0.3",
+    "eslint-plugin-import": "^2.22.1",
     "gh-pages": "^2.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
