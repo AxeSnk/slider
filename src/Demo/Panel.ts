@@ -1,9 +1,12 @@
-import IOptions from "../MVP/defaultOptions";
+import { IOptions } from '../MVP/utils/IOptions';
 
 class Panel {
   root: HTMLElement;
+
   $slider: any;
+
   form!: HTMLFormElement;
+
   input!: HTMLInputElement;
 
   constructor(root: HTMLElement, $slider: JQuery<Element>) {
@@ -17,13 +20,13 @@ class Panel {
   }
 
   private init(): void {
-    this.form = this.root.querySelector("form")!;
-    this.input = this.form.querySelector("input")!;
+    this.form = this.root.querySelector('form')!;
+    this.input = this.form.querySelector('input')!;
 
-    this.$slider.slider("subscribeToInitModel", this.update);
-    this.$slider.slider("subscribeToUpdates", this.update);
+    this.$slider.slider('subscribeToInitModel', this.update);
+    this.$slider.slider('subscribeToUpdates', this.update);
 
-    this.form.addEventListener("change", this.handleChange);
+    this.form.addEventListener('change', this.handleChange);
   }
 
   private handleChange(event: Event): void {
@@ -33,14 +36,16 @@ class Panel {
     const target = event.currentTarget as HTMLFormElement;
 
     [...target.elements].forEach((input) => {
-      const { name, type, value, checked } = input as HTMLInputElement;
-      const hasChecked = type === "radio" || type === "checkbox";
-      if (type === "submit") return;
+      const {
+        name, type, value, checked,
+      } = input as HTMLInputElement;
+      const hasChecked = type === 'radio' || type === 'checkbox';
+      if (type === 'submit') return;
 
       options[name] = hasChecked ? checked : value.trim();
     });
 
-    this.$slider.slider("setState", options);
+    this.$slider.slider('setState', options);
   }
 
   private update(state: IOptions): void {
@@ -49,7 +54,7 @@ class Panel {
       const { name, type } = input;
       // @ts-ignore
       const defaultValue = state[name];
-      const hasChecked = type === "checkbox";
+      const hasChecked = type === 'checkbox';
 
       if (defaultValue === undefined) return;
 

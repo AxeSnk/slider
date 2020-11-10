@@ -1,19 +1,23 @@
-import createElement from "../../utility";
-import EventEmitter from "../../EventEmitter";
-import Tooltip from "../Tooltip/Tooltip";
-import IOptions from "../../defaultOptions";
+import createElement from '../../utils/createElement';
+import EventEmitter from '../../utils/EventEmitter';
+import Tooltip from '../Tooltip/Tooltip';
+
+import { IOptions } from '../../utils/IOptions';
 
 class Handle extends EventEmitter {
   private handle: HTMLElement;
+
   private tooltip: Tooltip;
+
   private parent: HTMLElement;
+
   private id: number;
 
   constructor(parent: HTMLElement, id: number) {
     super();
 
     this.parent = parent;
-    this.handle = createElement("div", { class: "slider__handle" });
+    this.handle = createElement('div', { class: 'slider__handle' });
     this.init();
     this.addListener();
     this.id = id;
@@ -28,31 +32,31 @@ class Handle extends EventEmitter {
     val: number,
     minVal: number,
     maxVal: number,
-    vertical: boolean
+    vertical: boolean,
   ): void {
     if (vertical) {
-      this.handle.style.left = "";
-      let height = 96;
-      let newLeft = ((val - minVal) * height) / (maxVal - minVal);
+      this.handle.style.left = '';
+      const height = 96;
+      const newLeft = ((val - minVal) * height) / (maxVal - minVal);
 
       if (newLeft < 0) {
-        this.handle.style.top = 0 + "%";
+        this.handle.style.top = `${0}%`;
       } else if (newLeft > height) {
-        this.handle.style.top = height + "%";
+        this.handle.style.top = `${height}%`;
       } else {
-        this.handle.style.top = newLeft + "%";
+        this.handle.style.top = `${newLeft}%`;
       }
     } else {
-      this.handle.style.top = "";
-      let width = 96;
-      let newLeft = ((val - minVal) * width) / (maxVal - minVal);
+      this.handle.style.top = '';
+      const width = 96;
+      const newLeft = ((val - minVal) * width) / (maxVal - minVal);
 
       if (newLeft < 0) {
-        this.handle.style.left = 0 + "%";
+        this.handle.style.left = `${0}%`;
       } else if (newLeft > width) {
-        this.handle.style.left = width + "%";
+        this.handle.style.left = `${width}%`;
       } else {
-        this.handle.style.left = newLeft + "%";
+        this.handle.style.left = `${newLeft}%`;
       }
     }
   }
@@ -60,95 +64,87 @@ class Handle extends EventEmitter {
   public getPositionHandle(state: IOptions): number {
     if (state.vertical) {
       return this.handle.getBoundingClientRect().top;
-    } else {
-      return this.handle.getBoundingClientRect().left;
     }
+    return this.handle.getBoundingClientRect().left;
   }
 
   public getHandle(): HTMLElement {
     return this.handle;
   }
 
-  private init() {
+  private init():void {
     this.parent.appendChild(this.handle);
   }
 
-  private addListener() {
-    this.handle.addEventListener("mousedown", this.dragHandle.bind(this));
-    this.handle.addEventListener("touchstart", this.touchHandle.bind(this));
+  private addListener(): void {
+    this.handle.addEventListener('mousedown', this.dragHandle.bind(this));
+    this.handle.addEventListener('touchstart', this.touchHandle.bind(this));
   }
 
   private dragHandle(event: MouseEvent): void {
-    let handle = event.target as HTMLElement;
-    let handleX =
-      handle.className === "slider__handle"
-        ? handle.offsetLeft
-        : handle.parentElement!.offsetLeft;
-    let handleY =
-      handle.className === "slider__handle"
-        ? handle.offsetTop
-        : handle.parentElement!.offsetTop;
-    let mouseX = event.clientX;
-    let mouseY = event.clientY;
-    let id = this.id;
+    const handle = event.target as HTMLElement;
+    const handleX = handle.className === 'slider__handle'
+      ? handle.offsetLeft
+      : handle.parentElement!.offsetLeft;
+    const handleY = handle.className === 'slider__handle'
+      ? handle.offsetTop
+      : handle.parentElement!.offsetTop;
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
+    const { id } = this;
 
     event.preventDefault();
 
-    let moveHandle = (moveEvent: MouseEvent): void => {
-      let leftX = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
-      let leftY =
-        handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
+    const moveHandle = (moveEvent: MouseEvent): void => {
+      const leftX = handleX + moveEvent.clientX - mouseX + handle.offsetWidth / 2;
+      const leftY = handleY + moveEvent.clientY - mouseY + handle.offsetHeight / 2;
       this.emit(`drag_${id}`, { leftX, leftY, id });
     };
 
-    window.addEventListener("mousemove", moveHandle);
+    window.addEventListener('mousemove', moveHandle);
 
-    let handleMouseUp = (): void => {
-      window.removeEventListener("mousemove", moveHandle);
-      window.removeEventListener("mouseup", handleMouseUp);
+    const handleMouseUp = (): void => {
+      window.removeEventListener('mousemove', moveHandle);
+      window.removeEventListener('mouseup', handleMouseUp);
     };
 
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener('mouseup', handleMouseUp);
   }
 
   private touchHandle(event: TouchEvent): void {
-    let handle = event.target as HTMLElement;
-    let handleX =
-      handle.className === "slider__handle"
-        ? handle.offsetLeft
-        : handle.parentElement!.offsetLeft;
-    let handleY =
-      handle.className === "slider__handle"
-        ? handle.offsetTop
-        : handle.parentElement!.offsetTop;
-    let mouseX = event.touches[0].clientX;
-    let mouseY = event.touches[0].clientY;
-    let id = this.id;
+    const handle = event.target as HTMLElement;
+    const handleX = handle.className === 'slider__handle'
+      ? handle.offsetLeft
+      : handle.parentElement!.offsetLeft;
+    const handleY = handle.className === 'slider__handle'
+      ? handle.offsetTop
+      : handle.parentElement!.offsetTop;
+    const mouseX = event.touches[0].clientX;
+    const mouseY = event.touches[0].clientY;
+    const { id } = this;
 
     event.preventDefault();
 
-    let moveHandle = (moveEvent: TouchEvent): void => {
-      let leftX =
-        handleX +
-        moveEvent.touches[0].clientX -
-        mouseX +
-        handle.offsetWidth / 2;
-      let leftY =
-        handleY +
-        moveEvent.touches[0].clientY -
-        mouseY +
-        handle.offsetHeight / 2;
+    const moveHandle = (moveEvent: TouchEvent): void => {
+      const leftX = handleX
+        + moveEvent.touches[0].clientX
+        - mouseX
+        + handle.offsetWidth / 2;
+      const leftY = handleY
+        + moveEvent.touches[0].clientY
+        - mouseY
+        + handle.offsetHeight / 2;
       this.emit(`drag_${id}`, { leftX, leftY, id });
     };
 
-    window.addEventListener("touchmove", moveHandle);
+    window.addEventListener('touchmove', moveHandle);
 
-    let handleMouseUp = (): void => {
-      window.removeEventListener("touchmove", moveHandle);
-      window.removeEventListener("touchend", handleMouseUp);
+    const handleMouseUp = (): void => {
+      window.removeEventListener('touchmove', moveHandle);
+      window.removeEventListener('touchend', handleMouseUp);
     };
 
-    window.addEventListener("touchend", handleMouseUp);
+    window.addEventListener('touchend', handleMouseUp);
   }
 }
 

@@ -1,25 +1,29 @@
-import createElement from "../../utility";
-import EventEmitter from "../../EventEmitter";
-import IOptions from "../../defaultOptions";
+import createElement from '../../utils/createElement';
+import EventEmitter from '../../utils/EventEmitter';
+
+import { IOptions } from '../../utils/IOptions';
 
 class Tooltip extends EventEmitter {
   private tooltip: HTMLElement;
+
   private parent: HTMLElement;
 
   constructor(parent: HTMLElement) {
     super();
 
     this.parent = parent;
-    this.tooltip = createElement("div", { class: "slider__tooltip" });
+    this.tooltip = createElement('div', { class: 'slider__tooltip' });
     this.init();
   }
 
   public renderTooltip(arg: Partial<IOptions>): void {
-    const { tooltip, val, minVal, maxVal, vertical } = arg;
+    const {
+      tooltip, val, minVal, maxVal, vertical,
+    } = arg;
     if (tooltip) {
-      this.tooltip.setAttribute("style", "display: block");
+      this.tooltip.setAttribute('style', 'display: block');
     } else {
-      this.tooltip.setAttribute("style", "display: none");
+      this.tooltip.setAttribute('style', 'display: none');
     }
 
     if (val! < minVal!) {
@@ -31,17 +35,17 @@ class Tooltip extends EventEmitter {
     }
 
     if (vertical) {
-      this.tooltip.classList.add("tooltip--vertical");
-      this.tooltip.style.top = "";
-      this.tooltip.style.left = -1.6 + "rem";
+      this.tooltip.classList.add('tooltip--vertical');
+      this.tooltip.style.top = '';
+      this.tooltip.style.left = `${-1.6}rem`;
     } else {
-      this.tooltip.classList.remove("tooltip--vertical");
-      this.tooltip.style.left = "";
-      this.tooltip.style.top = -1.6 + "rem";
+      this.tooltip.classList.remove('tooltip--vertical');
+      this.tooltip.style.left = '';
+      this.tooltip.style.top = `${-1.6}rem`;
     }
   }
 
-  private init() {
+  private init(): void {
     this.parent.appendChild(this.tooltip);
   }
 

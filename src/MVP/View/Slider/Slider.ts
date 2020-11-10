@@ -1,24 +1,26 @@
-import createElement from "../../utility";
-import EventEmitter from "../../EventEmitter";
-import IOptions from "../../defaultOptions";
+import createElement from '../../utils/createElement';
+import EventEmitter from '../../utils/EventEmitter';
+
+import { IOptions } from '../../utils/IOptions';
 
 class Slider extends EventEmitter {
   private slider: HTMLElement;
+
   private parent: HTMLElement;
 
   constructor(parent: HTMLElement) {
     super();
 
     this.parent = parent;
-    this.slider = createElement("div", { class: "slider" });
+    this.slider = createElement('div', { class: 'slider' });
     this.init();
     this.addListener();
   }
 
   public render(state: IOptions): void {
     state.vertical
-      ? this.slider.classList.add("slider--vertical")
-      : this.slider.classList.remove("slider--vertical");
+      ? this.slider.classList.add('slider--vertical')
+      : this.slider.classList.remove('slider--vertical');
   }
 
   public getPosition(state: IOptions): number {
@@ -40,20 +42,20 @@ class Slider extends EventEmitter {
   }
 
   private addListener(): void {
-    this.slider.addEventListener("click", this.clickSlider.bind(this));
+    this.slider.addEventListener('click', this.clickSlider.bind(this));
   }
 
   private clickSlider(event: MouseEvent): void {
-    let slider = event.currentTarget as HTMLElement;
-    let sliderX = slider.getBoundingClientRect().left;
-    let sliderY = slider.getBoundingClientRect().top;
-    let mouseX = event.clientX;
-    let mouseY = event.clientY;
+    const slider = event.currentTarget as HTMLElement;
+    const sliderX = slider.getBoundingClientRect().left;
+    const sliderY = slider.getBoundingClientRect().top;
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
 
-    let leftX = mouseX - sliderX;
-    let leftY = mouseY - sliderY;
+    const leftX = mouseX - sliderX;
+    const leftY = mouseY - sliderY;
 
-    this.emit("clickSlider", { leftX, leftY });
+    this.emit('clickSlider', { leftX, leftY });
   }
 }
 

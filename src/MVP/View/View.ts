@@ -1,15 +1,20 @@
-import EventEmitter from "../EventEmitter";
-import IOptions from "../defaultOptions";
-import Slider from "./Slider/Slider";
-import Handle from "./Handle/Handle";
-import Fill from "./Fill/Fill";
-import Scale from "./Scale/Scale";
+import EventEmitter from '../utils/EventEmitter';
+import Slider from './Slider/Slider';
+import Handle from './Handle/Handle';
+import Fill from './Fill/Fill';
+import Scale from './Scale/Scale';
+
+import { IOptions } from '../utils/IOptions';
 
 class View extends EventEmitter {
   private root: HTMLElement;
+
   private slider: Slider;
+
   private fill: Fill;
+
   private handles: Array<Handle>;
+
   private scale: Scale;
 
   constructor(root: HTMLElement) {
@@ -41,14 +46,16 @@ class View extends EventEmitter {
   }
 
   public renderHandle(state: IOptions): void {
-    const { val, valEnd, minVal, maxVal, vertical, range } = state;
+    const {
+      val, valEnd, minVal, maxVal, vertical, range,
+    } = state;
     if (range) {
-      this.handles[1].getHandle().setAttribute("style", "display: flex");
+      this.handles[1].getHandle().setAttribute('style', 'display: flex');
 
       this.handles[0].renderHandle(val, minVal, maxVal, vertical);
       this.handles[1].renderHandle(valEnd, minVal, maxVal, vertical);
     } else {
-      this.handles[1].getHandle().setAttribute("style", "display: none");
+      this.handles[1].getHandle().setAttribute('style', 'display: none');
       this.handles[1].renderHandle(valEnd, minVal, maxVal, vertical);
     }
 
@@ -56,11 +63,18 @@ class View extends EventEmitter {
   }
 
   public renderTooltip(state: IOptions): void {
-    let { val, valEnd, minVal, maxVal, vertical, range, tooltip } = state;
-    this.handles[0].renderTooltip({tooltip, val, minVal, maxVal, vertical});
+    let { val } = state;
+    const {
+      valEnd, minVal, maxVal, vertical, range, tooltip,
+    } = state;
+    this.handles[0].renderTooltip({
+      tooltip, val, minVal, maxVal, vertical,
+    });
     if (range) {
-      val = valEnd
-      this.handles[1].renderTooltip({tooltip, val, minVal, maxVal, vertical});
+      val = valEnd;
+      this.handles[1].renderTooltip({
+        tooltip, val, minVal, maxVal, vertical,
+      });
     }
   }
 
@@ -102,38 +116,38 @@ class View extends EventEmitter {
   }
 
   private addOnHandles(): void {
-    this.handles[0].on("drag_0", this.emitDrag.bind(this));
-    this.handles[1].on("drag_1", this.emitDrag.bind(this));
+    this.handles[0].on('drag_0', this.emitDrag.bind(this));
+    this.handles[1].on('drag_1', this.emitDrag.bind(this));
   }
 
   private addOnSlider(): void {
-    this.slider.on("clickSlider", this.emitClick.bind(this));
+    this.slider.on('clickSlider', this.emitClick.bind(this));
   }
 
   private addOnScale(): void {
-    this.scale.on("clickScaleVal", this.emitScaleVal.bind(this));
-    this.scale.on("clickScaleValEnd", this.emitScaleValEnd.bind(this));
-    this.scale.on("clickScaleValItem", this.emitScaleValItem.bind(this));
+    this.scale.on('clickScaleVal', this.emitScaleVal.bind(this));
+    this.scale.on('clickScaleValEnd', this.emitScaleValEnd.bind(this));
+    this.scale.on('clickScaleValItem', this.emitScaleValItem.bind(this));
   }
 
-  private emitDrag(left: object): void {
-    this.emit("dragHandle", left);
+  private emitDrag(left: any): void {
+    this.emit('dragHandle', left);
   }
 
-  private emitClick(left: object): void {
-    this.emit("clickSlider", left);
+  private emitClick(left: any): void {
+    this.emit('clickSlider', left);
   }
 
-  private emitScaleVal(val: object): void {
-    this.emit("clickScaleVal", val);
+  private emitScaleVal(val: any): void {
+    this.emit('clickScaleVal', val);
   }
 
-  private emitScaleValEnd(valEnd: object): void {
-    this.emit("clickScaleValEnd", valEnd);
+  private emitScaleValEnd(valEnd: any): void {
+    this.emit('clickScaleValEnd', valEnd);
   }
 
-  private emitScaleValItem(left: object): void {
-    this.emit("clickScaleValItem", left);
+  private emitScaleValItem(left: any): void {
+    this.emit('clickScaleValItem', left);
   }
 }
 

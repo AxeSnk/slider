@@ -1,7 +1,8 @@
-import Model from "../Model/Model";
-import View from "../View/View";
-import IOptions from "../defaultOptions";
-import EventEmitter from "../EventEmitter";
+import Model from '../Model/Model';
+import View from '../View/View';
+import EventEmitter from '../utils/EventEmitter';
+
+import { IOptions } from '../utils/IOptions';
 
 interface IUpdate {
   leftX: number;
@@ -11,6 +12,7 @@ interface IUpdate {
 
 class Presenter extends EventEmitter {
   private model: Model;
+
   private view: View;
 
   constructor(model: Model, view: View) {
@@ -21,32 +23,32 @@ class Presenter extends EventEmitter {
 
     this.render(this.model.getState());
 
-    this.view.on("dragHandle", this.update.bind(this));
-    this.view.on("clickSlider", this.update.bind(this));
-    this.view.on("clickScaleVal", this.model.setState.bind(this));
-    this.view.on("clickScaleValEnd", this.model.setState.bind(this));
-    this.view.on("clickScaleValItem", this.update.bind(this));
-    this.model.on("updateState", this.render.bind(this));
-    this.on("updateSlider", this.model.setState.bind(this));
+    this.view.on('dragHandle', this.update.bind(this));
+    this.view.on('clickSlider', this.update.bind(this));
+    this.view.on('clickScaleVal', this.model.setState.bind(this));
+    this.view.on('clickScaleValEnd', this.model.setState.bind(this));
+    this.view.on('clickScaleValItem', this.update.bind(this));
+    this.model.on('updateState', this.render.bind(this));
+    this.on('updateSlider', this.model.setState.bind(this));
 
     this.subscribeToInitModel = this.subscribeToInitModel.bind(this);
     this.subscribeToUpdates = this.subscribeToUpdates.bind(this);
     this.setState = this.setState.bind(this);
   }
 
-  public subscribeToInitModel(callback: Function) {
-    this.model.on("initState", callback(this.model.getState()));
+  public subscribeToInitModel(callback: (state: IOptions) => (...args: any[]) => void): void {
+    this.model.on('initState', callback(this.model.getState()));
   }
 
-  public subscribeToUpdates(callback: Function) {
-    this.model.on("updateState", () => callback(this.model.getState()));
+  public subscribeToUpdates(callback: (state: IOptions) => (...args: any[]) => void): void {
+    this.model.on('updateState', () => callback(this.model.getState()));
   }
 
   public setState(options: Partial<IOptions>): void {
     this.model.setState(options);
   }
 
-  public getState(): {} {
+  public getState(): IOptions {
     return this.model.getState();
   }
 
@@ -61,20 +63,20 @@ class Presenter extends EventEmitter {
   private update(arg: IUpdate): void {
     const { leftX, leftY, id } = arg;
     let idHandle = id;
-    const isVertical = this.model.getState()["vertical"];
+    const isVertical = this.model.getState().vertical;
     const left = isVertical ? leftY : leftX;
     const sliderPos = this.view.getPositionSlider(this.model.getState());
     const handleFirstPos = this.view.getPositionHandle(
       this.model.getState(),
-      0
+      0,
     );
     const handleSecondPos = this.view.getPositionHandle(
       this.model.getState(),
-      1
+      1,
     );
     const sliderLength = this.view.getLengthSlider(this.model.getState());
 
-    if (id == undefined) {
+    if (id === undefined) {
       idHandle = this.model.findNearHandle({
         left,
         sliderPos,
@@ -85,7 +87,7 @@ class Presenter extends EventEmitter {
 
     this.model.setVal({ left, sliderLength, idHandle });
 
-    this.emit("updateSlider", this.model.getState());
+    this.emit('updateSlider', this.model.getState());
   }
 }
 

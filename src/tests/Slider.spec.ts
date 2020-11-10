@@ -1,5 +1,5 @@
 import Slider from '../MVP/View/Slider/Slider';
-import IOptions, { defaultOptions } from '../MVP/defaultOptions';
+import IOptions, { defaultOptions } from '../MVP/utils/defaultOptions';
 
 describe('Slider tests:', () => {
   let state: IOptions;

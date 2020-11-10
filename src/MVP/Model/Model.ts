@@ -1,6 +1,8 @@
-import IOptions, { defaultOptions } from "../defaultOptions";
-import EventEmitter from "../EventEmitter";
-import IData from "../IData";
+import EventEmitter from '../utils/EventEmitter';
+import defaultOptions from '../utils/defaultOptions';
+
+import { IOptions } from '../utils/IOptions';
+import { IData } from '../utils/IData';
 
 class Model extends EventEmitter {
   private state: IOptions;
@@ -10,18 +12,17 @@ class Model extends EventEmitter {
 
     this.state = options ? { ...defaultOptions, ...options } : defaultOptions;
 
-    this.emit("initState", this.state);
+    this.emit('initState', this.state);
 
     this.setState = this.setState.bind(this);
   }
 
-  public setState(options: Partial<IOptions>) {
-    let validOptions: Partial<IOptions> = this.validation(options);
+  public setState(options: Partial<IOptions>): void {
+    const validOptions: Partial<IOptions> = this.validation(options);
 
-    const isValue = (key: string) =>
-      ["val", "minVal", "maxVal", "valEnd", "step"].indexOf(key) !== -1;
+    const isValue = (key: string): boolean => ['val', 'minVal', 'maxVal', 'valEnd', 'step'].indexOf(key) !== -1;
 
-    for (let key in validOptions) {
+    Object.keys(validOptions).forEach((key) => {
       if (isValue(key)) {
         // @ts-ignore
         validOptions[key] = Number(validOptions[key]);
@@ -29,25 +30,25 @@ class Model extends EventEmitter {
         // @ts-ignore
         validOptions[key] = Boolean(validOptions[key]);
       }
-    }
+    });
 
     const newOptions = { ...this.state, ...validOptions };
     this.state = newOptions;
 
-    this.emit("updateState", newOptions);
+    this.emit('updateState', newOptions);
   }
 
   public setVal(arg: Partial<IData>): void {
     const { left, sliderLength, idHandle } = arg;
-    const { val, valEnd, maxVal, minVal, step, range } = this.state;
-    const newVal =
-      Math.round(Math.round((left! * (maxVal - minVal)) / sliderLength!) / step) *
-        step +
-      minVal;
-    const newValEnd =
-      Math.round(Math.round((left! * (maxVal - minVal)) / sliderLength!) / step) *
-        step +
-      minVal;
+    const {
+      val, valEnd, maxVal, minVal, step, range,
+    } = this.state;
+    const newVal = Math.round(Math.round((left! * (maxVal - minVal)) / sliderLength!) / step)
+        * step
+      + minVal;
+    const newValEnd = Math.round(Math.round((left! * (maxVal - minVal)) / sliderLength!) / step)
+        * step
+      + minVal;
 
     const isFirstHandle = idHandle === 0;
     const isLimitValRange = minVal <= newVal && newVal < valEnd;
@@ -61,25 +62,23 @@ class Model extends EventEmitter {
         if (isLimitValRange) {
           this.state.val = newVal;
         }
-      } else {
-        if (isLimitValEnd) {
-          this.state.valEnd = newValEnd;
-        } else if (isExceededValEnd) {
-          this.state.valEnd = maxVal;
-        }
-      }
-    } else {
-      if (isLimitVal) {
-        this.state.val = newVal;
+      } else if (isLimitValEnd) {
+        this.state.valEnd = newValEnd;
+      } else if (isExceededValEnd) {
         this.state.valEnd = maxVal;
-      } else if (iExceededVal) {
-        this.state.val = maxVal;
       }
+    } else if (isLimitVal) {
+      this.state.val = newVal;
+      this.state.valEnd = maxVal;
+    } else if (iExceededVal) {
+      this.state.val = maxVal;
     }
   }
 
-  public findNearHandle(arg: Partial<IData>): number {
-    const { left, sliderPos, handleFirstPos, handleSecondPos } = arg;
+  public findNearHandle = (arg: Partial<IData>): number => {
+    const {
+      left, sliderPos, handleFirstPos, handleSecondPos,
+    } = arg;
     const handleFirstLeft = handleFirstPos! - sliderPos!;
     const handleSecondLeft = handleSecondPos! - sliderPos!;
 
@@ -87,7 +86,7 @@ class Model extends EventEmitter {
     const currentSecondDelta = Math.abs(handleSecondLeft - left!);
 
     return currentFirstDelta < currentSecondDelta ? 0 : 1;
-  }
+  };
 
   public getState(): IOptions {
     return this.state;
@@ -106,28 +105,23 @@ class Model extends EventEmitter {
       scale,
     } = options;
 
-    const isNotValidRangeVal =
-      val! >= this.state.valEnd ||
-      val! < this.state.minVal ||
-      val! > this.state.maxVal ||
-      val == undefined;
-    const isNotValidRangeValEnd =
-      valEnd! > this.state.maxVal || valEnd == undefined;
-    const isNotValidRangeMaxVal =
-      maxVal! < this.state.valEnd || maxVal == undefined;
-    const isNotValidVal =
-      val! < this.state.minVal || val! > this.state.maxVal || val == undefined;
-    const isNotValidMaxVal = maxVal! < this.state.val || maxVal == undefined;
-    const isNotValidMinVal = minVal! > this.state.val || minVal == undefined;
-    const isNotValidStep =
-      step! < 1 || step! > this.state.maxVal || step == undefined;
-    const isNotValidRange = range == undefined;
-    const isNotValidTooltip = tooltip == undefined;
-    const isNotValidVertical = vertical == undefined;
-    const isNotValidScale = scale == undefined;
+    const isNotValidRangeVal = val! >= this.state.valEnd
+      || val! < this.state.minVal
+      || val! > this.state.maxVal
+      || val === undefined;
+    const isNotValidRangeValEnd = valEnd! > this.state.maxVal || valEnd === undefined;
+    const isNotValidRangeMaxVal = maxVal! < this.state.valEnd || maxVal === undefined;
+    const isNotValidVal = val! < this.state.minVal || val! > this.state.maxVal || val === undefined;
+    const isNotValidMaxVal = maxVal! < this.state.val || maxVal === undefined;
+    const isNotValidMinVal = minVal! > this.state.val || minVal === undefined;
+    const isNotValidStep = step! < 1 || step! > this.state.maxVal || step === undefined;
+    const isNotValidRange = range === undefined;
+    const isNotValidTooltip = tooltip === undefined;
+    const isNotValidVertical = vertical === undefined;
+    const isNotValidScale = scale === undefined;
 
     if (range) {
-      if (val == valEnd) {
+      if (val === valEnd) {
         val = this.state.minVal;
       }
     }

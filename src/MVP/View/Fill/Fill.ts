@@ -1,20 +1,24 @@
-import createElement from "../../utility";
-import IOptions from "../../defaultOptions";
-import IData from "../../IData";
+import createElement from '../../utils/createElement';
+
+import { IOptions } from '../../utils/IOptions';
+import { IData } from '../../utils/IData';
 
 class Fill {
   private fill: HTMLElement;
+
   private parent: HTMLElement;
 
   constructor(parent: HTMLElement) {
     this.parent = parent;
-    this.fill = createElement("div", { class: "slider__fill" });
+    this.fill = createElement('div', { class: 'slider__fill' });
     this.init();
     this.renderFill = this.renderFill.bind(this);
   }
 
   public renderFill(state: IOptions, arg: Partial<IData>): void {
-    const { handleFirstPos, handleSecondPos, sliderPos, sliderLength } = arg;
+    const {
+      handleFirstPos, handleSecondPos, sliderPos, sliderLength,
+    } = arg;
     const length = state.range
       ? handleSecondPos! - handleFirstPos!
       : handleFirstPos! - sliderPos! + 10;
@@ -24,22 +28,22 @@ class Fill {
     const percentShift = (shift / sliderLength!) * 100;
 
     if (state.vertical) {
-      this.fill.classList.add("fill--vertical");
-      this.fill.style.left = "";
-      this.fill.style.width = "";
-      this.fill.style.height = percentLength + "%";
-      this.fill.style.top = "0";
+      this.fill.classList.add('fill--vertical');
+      this.fill.style.left = '';
+      this.fill.style.width = '';
+      this.fill.style.height = `${percentLength}%`;
+      this.fill.style.top = '0';
       if (state.range) {
-        this.fill.style.top = percentShift + "%";
+        this.fill.style.top = `${percentShift}%`;
       }
     } else {
-      this.fill.classList.remove("fill--vertical");
-      this.fill.style.top = "";
-      this.fill.style.height = "";
-      this.fill.style.width = percentLength + "%";
-      this.fill.style.left = "0";
+      this.fill.classList.remove('fill--vertical');
+      this.fill.style.top = '';
+      this.fill.style.height = '';
+      this.fill.style.width = `${percentLength}%`;
+      this.fill.style.left = '0';
       if (state.range) {
-        this.fill.style.left = percentShift + "%";
+        this.fill.style.left = `${percentShift}%`;
       }
     }
   }

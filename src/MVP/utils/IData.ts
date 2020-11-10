@@ -1,4 +1,4 @@
-export default interface IData {
+interface IData {
   left: number;
   sliderPos: number;
   handleFirstPos: number;
@@ -6,3 +6,5 @@ export default interface IData {
   sliderLength: number;
   idHandle: number
 }
+
+export type { IData };
