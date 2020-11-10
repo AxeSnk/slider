@@ -36,25 +36,25 @@ class Handle extends EventEmitter {
   ): void {
     if (vertical) {
       this.handle.style.left = '';
-      const height = 96;
+      const height = 100;
       const newLeft = ((val - minVal) * height) / (maxVal - minVal);
 
       if (newLeft < 0) {
         this.handle.style.top = `${0}%`;
-      } else if (newLeft > height) {
-        this.handle.style.top = `${height}%`;
+      } else if (newLeft >= height) {
+        this.handle.style.top = `calc(${height}% - 20px`;
       } else {
         this.handle.style.top = `${newLeft}%`;
       }
     } else {
       this.handle.style.top = '';
-      const width = 96;
+      const width = 100;
       const newLeft = ((val - minVal) * width) / (maxVal - minVal);
 
       if (newLeft < 0) {
         this.handle.style.left = `${0}%`;
-      } else if (newLeft > width) {
-        this.handle.style.left = `${width}%`;
+      } else if (newLeft >= width) {
+        this.handle.style.left = `calc(${width}% - 20px`;
       } else {
         this.handle.style.left = `${newLeft}%`;
       }
