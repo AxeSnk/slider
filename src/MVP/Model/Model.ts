@@ -109,7 +109,9 @@ class Model extends EventEmitter {
       || val! < this.state.minVal
       || val! > this.state.maxVal
       || val === undefined;
-    const isNotValidRangeValEnd = valEnd! > this.state.maxVal || valEnd === undefined;
+    const isNotValidRangeValEnd = valEnd! < val!
+      || valEnd! > this.state.maxVal
+      || valEnd === undefined;
     const isNotValidRangeMaxVal = maxVal! < this.state.valEnd || maxVal === undefined;
     const isNotValidVal = val! < this.state.minVal || val! > this.state.maxVal || val === undefined;
     const isNotValidMaxVal = maxVal! < this.state.val || maxVal === undefined;
