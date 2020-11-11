@@ -50,46 +50,47 @@ class Scale extends EventEmitter {
 
     this.clear(elems);
 
-    let left = vertical ? 0 : 2;
-
     const valStart: HTMLElement = createElement('div', {
-      class: 'value__item-start value__item',
+      class: 'scale__value-item scale__value-item_start ',
     });
 
-    vertical
-      ? valStart.setAttribute('style', `top: ${left}%`)
-      : valStart.setAttribute('style', `left: ${left}%`);
     valStart.innerHTML = `${minVal}`;
     this.values.appendChild(valStart);
 
     let i: number;
-    const width = vertical ? 98 : 100;
-    let value: number;
-    value = Math.round(((Math.round((maxVal - minVal) / step) * step) / 3) / step) * step;
+    const width = 100;
+    const scope = maxVal - minVal;
+    const numberOfSteps = Math.round(scope / step) * step;
+    const gaps = 3;
+
+    const interval = Math.round((numberOfSteps / gaps) / step) * step;
+    let value = minVal;
+
+    let left;
 
     for (i = 0; i < 2; i += 1) {
-      const newLeft = (value / (maxVal - minVal)) * width;
+      value += interval;
+
+      const newLeft = ((value - minVal) * width) / scope;
       left = newLeft;
       const valItem = createElement('div', {
-        class: 'value__item',
+        class: 'scale__value-item',
       });
 
-      state.vertical
-        ? valItem.setAttribute('style', `top: ${left}%`)
-        : valItem.setAttribute('style', `left: ${left}%`);
+      vertical
+        ? valItem.setAttribute('style', `top: calc(${left}% + 10px)`)
+        : valItem.setAttribute('style', `left: calc(${left}% + 10px)`);
       valItem.innerHTML = `${value}`;
       this.values.appendChild(valItem);
-
-      value += value;
     }
 
-    left = vertical ? 96 : 98;
+    left = 100;
 
     const valEnd = createElement('div', {
-      class: 'value__item-end value__item',
+      class: 'scale__value-item scale__value-item_end',
     });
 
-    state.vertical
+    vertical
       ? valEnd.setAttribute('style', `top: ${left}%`)
       : valEnd.setAttribute('style', `left: ${left}%`);
     valEnd.innerHTML = `${maxVal}`;
@@ -111,15 +112,15 @@ class Scale extends EventEmitter {
   private clickScale(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     const { range, maxVal } = this.state;
-    const isValStart = target.className.indexOf('value__item-start') === 0;
-    const isValEnd = target.className.indexOf('value__item-end') === 0;
+    const isValStart = target.className.indexOf('scale__value-item_start') !== -1;
+    const isValEnd = target.className.indexOf('scale__value-item_end') !== -1;
 
     const scaleX = this.scale.getBoundingClientRect().left;
     const scaleY = this.scale.getBoundingClientRect().top;
-    const mouseX = event.clientX;
-    const mouseY = event.clientY;
-    const leftX = mouseX - scaleX;
-    const leftY = mouseY - scaleY;
+    const targetX = target.getBoundingClientRect().left;
+    const targetY = target.getBoundingClientRect().top;
+    const leftX = targetX - scaleX;
+    const leftY = targetY - scaleY;
 
     if (range) {
       if (isValStart) {

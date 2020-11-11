@@ -39,10 +39,10 @@ class Handle extends EventEmitter {
       const height = 100;
       const newLeft = ((val - minVal) * height) / (maxVal - minVal);
 
-      if (newLeft < 0) {
-        this.handle.style.top = `${0}%`;
+      if (newLeft <= 0) {
+        this.handle.style.top = `calc(${0}% - 10px)`;
       } else if (newLeft >= height) {
-        this.handle.style.top = `calc(${height}% - 20px`;
+        this.handle.style.top = `calc(${height}% - 10px)`;
       } else {
         this.handle.style.top = `${newLeft}%`;
       }
@@ -51,10 +51,10 @@ class Handle extends EventEmitter {
       const width = 100;
       const newLeft = ((val - minVal) * width) / (maxVal - minVal);
 
-      if (newLeft < 0) {
-        this.handle.style.left = `${0}%`;
+      if (newLeft <= 0) {
+        this.handle.style.left = `calc(${0}% - 10px)`;
       } else if (newLeft >= width) {
-        this.handle.style.left = `calc(${width}% - 20px`;
+        this.handle.style.left = `calc(${width}% - 10px)`;
       } else {
         this.handle.style.left = `${newLeft}%`;
       }

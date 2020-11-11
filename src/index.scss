@@ -92,17 +92,28 @@ body {
 
         &__scale {
           position: absolute;
-          width:100%;
-          top: 30px;
+          width: 100%;
+          top: 15px;
 
           .scale__values {
             position: relative;
             display: flex;
-            width:100%;
+            width: 100%;
 
-            .value__item {
+            .scale__value-item {
               position: absolute;
               transform: translateX(-50%);
+              padding-top: 10px;
+
+              &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 50%;
+                width: 1px;
+                height: 10px;
+                background-color: #000;
+              }
             }
           }
         }
@@ -133,12 +144,28 @@ body {
           width: 0px;
           height: 100%;
           top: 0;
-          left: 30px;
+          left: 15px;
 
           .scale__values {
             display: flex;
             height: 100%;
             flex-direction: column;
+
+            .scale__value-item {
+              transform: translateY(-50%);
+              padding-top: 0;
+              padding-left: 15px;
+
+              &::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 0;
+                width: 10px;
+                height: 1px;
+                background-color: #000;
+              }
+            }
           }
 
         }
