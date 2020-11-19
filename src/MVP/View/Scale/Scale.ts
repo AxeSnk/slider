@@ -124,9 +124,9 @@ class Scale extends EventEmitter {
 
     if (range) {
       if (isValStart) {
-        this.emit('clickScaleVal', { val: target.innerHTML });
+        this.emit('clickScaleVal', { ...this.state, val: target.innerHTML });
       } else if (isValEnd) {
-        this.emit('clickScaleValEnd', { valEnd: target.innerHTML });
+        this.emit('clickScaleValEnd', { ...this.state, valEnd: target.innerHTML });
       } else {
         this.emit('clickScaleValItem', { leftX, leftY });
       }
@@ -134,14 +134,14 @@ class Scale extends EventEmitter {
 
     if (!range) {
       if (isValStart) {
-        this.emit('clickScaleVal', { val: target.innerHTML });
-        this.emit('clickScaleValEnd', { valEnd: maxVal });
+        this.emit('clickScaleVal', { ...this.state, val: target.innerHTML });
+        this.emit('clickScaleValEnd', { ...this.state, valEnd: maxVal });
       } else if (isValEnd) {
-        this.emit('clickScaleVal', { val: target.innerHTML });
-        this.emit('clickScaleValEnd', { valEnd: maxVal });
+        this.emit('clickScaleVal', { ...this.state, val: target.innerHTML });
+        this.emit('clickScaleValEnd', { ...this.state, valEnd: maxVal });
       } else {
-        this.emit('clickScaleVal', { val: target.innerHTML });
-        this.emit('clickScaleValEnd', { valEnd: maxVal });
+        this.emit('clickScaleVal', { ...this.state, val: target.innerHTML });
+        this.emit('clickScaleValEnd', { ...this.state, valEnd: maxVal });
       }
     }
   }
