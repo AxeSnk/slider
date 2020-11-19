@@ -42,7 +42,7 @@ class Panel {
       const hasChecked = type === 'radio' || type === 'checkbox';
       if (type === 'submit') return;
 
-      options[name] = hasChecked ? checked : value.trim();
+      options[name] = hasChecked ? checked : Number(value.trim()).toFixed(2);
     });
 
     this.$slider.slider('setState', options);

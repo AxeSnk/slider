@@ -44,11 +44,9 @@ class Model extends EventEmitter {
       val, valEnd, maxVal, minVal, step, range,
     } = this.state;
     const newVal = Math.round(Math.round((left! * (maxVal - minVal)) / sliderLength!) / step)
-        * step
-      + minVal;
+        * step + minVal;
     const newValEnd = Math.round(Math.round((left! * (maxVal - minVal)) / sliderLength!) / step)
-        * step
-      + minVal;
+        * step + minVal;
 
     const isFirstHandle = idHandle === 0;
     const isLimitValRange = minVal <= newVal && newVal < valEnd;
@@ -60,15 +58,15 @@ class Model extends EventEmitter {
     if (range) {
       if (isFirstHandle) {
         if (isLimitValRange) {
-          this.state.val = newVal;
+          this.state.val = +newVal.toFixed(2);
         }
       } else if (isLimitValEnd) {
-        this.state.valEnd = newValEnd;
+        this.state.valEnd = +newValEnd.toFixed(2);
       } else if (isExceededValEnd) {
         this.state.valEnd = maxVal;
       }
     } else if (isLimitVal) {
-      this.state.val = newVal;
+      this.state.val = +newVal.toFixed(2);
       this.state.valEnd = maxVal;
     } else if (iExceededVal) {
       this.state.val = maxVal;
