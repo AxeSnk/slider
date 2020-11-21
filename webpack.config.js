@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const PATHS = {
   src: path.join(__dirname, "src"),
   docs: path.join(__dirname, "dist")
@@ -25,7 +24,6 @@ const plugins = () => {
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "index.css",
-      template: "./src/index.scss"
     }),
     new webpack.ProvidePlugin({
       $: "jquery",
@@ -35,21 +33,6 @@ const plugins = () => {
     new CopyPlugin([
       { from: './src/favicon.ico', to: './' }
     ]),
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.css$/g,
-      cssProcessor: require("cssnano"),
-      cssProcessorPluginOptions: {
-        preset: [
-          "default",
-          {
-            discardComments: {
-              removeAll: true
-            }
-          }
-        ]
-      },
-      canPrint: true
-    })
   ];
 
   return base;
@@ -103,7 +86,31 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: isDev,
+              reloadAll: true
+            }
+          },
+          {
+            loader: "css-loader",
+            options: { sourceMap: isDev }
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              sourceMap: isDev,
+           }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: isDev
+            }
+          },
+        ]
       },
       {
         test: /\.pug$/,

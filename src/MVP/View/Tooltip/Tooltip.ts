@@ -18,7 +18,7 @@ class Tooltip extends EventEmitter {
 
   public renderTooltip(arg: Partial<IOptions>): void {
     const {
-      tooltip, val, minVal, maxVal, vertical,
+      tooltip, val, minVal, maxVal,
     } = arg;
     if (tooltip) {
       this.tooltip.setAttribute('style', 'display: block');
@@ -32,16 +32,6 @@ class Tooltip extends EventEmitter {
       this.tooltip.innerHTML = `${maxVal}`;
     } else {
       this.tooltip.innerHTML = `${val}`;
-    }
-
-    if (vertical) {
-      this.tooltip.classList.add('tooltip--vertical');
-      this.tooltip.style.top = '';
-      this.tooltip.style.left = `${-1.6}rem`;
-    } else {
-      this.tooltip.classList.remove('tooltip--vertical');
-      this.tooltip.style.left = '';
-      this.tooltip.style.top = `${-1.6}rem`;
     }
   }
 

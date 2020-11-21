@@ -1,0 +1,147 @@
+.slider {
+  display: flex;
+  justify-content: center;   
+  padding: 10%;
+  width: 80%;  
+
+  &__wrapper {
+    width: 100%;
+    position: relative;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    height: 10px;
+    background-color: rgb(229, 229, 229);
+    border-radius: 6px;
+    cursor: pointer;  
+  }
+
+  &__fill {
+    position: absolute;
+    height: 10px;
+    background-color: rgb(231, 87, 53);
+    border-radius: 6px;
+  }
+
+  &__handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(231, 87, 53);
+    border: 1px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100;
+  }
+
+  &__tooltip {
+    position: relative;
+    width: fit-content;
+    padding: 4px 8px;
+    font-size: 13px;
+    border-radius: 4px;
+    text-align: center;
+    background-color: rgb(231, 87, 53);
+    color: #fff;
+    z-index: 99;
+    cursor: pointer;
+    top: -1.6rem;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      width: 6px;
+      height: 6px;
+      left: 40%;
+      border-radius: 15%;
+      background-color: rgb(231, 87, 53);
+      transform: rotate(45deg);
+      z-index: 98;
+    }
+  }
+
+  &__scale {
+    position: absolute;
+    width: 100%;
+    top: 15px;
+  }
+
+  &__scale-values {
+    position: relative;
+    display: flex;
+    width: 100%;
+  }
+
+  &__scale-value-item {
+    position: absolute;
+    transform: translateX(-50%);
+    padding-top: 10px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 10px;
+      background-color: #000;
+    }
+  }    
+
+  &_vertical {
+    width: 10px;
+    height: 25rem;
+    justify-items: center;
+
+    .slider__fill {
+      align-self: flex-start;
+      width: 10px;
+      border-radius: 6px;
+      left: 0;
+    }
+
+
+    .slider__tooltip {
+      top: auto;
+      left: -1.7rem;
+
+      &::after {
+        bottom: 40%;
+        left: 85%;
+      }
+    }
+
+    .slider__scale {
+      width: 0px;
+      height: 100%;
+      top: 0;
+      left: 15px;
+    }
+
+    .slider__scale-values {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+    }
+
+    .slider__scale-value-item {
+      transform: translateY(-50%);
+      padding-top: 0;
+      padding-left: 15px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 10px;
+        height: 1px;
+        background-color: #000;
+      }
+    }
+  }
+}

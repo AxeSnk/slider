@@ -12,15 +12,15 @@ class Slider extends EventEmitter {
     super();
 
     this.parent = parent;
-    this.slider = createElement('div', { class: 'slider' });
+    this.slider = createElement('div', { class: 'slider__wrapper' });
     this.init();
     this.addListener();
   }
 
   public render(state: IOptions): void {
     state.vertical
-      ? this.slider.classList.add('slider--vertical')
-      : this.slider.classList.remove('slider--vertical');
+      ? this.slider.classList.add('slider_vertical')
+      : this.slider.classList.remove('slider_vertical');
   }
 
   public getPosition(state: IOptions): number {

@@ -12,8 +12,8 @@ class Demo {
   }
 
   private init(options: Partial<IOptions>): void {
-    const slider = this.root.querySelector('.js-demo__slider .slider__wrapper .js-slider');
-    const panel = this.root.querySelector('.js-demo__panel .panel__wrapper');
+    const slider = this.root.querySelector('.js-slider');
+    const panel = this.root.querySelector('.js-panel');
 
     this.$slider = $(slider!).slider(options) as JQuery<Element>;
     this.panel = new Panel(panel as HTMLElement, this.$slider);

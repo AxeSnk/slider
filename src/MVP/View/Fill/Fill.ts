@@ -28,7 +28,6 @@ class Fill {
     const percentShift = (shift / sliderLength!) * 100;
 
     if (state.vertical) {
-      this.fill.classList.add('fill--vertical');
       this.fill.style.left = '';
       this.fill.style.width = '';
       this.fill.style.height = `${percentLength}%`;
@@ -37,7 +36,6 @@ class Fill {
         this.fill.style.top = `${percentShift}%`;
       }
     } else {
-      this.fill.classList.remove('fill--vertical');
       this.fill.style.top = '';
       this.fill.style.height = '';
       this.fill.style.width = `${percentLength}%`;

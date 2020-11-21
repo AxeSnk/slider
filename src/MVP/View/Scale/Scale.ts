@@ -25,10 +25,6 @@ class Scale extends EventEmitter {
     if (state.scale) {
       this.scale.setAttribute('style', 'display: block');
 
-      state.vertical
-        ? this.scale.classList.add('scale--vertical')
-        : this.scale.classList.remove('scale--vertical');
-
       this.renderValues(state);
     } else {
       this.scale.setAttribute('style', 'display: none');
@@ -37,7 +33,7 @@ class Scale extends EventEmitter {
 
   private init(): void {
     this.scale = createElement('div', { class: 'slider__scale' });
-    this.values = createElement('div', { class: 'scale__values' });
+    this.values = createElement('div', { class: 'slider__scale-values' });
     this.scale.appendChild(this.values);
     this.parent.appendChild(this.scale);
   }
@@ -51,7 +47,7 @@ class Scale extends EventEmitter {
     this.clear(elems);
 
     const valStart: HTMLElement = createElement('div', {
-      class: 'scale__value-item scale__value-item_start ',
+      class: 'slider__scale-value-item slider__scale-value-item_start',
     });
 
     valStart.innerHTML = `${minVal}`;
@@ -74,7 +70,7 @@ class Scale extends EventEmitter {
       const newLeft = ((value - minVal) * width) / scope;
       left = newLeft;
       const valItem = createElement('div', {
-        class: 'scale__value-item',
+        class: 'slider__scale-value-item',
       });
 
       vertical
@@ -87,7 +83,7 @@ class Scale extends EventEmitter {
     left = 100;
 
     const valEnd = createElement('div', {
-      class: 'scale__value-item scale__value-item_end',
+      class: 'slider__scale-value-item slider__scale-value-item_end',
     });
 
     vertical
@@ -112,8 +108,8 @@ class Scale extends EventEmitter {
   private clickScale(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     const { range, maxVal } = this.state;
-    const isValStart = target.className.indexOf('scale__value-item_start') !== -1;
-    const isValEnd = target.className.indexOf('scale__value-item_end') !== -1;
+    const isValStart = target.className.indexOf('slider__scale-value-item_start') !== -1;
+    const isValEnd = target.className.indexOf('slider__scale-value-item_end') !== -1;
 
     const scaleX = this.scale.getBoundingClientRect().left;
     const scaleY = this.scale.getBoundingClientRect().top;
