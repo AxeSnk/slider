@@ -22,7 +22,7 @@ describe('Handle tests:', () => {
       const element: HTMLElement = handle.getHandle();
 
       expect(element.style.top).toBe('');
-      expect(element.style.left).toBe('48%');
+      expect(element.style.left).toBe('50%');
     });
 
     test('renderHandle vertical', () => {
@@ -31,7 +31,7 @@ describe('Handle tests:', () => {
       const element: HTMLElement = handle.getHandle();
 
       expect(element.style.left).toBe('');
-      expect(element.style.top).toBe('48%');
+      expect(element.style.top).toBe('50%');
     });
   });
 });

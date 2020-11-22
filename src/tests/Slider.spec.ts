@@ -1,5 +1,6 @@
 import Slider from '../MVP/View/Slider/Slider';
-import IOptions, { defaultOptions } from '../MVP/utils/defaultOptions';
+import { IOptions } from '../MVP/utils/IOptions';
+import defaultOptions from '../MVP/utils/defaultOptions';
 
 describe('Slider tests:', () => {
   let state: IOptions;
@@ -14,7 +15,7 @@ describe('Slider tests:', () => {
     slider.render(state);
     const element: HTMLElement = slider.getElement();
 
-    expect(element.className).toBe('slider');
+    expect(element.className).toBe('slider__wrapper');
   });
 
   test('renderSlider vertical', () => {
@@ -22,6 +23,6 @@ describe('Slider tests:', () => {
     slider.render(state);
     const element: HTMLElement = slider.getElement();
 
-    expect(element.className).toBe('slider slider--vertical');
+    expect(element.className).toBe('slider__wrapper slider_vertical');
   });
 });

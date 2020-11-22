@@ -1,5 +1,6 @@
 import Fill from '../MVP/View/Fill/Fill';
-import IOptions, { defaultOptions } from '../MVP/utils/defaultOptions';
+import { IOptions } from '../MVP/utils/IOptions';
+import defaultOptions from '../MVP/utils/defaultOptions';
 
 describe('Fill tests:', () => {
   let fill: Fill;
@@ -28,7 +29,6 @@ describe('Fill tests:', () => {
 
       const element = fill.getFill();
 
-      expect(element.className).toBe('slider__fill fill--vertical');
       expect(element.style.left).toBe('');
       expect(element.style.width).toBe('');
       expect(element.style.height).toBe(`${length}%`);
@@ -43,7 +43,6 @@ describe('Fill tests:', () => {
 
       const element = fill.getFill();
 
-      expect(element.className).toBe('slider__fill');
       expect(element.style.top).toBe('');
       expect(element.style.height).toBe('');
       expect(element.style.width).toBe(`${length}%`);
@@ -63,7 +62,6 @@ describe('Fill tests:', () => {
 
       const element = fill.getFill();
 
-      expect(element.className).toBe('slider__fill fill--vertical');
       expect(element.style.left).toBe('');
       expect(element.style.width).toBe('');
       expect(element.style.height).toBe(`${length}%`);
@@ -78,7 +76,6 @@ describe('Fill tests:', () => {
 
       const element = fill.getFill();
 
-      expect(element.className).toBe('slider__fill');
       expect(element.style.top).toBe('');
       expect(element.style.height).toBe('');
       expect(element.style.width).toBe(`${length}%`);

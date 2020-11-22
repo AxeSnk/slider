@@ -31,10 +31,7 @@ describe('Tooltip tests:', () => {
       );
       const element: HTMLElement = tooltips.getTooltip();
       expect(element.innerHTML).toBe('2');
-      expect(element.className).toBe('slider__tooltip');
       expect(element.style.display).toBe('block');
-      expect(element.style.left).toBe('');
-      expect(element.style.top).toBe(`${-1.6}rem`);
     });
 
     test('renderTooltip vertical mask = false', () => {
@@ -52,10 +49,7 @@ describe('Tooltip tests:', () => {
       );
       const element: HTMLElement = tooltips.getTooltip();
       expect(element.innerHTML).toBe('2');
-      expect(element.className).toBe('slider__tooltip tooltip--vertical');
       expect(element.style.display).toBe('none');
-      expect(element.style.left).toBe(`${-1.6}rem`);
-      expect(element.style.top).toBe('');
     });
   });
 });
