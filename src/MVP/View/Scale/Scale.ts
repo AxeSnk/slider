@@ -53,18 +53,21 @@ class Scale extends EventEmitter {
     valStart.innerHTML = `${minVal}`;
     this.values.appendChild(valStart);
 
-    let i: number;
     const width = 100;
     const scope = maxVal - minVal;
-    const numberOfSteps = Math.round(scope / step) * step;
-    const gaps = 3;
-
-    const interval = Math.round((numberOfSteps / gaps) / step) * step;
+    let gaps = Math.ceil(scope / step);
+    let interval = Math.round(scope / (scope / step));
+    const numberOfDivisions = 3;
+    if (gaps > numberOfDivisions) {
+      gaps = numberOfDivisions;
+      interval = Math.round(scope / gaps);
+    }
     let value = minVal;
 
+    let i: number;
     let left;
 
-    for (i = 0; i < 2; i += 1) {
+    for (i = 1; i < gaps; i += 1) {
       value += interval;
 
       const newLeft = ((value - minVal) * width) / scope;
