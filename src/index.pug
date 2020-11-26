@@ -12,12 +12,12 @@ html(lang="ru")
   body
     .demo
       .demo__slider
-        +slider({valEnd: 8, val: 2, minVal: 0, maxVal: 10, step: 8})
+        +slider({ minVal: 0, maxVal: 100, val: 10, valEnd: 20, step: 1 })
       .demo__panel
         +panel
     .demo
       .demo__slider
-        +slider({vertical : true, range: false })
+        +slider()
       .demo__panel
         +panel
     .demo

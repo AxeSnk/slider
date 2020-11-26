@@ -44,7 +44,7 @@ class Handle extends EventEmitter {
       } else if (newLeft >= height) {
         this.handle.style.top = `calc(${height}% - 10px)`;
       } else {
-        this.handle.style.top = `${newLeft}%`;
+        this.handle.style.top = `calc(${newLeft}% - 10px)`;
       }
     } else {
       this.handle.style.top = '';
@@ -56,7 +56,7 @@ class Handle extends EventEmitter {
       } else if (newLeft >= width) {
         this.handle.style.left = `calc(${width}% - 10px)`;
       } else {
-        this.handle.style.left = `${newLeft}%`;
+        this.handle.style.left = `calc(${newLeft}% - 10px)`;
       }
     }
   }

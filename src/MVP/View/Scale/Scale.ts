@@ -77,8 +77,8 @@ class Scale extends EventEmitter {
       });
 
       vertical
-        ? valItem.setAttribute('style', `top: calc(${left}% + 10px)`)
-        : valItem.setAttribute('style', `left: calc(${left}% + 10px)`);
+        ? valItem.setAttribute('style', `top: ${left}%`)
+        : valItem.setAttribute('style', `left: ${left}%`);
       valItem.innerHTML = `${+value.toFixed(2)}`;
       this.values.appendChild(valItem);
     }
@@ -118,8 +118,8 @@ class Scale extends EventEmitter {
     const scaleY = this.scale.getBoundingClientRect().top;
     const targetX = target.getBoundingClientRect().left;
     const targetY = target.getBoundingClientRect().top;
-    const leftX = targetX - scaleX;
-    const leftY = targetY - scaleY;
+    const leftX = targetX - scaleX + 10;
+    const leftY = targetY - scaleY + 10;
 
     if (range) {
       if (isValStart) {
