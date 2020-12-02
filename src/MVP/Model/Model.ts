@@ -103,17 +103,17 @@ class Model extends EventEmitter {
       scale,
     } = options;
 
-    const isMultipleAndStart = (val! % step!) !== 0 && val === this.state.minVal;
-    const isMultipleAndEnd = (valEnd! % step!) !== 0 && valEnd === this.state.maxVal;
-
+    const isMultipleStartStep = (val! - minVal!) % step! === 0;
+    const isMultipleEndStep = (valEnd! - minVal!) % step! === 0;
+    const isEqualMaxVal = Number(valEnd) === this.state.maxVal;
     const isNotValidRangeVal = val! >= this.state.valEnd
       || val! < this.state.minVal
       || val! > this.state.maxVal
-      || isMultipleAndStart
+      || (!isMultipleStartStep)
       || val === undefined;
     const isNotValidRangeValEnd = valEnd! < this.state.val!
       || valEnd! > this.state.maxVal
-      || isMultipleAndEnd
+      || (!isMultipleEndStep)
       || valEnd === undefined;
     const isNotValidRangeMaxVal = maxVal! < this.state.valEnd || maxVal === undefined;
     const isNotValidVal = val! < this.state.minVal || val! > this.state.maxVal || val === undefined;
@@ -138,6 +138,10 @@ class Model extends EventEmitter {
 
       if (isNotValidRangeValEnd) {
         valEnd = this.state.valEnd;
+      }
+
+      if (isEqualMaxVal) {
+        valEnd = this.state.maxVal;
       }
 
       if (isNotValidRangeMaxVal) {
