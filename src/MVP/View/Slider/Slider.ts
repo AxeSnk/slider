@@ -18,19 +18,25 @@ class Slider extends EventEmitter {
   }
 
   public render(state: IOptions): void {
-    state.vertical
-      ? this.slider.classList.add('slider_vertical')
-      : this.slider.classList.remove('slider_vertical');
+    if (state.vertical) {
+      this.slider.classList.add('slider_vertical');
+    } else {
+      this.slider.classList.remove('slider_vertical');
+    }
   }
 
   public getPosition(state: IOptions): number {
-    return state.vertical
-      ? this.slider.getBoundingClientRect().top
-      : this.slider.getBoundingClientRect().left;
+    if (state.vertical) {
+      return this.slider.getBoundingClientRect().top;
+    }
+    return this.slider.getBoundingClientRect().left;
   }
 
   public getLength(state: IOptions): number {
-    return state.vertical ? this.slider.offsetHeight : this.slider.offsetWidth;
+    if (state.vertical) {
+      return this.slider.offsetHeight;
+    }
+    return this.slider.offsetWidth;
   }
 
   public getElement(): HTMLElement {

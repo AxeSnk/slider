@@ -76,9 +76,11 @@ class Scale extends EventEmitter {
         class: 'slider__scale-value-item',
       });
 
-      vertical
-        ? valItem.setAttribute('style', `top: ${left}%`)
-        : valItem.setAttribute('style', `left: ${left}%`);
+      if (vertical) {
+        valItem.setAttribute('style', `top: ${left}%`);
+      } else {
+        valItem.setAttribute('style', `left: ${left}%`);
+      }
       valItem.innerHTML = `${+value.toFixed(2)}`;
       this.values.appendChild(valItem);
     }
@@ -89,9 +91,11 @@ class Scale extends EventEmitter {
       class: 'slider__scale-value-item slider__scale-value-item_end',
     });
 
-    vertical
-      ? valEnd.setAttribute('style', `top: ${left}%`)
-      : valEnd.setAttribute('style', `left: ${left}%`);
+    if (vertical) {
+      valEnd.setAttribute('style', `top: ${left}%`);
+    } else {
+      valEnd.setAttribute('style', `left: ${left}%`);
+    }
     valEnd.innerHTML = `${maxVal}`;
     this.values.appendChild(valEnd);
   }

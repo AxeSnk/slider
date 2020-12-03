@@ -83,7 +83,8 @@ class Model extends EventEmitter {
     const currentFirstDelta = Math.abs(handleFirstLeft - left!);
     const currentSecondDelta = Math.abs(handleSecondLeft - left!);
 
-    return currentFirstDelta < currentSecondDelta ? 0 : 1;
+    if (currentFirstDelta < currentSecondDelta) return 0;
+    return 1;
   };
 
   public getState(): IOptions {
