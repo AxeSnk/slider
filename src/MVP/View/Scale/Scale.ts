@@ -81,7 +81,7 @@ class Scale extends EventEmitter {
       } else {
         valItem.setAttribute('style', `left: ${left}%`);
       }
-      valItem.innerHTML = `${+value.toFixed(2)}`;
+      valItem.innerHTML = `${Number(value.toFixed(2))}`;
       this.values.appendChild(valItem);
     }
 

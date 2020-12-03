@@ -58,15 +58,15 @@ class Model extends EventEmitter {
     if (range) {
       if (isFirstHandle) {
         if (isLimitValRange) {
-          this.state.val = +newVal.toFixed(2);
+          this.state.val = Number(newVal.toFixed(2));
         }
       } else if (isLimitValEnd) {
-        this.state.valEnd = +newValEnd.toFixed(2);
+        this.state.valEnd = Number(newValEnd.toFixed(2));
       } else if (isExceededValEnd) {
         this.state.valEnd = maxVal;
       }
     } else if (isLimitVal) {
-      this.state.val = +newVal.toFixed(2);
+      this.state.val = Number(newVal.toFixed(2));
       this.state.valEnd = maxVal;
     } else if (iExceededVal) {
       this.state.val = maxVal;
