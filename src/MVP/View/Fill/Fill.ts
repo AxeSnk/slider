@@ -15,17 +15,17 @@ class Fill {
     this.renderFill = this.renderFill.bind(this);
   }
 
-  public renderFill(state: IOptions, arg: Partial<IData>): void {
+  public renderFill(state: IOptions, arg: Omit<IData, 'left' | 'idHandle'>): void {
     const {
       handleFirstPos, handleSecondPos, sliderPos, sliderLength,
     } = arg;
     const length = state.range
-      ? handleSecondPos! - handleFirstPos!
-      : handleFirstPos! - sliderPos! + 10;
-    const shift = handleFirstPos! - sliderPos! + 10;
+      ? handleSecondPos - handleFirstPos
+      : handleFirstPos - sliderPos + 10;
+    const shift = handleFirstPos - sliderPos + 10;
 
-    const percentLength = (length / sliderLength!) * 100;
-    const percentShift = (shift / sliderLength!) * 100;
+    const percentLength = (length / sliderLength) * 100;
+    const percentShift = (shift / sliderLength) * 100;
 
     if (state.vertical) {
       this.fill.style.left = '';

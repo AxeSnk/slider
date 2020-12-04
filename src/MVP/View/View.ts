@@ -65,15 +65,15 @@ class View extends EventEmitter {
   public renderTooltip(state: IOptions): void {
     let { val } = state;
     const {
-      valEnd, minVal, maxVal, vertical, range, tooltip,
+      valEnd, minVal, maxVal, range, tooltip,
     } = state;
     this.handles[0].renderTooltip({
-      tooltip, val, minVal, maxVal, vertical,
+      tooltip, val, minVal, maxVal,
     });
     if (range) {
       val = valEnd;
       this.handles[1].renderTooltip({
-        tooltip, val, minVal, maxVal, vertical,
+        tooltip, val, minVal, maxVal,
       });
     }
   }
@@ -106,12 +106,12 @@ class View extends EventEmitter {
     return new Fill(this.slider.getElement());
   }
 
-  private addHandles(): any {
+  private addHandles(): void {
     this.handles.push(new Handle(this.slider.getElement(), 0));
     this.handles.push(new Handle(this.slider.getElement(), 1));
   }
 
-  private addScale(): any {
+  private addScale(): Scale {
     return new Scale(this.slider.getElement());
   }
 
@@ -130,23 +130,23 @@ class View extends EventEmitter {
     this.scale.on('clickScaleValItem', this.emitScaleValItem.bind(this));
   }
 
-  private emitDrag(left: any): void {
+  private emitDrag(left: number): void {
     this.emit('dragHandle', left);
   }
 
-  private emitClick(left: any): void {
+  private emitClick(left: number): void {
     this.emit('clickSlider', left);
   }
 
-  private emitScaleVal(val: any): void {
+  private emitScaleVal(val: number): void {
     this.emit('clickScaleVal', val);
   }
 
-  private emitScaleValEnd(valEnd: any): void {
+  private emitScaleValEnd(valEnd: number): void {
     this.emit('clickScaleValEnd', valEnd);
   }
 
-  private emitScaleValItem(left: any): void {
+  private emitScaleValItem(left: number): void {
     this.emit('clickScaleValItem', left);
   }
 }

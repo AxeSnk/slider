@@ -3,36 +3,38 @@ import { IOptions } from '../MVP/utils/IOptions';
 class Panel {
   root: HTMLElement;
 
-  $slider: any;
+  $slider: JQuery<Element>;
 
-  form!: HTMLFormElement;
+  form: HTMLFormElement | null;
 
-  input!: HTMLInputElement;
+  input: HTMLInputElement | null;
 
   constructor(root: HTMLElement, $slider: JQuery<Element>) {
     this.root = root;
     this.$slider = $slider;
+    this.form = this.root.querySelector('form');
+    if (this.form !== null) {
+      this.input = this.form.querySelector('input');
 
-    this.handleChange = this.handleChange.bind(this);
-    this.update = this.update.bind(this);
-
-    this.init();
+      this.handleChange = this.handleChange.bind(this);
+      this.update = this.update.bind(this);
+      this.init();
+    } else {
+      this.input = null;
+    }
   }
 
   private init(): void {
-    this.form = this.root.querySelector('form')!;
-    this.input = this.form.querySelector('input')!;
-
     this.$slider.slider('subscribeToInitModel', this.update);
     this.$slider.slider('subscribeToUpdates', this.update);
 
-    this.form.addEventListener('change', this.handleChange);
+    this.form!.addEventListener('change', this.handleChange);
   }
 
   private handleChange(event: Event): void {
     event.preventDefault();
 
-    const options: { [key: string]: any } = {};
+    const options: { [key: string]: string | number | boolean } = {};
     const target = event.currentTarget as HTMLFormElement;
 
     [...target.elements].forEach((input) => {
@@ -42,14 +44,14 @@ class Panel {
       const hasChecked = type === 'radio' || type === 'checkbox';
       if (type === 'submit') return;
 
-      options[name] = hasChecked ? checked : Number(value.trim()).toFixed(2);
+      options[name] = hasChecked ? checked : Number(Number(value.trim()).toFixed(2));
     });
 
     this.$slider.slider('setState', options);
   }
 
   private update(state: IOptions): void {
-    [...this.form.elements].forEach((element) => {
+    [...this.form!.elements].forEach((element) => {
       const input = element as HTMLInputElement;
       const { name, type } = input;
       // @ts-ignore

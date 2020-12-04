@@ -24,7 +24,9 @@ class Handle extends EventEmitter {
     this.tooltip = new Tooltip(this.handle);
   }
 
-  public renderTooltip(arg: Partial<IOptions>): void {
+  public renderTooltip(
+    arg: { tooltip: boolean, val: number, minVal: number, maxVal: number },
+  ): void {
     this.tooltip.renderTooltip(arg);
   }
 

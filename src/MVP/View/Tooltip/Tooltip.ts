@@ -1,8 +1,6 @@
 import createElement from '../../utils/createElement';
 import EventEmitter from '../../utils/EventEmitter';
 
-import { IOptions } from '../../utils/IOptions';
-
 class Tooltip extends EventEmitter {
   private tooltip: HTMLElement;
 
@@ -16,7 +14,9 @@ class Tooltip extends EventEmitter {
     this.init();
   }
 
-  public renderTooltip(arg: Partial<IOptions>): void {
+  public renderTooltip(
+    arg: { tooltip: boolean, val: number, minVal: number, maxVal: number },
+  ): void {
     const {
       tooltip, val, minVal, maxVal,
     } = arg;
@@ -26,9 +26,9 @@ class Tooltip extends EventEmitter {
       this.tooltip.setAttribute('style', 'display: none');
     }
 
-    if (val! < minVal!) {
+    if (val < minVal) {
       this.tooltip.innerHTML = `${minVal}`;
-    } else if (val! > maxVal!) {
+    } else if (val > maxVal) {
       this.tooltip.innerHTML = `${maxVal}`;
     } else {
       this.tooltip.innerHTML = `${val}`;

@@ -2,7 +2,7 @@ import './index.scss';
 import './MVP/sliderFacade';
 import Demo from './Demo/Demo';
 
-function importAll(resolve: any): void {
+function importAll(resolve: __WebpackModuleApi.RequireContext): void {
   resolve.keys().forEach(resolve);
 }
 

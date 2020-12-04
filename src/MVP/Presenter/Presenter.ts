@@ -36,11 +36,11 @@ class Presenter extends EventEmitter {
     this.setState = this.setState.bind(this);
   }
 
-  public subscribeToInitModel(callback: (state: IOptions) => (...args: any[]) => void): void {
+  public subscribeToInitModel(callback: (state: IOptions) => (state: IOptions) => void): void {
     this.model.on('initState', callback(this.model.getState()));
   }
 
-  public subscribeToUpdates(callback: (state: IOptions) => (...args: any[]) => void): void {
+  public subscribeToUpdates(callback: (state: IOptions) => (state: IOptions) => void): void {
     this.model.on('updateState', () => callback(this.model.getState()));
   }
 
