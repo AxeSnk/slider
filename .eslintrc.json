@@ -19,7 +19,6 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "linebreak-style": "off",
     "no-console": [
       "error",
       {
