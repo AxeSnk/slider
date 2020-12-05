@@ -4,12 +4,13 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "test": "jest",
     "dev": "webpack-dev-server --mode development --open",
     "build": "webpack -d",
     "prod": "webpack -p",
     "deploy": "gh-pages -d dist",
-    "lint": "eslint --ext .ts src/"
+    "lint": "eslint --ext .ts src/",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "browserslist": "> 0.25%, not dead",
   "author": "Alexander Axenov",
