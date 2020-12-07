@@ -1,6 +1,6 @@
-import Fill from '../MVP/View/Fill/Fill';
-import { IOptions } from '../MVP/utils/IOptions';
-import defaultOptions from '../MVP/utils/defaultOptions';
+import Fill from '../../../MVP/View/Fill/Fill';
+import { IOptions } from '../../../MVP/utils/IOptions';
+import defaultOptions from '../../../MVP/utils/defaultOptions';
 
 describe('Fill tests:', () => {
   let fill: Fill;

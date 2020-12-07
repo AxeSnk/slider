@@ -1,14 +1,23 @@
-import Handle from '../MVP/View/Handle/Handle';
+import Handle from '../../../MVP/View/Handle/Handle';
+import defaultOptions from '../../../MVP/utils/defaultOptions';
 
 describe('Handle tests:', () => {
   let handle: Handle;
+  let parent: HTMLElement;
 
   beforeEach(() => {
-    handle = new Handle(document.body, 0);
+    document.body.innerHTML = '';
+    parent = document.createElement('div');
+    document.body.appendChild(parent);
+    handle = new Handle(parent, 0);
   });
 
   test('create handle element', () => {
     expect(handle.getHandle()).toBeInstanceOf(HTMLElement);
+  });
+
+  test('should return position handle', () => {
+    expect(handle.getPositionHandle(defaultOptions)).toEqual(0);
   });
 
   describe('renderHandle:', () => {
@@ -22,7 +31,7 @@ describe('Handle tests:', () => {
       const element: HTMLElement = handle.getHandle();
 
       expect(element.style.top).toBe('');
-      expect(element.style.left).toBe('50%');
+      expect(element.style.left).toBe('');
     });
 
     test('renderHandle vertical', () => {
@@ -31,7 +40,7 @@ describe('Handle tests:', () => {
       const element: HTMLElement = handle.getHandle();
 
       expect(element.style.left).toBe('');
-      expect(element.style.top).toBe('50%');
+      expect(element.style.top).toBe('');
     });
   });
 });

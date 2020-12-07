@@ -1,4 +1,4 @@
-import Tooltip from '../MVP/View/Tooltip/Tooltip';
+import Tooltip from '../../../MVP/View/Tooltip/Tooltip';
 
 describe('Tooltip tests:', () => {
   let tooltips: Tooltip;
@@ -12,13 +12,12 @@ describe('Tooltip tests:', () => {
   });
 
   describe('renderTooltip', () => {
-    const val = 2;
+    let val = 2;
     const minVal = -3;
     const maxVal = 5;
 
     test('renderTooltip horizontal mask = true', () => {
       const tooltip = true;
-      const vertical = false;
 
       tooltips.renderTooltip(
         {
@@ -26,7 +25,6 @@ describe('Tooltip tests:', () => {
           val,
           minVal,
           maxVal,
-          vertical,
         },
       );
       const element: HTMLElement = tooltips.getTooltip();
@@ -36,7 +34,6 @@ describe('Tooltip tests:', () => {
 
     test('renderTooltip vertical mask = false', () => {
       const tooltip = false;
-      const vertical = true;
 
       tooltips.renderTooltip(
         {
@@ -44,12 +41,45 @@ describe('Tooltip tests:', () => {
           val,
           minVal,
           maxVal,
-          vertical,
         },
       );
       const element: HTMLElement = tooltips.getTooltip();
       expect(element.innerHTML).toBe('2');
       expect(element.style.display).toBe('none');
+    });
+
+    test('should set tooltip to minVal', () => {
+      const tooltip = true;
+      val = -5;
+
+      tooltips.renderTooltip(
+        {
+          tooltip,
+          val,
+          minVal,
+          maxVal,
+        },
+      );
+
+      const element: HTMLElement = tooltips.getTooltip();
+      expect(element.innerHTML).toBe('-3');
+    });
+
+    test('should set tooltip to maxVal', () => {
+      const tooltip = true;
+      val = 7;
+
+      tooltips.renderTooltip(
+        {
+          tooltip,
+          val,
+          minVal,
+          maxVal,
+        },
+      );
+
+      const element: HTMLElement = tooltips.getTooltip();
+      expect(element.innerHTML).toBe('5');
     });
   });
 });
